@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 @Entity
@@ -20,9 +23,12 @@ public class UserLook extends Model {
 	@ManyToOne
 	private Look look;
 
+	@Required
 	private int size;
 	private int likeCount;
+	@Required
 	private String imageUrl;
+	private Date date;
 	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
 		    Long.class, UserLook.class
@@ -32,13 +38,22 @@ public class UserLook extends Model {
 		super();
 	}
 
-	public UserLook(Long id, Look look, int size, int likeCount, String imageUrl) {
+	public UserLook(Long id, Look look, int size, int likeCount, String imageUrl, Date date) {
 		super();
 		this.id = id;
 		this.look = look;
 		this.size = size;
 		this.likeCount = likeCount;
 		this.imageUrl = imageUrl;
+		this.date = date;
+	}
+	
+	public Date getDate(){
+		return date;
+	}
+	
+	public void setDate(Date date){
+		this.date = date;
 	}
 
 	public Long getId() {

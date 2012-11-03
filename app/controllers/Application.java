@@ -13,7 +13,13 @@ public class Application extends Controller {
   public static Result index() {
 	  
 	  Look look = new Look();
+	  look.setPrice(29000);
+	  look.setLookType(0);
+	  look.setYear(2012);
+	  look.setSeason(4);
+	  look.setImageUrl("http://www.naver.com");
 	  look.save();
+	  
 	  UserLook userLook = new UserLook();
 	  userLook.setLook(look);
 	  userLook.save();
