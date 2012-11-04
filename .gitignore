@@ -14,3 +14,8 @@ tmp
 test-result
 eclipse
 server.pid
+
+
+# Ignore Java 
+.classpath
+*.class
