@@ -1,6 +1,6 @@
 // @SOURCE:/Users/jinsu0411/Documents/soma2/conf/routes
-// @HASH:9c88ccb541a682c8329066689180b47eee67b3e7
-// @DATE:Sun Nov 04 18:19:45 KST 2012
+// @HASH:ff22093e1c2de038da57cf75cc0c6fd972ffabb5
+// @DATE:Sun Nov 04 23:20:02 KST 2012
 
 import play.core._
 import play.core.Router._
@@ -43,13 +43,17 @@ val controllers_RestApp_deleteUserLookById6 = Route("DELETE", PathPattern(List(S
                     
 
 // @LINE:18
-val controllers_Login_blank7 = Route("GET", PathPattern(List(StaticPart("/login"))))
+val controllers_Looks_selectLooks7 = Route("GET", PathPattern(List(StaticPart("/looks"))))
                     
 
 // @LINE:21
-val controllers_Assets_at8 = Route("GET", PathPattern(List(StaticPart("/assets/"),DynamicPart("file", """.+"""))))
+val controllers_Login_blank8 = Route("GET", PathPattern(List(StaticPart("/login"))))
                     
-def documentation = List(("""GET""","""/""","""controllers.Application.index()"""),("""GET""","""/api/looks""","""controllers.RestApp.getLooks(year:String ?= null, season:String ?= null, lookType:String ?= null)"""),("""GET""","""/api/looks/$id<[^/]+>""","""controllers.RestApp.getLookById(id:Long)"""),("""GET""","""/api/looks/$id<[^/]+>/userLooks""","""controllers.RestApp.getAllUserLooksByLookId(id:Long)"""),("""GET""","""/api/userLook/$id<[^/]+>""","""controllers.RestApp.getUserLookById(id:Long)"""),("""POST""","""/api/userLook""","""controllers.RestApp.saveUserLook()"""),("""DELETE""","""/api/userLook/$id<[^/]+>""","""controllers.RestApp.deleteUserLookById(id:Long)"""),("""GET""","""/login""","""controllers.Login.blank()"""),("""GET""","""/assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)"""))
+
+// @LINE:25
+val controllers_Assets_at9 = Route("GET", PathPattern(List(StaticPart("/assets/"),DynamicPart("file", """.+"""))))
+                    
+def documentation = List(("""GET""","""/""","""controllers.Application.index()"""),("""GET""","""/api/looks""","""controllers.RestApp.getLooks(year:String ?= null, season:String ?= null, lookType:String ?= null)"""),("""GET""","""/api/looks/$id<[^/]+>""","""controllers.RestApp.getLookById(id:Long)"""),("""GET""","""/api/looks/$id<[^/]+>/userLooks""","""controllers.RestApp.getAllUserLooksByLookId(id:Long)"""),("""GET""","""/api/userLook/$id<[^/]+>""","""controllers.RestApp.getUserLookById(id:Long)"""),("""POST""","""/api/userLook""","""controllers.RestApp.saveUserLook()"""),("""DELETE""","""/api/userLook/$id<[^/]+>""","""controllers.RestApp.deleteUserLookById(id:Long)"""),("""GET""","""/looks""","""controllers.Looks.selectLooks()"""),("""GET""","""/login""","""controllers.Login.blank()"""),("""GET""","""/assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)"""))
              
     
 def routes:PartialFunction[RequestHeader,Handler] = {        
@@ -111,15 +115,23 @@ case controllers_RestApp_deleteUserLookById6(params) => {
                     
 
 // @LINE:18
-case controllers_Login_blank7(params) => {
+case controllers_Looks_selectLooks7(params) => {
+   call { 
+        invokeHandler(_root_.controllers.Looks.selectLooks(), HandlerDef(this, "controllers.Looks", "selectLooks", Nil))
+   }
+}
+                    
+
+// @LINE:21
+case controllers_Login_blank8(params) => {
    call { 
         invokeHandler(_root_.controllers.Login.blank(), HandlerDef(this, "controllers.Login", "blank", Nil))
    }
 }
                     
 
-// @LINE:21
-case controllers_Assets_at8(params) => {
+// @LINE:25
+case controllers_Assets_at9(params) => {
    call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         invokeHandler(_root_.controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String])))
    }

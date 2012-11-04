@@ -1,0 +1,27 @@
+@(title :String)(username :String)
+
+
+@main(title)(username){
+	<h1> Years </h1>
+	
+	<input id="years_" type="text">
+
+	<h1> Season </h1>
+	<div id ="season" class="btn-group" data-toggle="buttons-radio">
+		<button class = "btn"> 봄  </button>
+		<button class = "btn"> 여름 </button>
+		<button class = "btn"> 가을 </button>
+		<button class = "btn"> 겨울 </button>
+	</div>
+	
+	<h1> 상/하의 </h1>
+	<div class="btn-group" data-toggle="buttons-radio">
+		<button class = "btn"> 상의  </button>
+		<button class = "btn"> 하의 </button>		
+	</div>
+	
+	<h1> Price </h1>
+	<input type="text">
+	
+	<script src="@routes.Assets.at("javascripts/looks.js")"> </script>
+}

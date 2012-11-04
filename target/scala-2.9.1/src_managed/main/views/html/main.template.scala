@@ -43,12 +43,12 @@ Seq[Any](format.raw/*1.50*/("""
         <script src=""""),_display_(Seq[Any](/*14.23*/routes/*14.29*/.Assets.at("javascripts/highcharts.js"))),format.raw/*14.68*/("""" type="text/javascript"></script>
     </head>
     <body>
-    	<div class="navbar navbar-fixed-top">
+    	<div class="navbar navbar-fixed-top navbar-inverse">
     		<div class="navbar-inner">
     			<div class="container">
     				
     				<ul class="nav">
-    					<li> <a class="active" href="/"> Home </a> </li>
+    					<li> <a href="/"> Home </a> </li>
   						<li class="divider-vertical"></li>  						
     					<li class="normal-navbar">
 	    					Welcome! """),_display_(Seq[Any](/*25.21*/username)),format.raw/*25.29*/(""" 
@@ -58,16 +58,14 @@ Seq[Any](format.raw/*1.50*/("""
     					</li>	
     				</ul>
     				<div class = "float-right">    				
-		 				<a href="/login" class="btn"> Add Product </a>
-	    					<a href="/login" class="btn"> View Product </a>
- 						
+    					<a href="/looks" class="btn"> View Product </a>
  					</div>
  				</div>
  			</div>
     	</div>
     	<div class="container container-margin">
     		<div class="row">
-	        		"""),_display_(Seq[Any](/*41.13*/content)),format.raw/*41.20*/("""      	
+	        		"""),_display_(Seq[Any](/*39.13*/content)),format.raw/*39.20*/("""      	
 	        </div>
 	        
         </div>
@@ -90,11 +88,11 @@ Seq[Any](format.raw/*1.50*/("""
 }
                 /*
                     -- GENERATED --
-                    DATE: Sun Nov 04 17:16:22 KST 2012
+                    DATE: Mon Nov 05 00:33:10 KST 2012
                     SOURCE: /Users/jinsu0411/Documents/soma2/app/views/main.scala.html
-                    HASH: 9bbffc8f068e77341fc0199b56c292d7d02271eb
-                    MATRIX: 766->1|891->49|979->102|1005->107|1102->169|1116->175|1171->209|1262->265|1276->271|1343->316|1435->372|1450->378|1529->434|1626->495|1641->501|1695->533|1756->558|1771->564|1838->609|1931->666|1946->672|2011->715|2081->749|2096->755|2157->794|2557->1158|2587->1166|3026->1569|3055->1576
-                    LINES: 27->1|30->1|36->7|36->7|37->8|37->8|37->8|38->9|38->9|38->9|39->10|39->10|39->10|40->11|40->11|40->11|41->12|41->12|41->12|42->13|42->13|42->13|43->14|43->14|43->14|54->25|54->25|70->41|70->41
+                    HASH: 5b6e29606e1fab7032787a9db68b1d0f637a65c0
+                    MATRIX: 766->1|891->49|979->102|1005->107|1102->169|1116->175|1171->209|1262->265|1276->271|1343->316|1435->372|1450->378|1529->434|1626->495|1641->501|1695->533|1756->558|1771->564|1838->609|1931->666|1946->672|2011->715|2081->749|2096->755|2157->794|2557->1158|2587->1166|2963->1506|2992->1513
+                    LINES: 27->1|30->1|36->7|36->7|37->8|37->8|37->8|38->9|38->9|38->9|39->10|39->10|39->10|40->11|40->11|40->11|41->12|41->12|41->12|42->13|42->13|42->13|43->14|43->14|43->14|54->25|54->25|68->39|68->39
                     -- GENERATED --
                 */
             

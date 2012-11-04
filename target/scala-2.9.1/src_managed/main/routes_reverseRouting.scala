@@ -1,6 +1,6 @@
 // @SOURCE:/Users/jinsu0411/Documents/soma2/conf/routes
-// @HASH:9c88ccb541a682c8329066689180b47eee67b3e7
-// @DATE:Sun Nov 04 18:19:45 KST 2012
+// @HASH:ff22093e1c2de038da57cf75cc0c6fd972ffabb5
+// @DATE:Sun Nov 04 23:20:02 KST 2012
 
 import play.core._
 import play.core.Router._
@@ -12,6 +12,7 @@ import play.libs.F
 import Router.queryString
 
 
+// @LINE:25
 // @LINE:21
 // @LINE:18
 // @LINE:15
@@ -22,6 +23,23 @@ import Router.queryString
 // @LINE:7
 // @LINE:6
 package controllers {
+
+// @LINE:25
+class ReverseAssets {
+    
+
+
+ 
+// @LINE:25
+def at(file:String) = {
+   Call("GET", "/assets/" + implicitly[PathBindable[String]].unbind("file", file))
+}
+                                                        
+
+                      
+    
+}
+                            
 
 // @LINE:15
 // @LINE:13
@@ -75,13 +93,13 @@ def deleteUserLookById(id:Long) = {
 }
                             
 
-// @LINE:18
+// @LINE:21
 class ReverseLogin {
     
 
 
  
-// @LINE:18
+// @LINE:21
 def blank() = {
    Call("GET", "/login")
 }
@@ -109,15 +127,15 @@ def index() = {
 }
                             
 
-// @LINE:21
-class ReverseAssets {
+// @LINE:18
+class ReverseLooks {
     
 
 
  
-// @LINE:21
-def at(file:String) = {
-   Call("GET", "/assets/" + implicitly[PathBindable[String]].unbind("file", file))
+// @LINE:18
+def selectLooks() = {
+   Call("GET", "/looks")
 }
                                                         
 
@@ -129,6 +147,7 @@ def at(file:String) = {
                     
 
 
+// @LINE:25
 // @LINE:21
 // @LINE:18
 // @LINE:15
@@ -139,6 +158,28 @@ def at(file:String) = {
 // @LINE:7
 // @LINE:6
 package controllers.javascript {
+
+// @LINE:25
+class ReverseAssets {
+    
+
+
+ 
+// @LINE:25
+def at = JavascriptReverseRoute(
+   "controllers.Assets.at",
+   """
+      function(file) {
+      return _wA({method:"GET", url:"/assets/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file)})
+      }
+   """
+)
+                                                        
+
+                      
+    
+}
+                            
 
 // @LINE:15
 // @LINE:13
@@ -222,13 +263,13 @@ def deleteUserLookById = JavascriptReverseRoute(
 }
                             
 
-// @LINE:18
+// @LINE:21
 class ReverseLogin {
     
 
 
  
-// @LINE:18
+// @LINE:21
 def blank = JavascriptReverseRoute(
    "controllers.Login.blank",
    """
@@ -266,18 +307,18 @@ def index = JavascriptReverseRoute(
 }
                             
 
-// @LINE:21
-class ReverseAssets {
+// @LINE:18
+class ReverseLooks {
     
 
 
  
-// @LINE:21
-def at = JavascriptReverseRoute(
-   "controllers.Assets.at",
+// @LINE:18
+def selectLooks = JavascriptReverseRoute(
+   "controllers.Looks.selectLooks",
    """
-      function(file) {
-      return _wA({method:"GET", url:"/assets/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file)})
+      function() {
+      return _wA({method:"GET", url:"/looks"})
       }
    """
 )
@@ -291,6 +332,7 @@ def at = JavascriptReverseRoute(
                     
 
 
+// @LINE:25
 // @LINE:21
 // @LINE:18
 // @LINE:15
@@ -301,6 +343,23 @@ def at = JavascriptReverseRoute(
 // @LINE:7
 // @LINE:6
 package controllers.ref {
+
+// @LINE:25
+class ReverseAssets {
+    
+
+
+ 
+// @LINE:25
+def at(path:String, file:String) = new play.api.mvc.HandlerRef(
+   controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]))
+)
+                              
+
+                      
+    
+}
+                            
 
 // @LINE:15
 // @LINE:13
@@ -354,13 +413,13 @@ def deleteUserLookById(id:Long) = new play.api.mvc.HandlerRef(
 }
                             
 
-// @LINE:18
+// @LINE:21
 class ReverseLogin {
     
 
 
  
-// @LINE:18
+// @LINE:21
 def blank() = new play.api.mvc.HandlerRef(
    controllers.Login.blank(), HandlerDef(this, "controllers.Login", "blank", Seq())
 )
@@ -388,15 +447,15 @@ def index() = new play.api.mvc.HandlerRef(
 }
                             
 
-// @LINE:21
-class ReverseAssets {
+// @LINE:18
+class ReverseLooks {
     
 
 
  
-// @LINE:21
-def at(path:String, file:String) = new play.api.mvc.HandlerRef(
-   controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]))
+// @LINE:18
+def selectLooks() = new play.api.mvc.HandlerRef(
+   controllers.Looks.selectLooks(), HandlerDef(this, "controllers.Looks", "selectLooks", Seq())
 )
                               
 
