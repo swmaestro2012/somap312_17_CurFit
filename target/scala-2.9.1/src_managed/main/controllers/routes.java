@@ -1,6 +1,6 @@
 // @SOURCE:/Users/jinsu0411/Documents/soma2/conf/routes
-// @HASH:aba3717b530620a92c9f7bb44365a751eb5e5a4a
-// @DATE:Sun Nov 04 16:59:47 KST 2012
+// @HASH:9c88ccb541a682c8329066689180b47eee67b3e7
+// @DATE:Sun Nov 04 18:19:45 KST 2012
 
 package controllers;
 

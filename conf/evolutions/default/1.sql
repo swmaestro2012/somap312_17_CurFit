@@ -5,6 +5,7 @@
 
 create table look (
   id                        bigint auto_increment not null,
+  name                      varchar(255),
   look_count                integer,
   year                      integer,
   season                    integer,
@@ -20,6 +21,7 @@ create table user_look (
   size                      integer,
   like_count                integer,
   image_url                 varchar(255),
+  date                      timestamp,
   constraint pk_user_look primary key (id))
 ;
 

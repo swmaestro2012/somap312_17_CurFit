@@ -20,6 +20,7 @@ public class Look extends Model {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String name;
 	private int lookCount;
 	private int year;
 	private int season;
@@ -30,17 +31,17 @@ public class Look extends Model {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<UserLook> userLooks;
 
-	public static Finder<Long, Look> find = new Finder<Long, Look>(Long.class,
-			Look.class);
+	public static Finder<Long, Look> find = new Finder<Long, Look>(Long.class, Look.class);
 
 	public Look() {
 		super();
 	}
 
-	public Look(Long id, int lookCount, int year, int season, int lookType,
+	public Look(Long id, String name, int lookCount, int year, int season, int lookType,
 			int price, String imageUrl, List<UserLook> userLooks) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.lookCount = lookCount;
 		this.year = year;
 		this.season = season;
@@ -48,6 +49,14 @@ public class Look extends Model {
 		this.price = price;
 		this.imageUrl = imageUrl;
 		this.userLooks = userLooks;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
 	}
 
 	public int getLookCount() {

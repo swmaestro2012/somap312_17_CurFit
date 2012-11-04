@@ -1,6 +1,6 @@
 // @SOURCE:/Users/jinsu0411/Documents/soma2/conf/routes
-// @HASH:aba3717b530620a92c9f7bb44365a751eb5e5a4a
-// @DATE:Sun Nov 04 16:59:47 KST 2012
+// @HASH:9c88ccb541a682c8329066689180b47eee67b3e7
+// @DATE:Sun Nov 04 18:19:45 KST 2012
 
 import play.core._
 import play.core.Router._
@@ -12,51 +12,59 @@ import play.libs.F
 import Router.queryString
 
 
-// @LINE:19
-// @LINE:16
+// @LINE:21
+// @LINE:18
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 // @LINE:6
 package controllers {
 
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 class ReverseRestApp {
     
 
 
  
-// @LINE:9
+// @LINE:11
 def getUserLookById(id:Long) = {
    Call("GET", "/api/userLook/" + implicitly[PathBindable[Long]].unbind("id", id))
 }
                                                         
  
-// @LINE:8
+// @LINE:10
 def getAllUserLooksByLookId(id:Long) = {
    Call("GET", "/api/looks/" + implicitly[PathBindable[Long]].unbind("id", id) + "/userLooks")
 }
                                                         
  
-// @LINE:7
+// @LINE:9
 def getLookById(id:Long) = {
    Call("GET", "/api/looks/" + implicitly[PathBindable[Long]].unbind("id", id))
 }
                                                         
  
-// @LINE:11
+// @LINE:13
 def saveUserLook() = {
    Call("POST", "/api/userLook")
 }
                                                         
  
-// @LINE:13
+// @LINE:7
+def getLooks(year:String = null, season:String = null, lookType:String = null) = {
+   Call("GET", "/api/looks" + queryString(List(if(year == null) None else Some(implicitly[QueryStringBindable[String]].unbind("year", year)), if(season == null) None else Some(implicitly[QueryStringBindable[String]].unbind("season", season)), if(lookType == null) None else Some(implicitly[QueryStringBindable[String]].unbind("lookType", lookType)))))
+}
+                                                        
+ 
+// @LINE:15
 def deleteUserLookById(id:Long) = {
    Call("DELETE", "/api/userLook/" + implicitly[PathBindable[Long]].unbind("id", id))
 }
@@ -67,13 +75,13 @@ def deleteUserLookById(id:Long) = {
 }
                             
 
-// @LINE:16
+// @LINE:18
 class ReverseLogin {
     
 
 
  
-// @LINE:16
+// @LINE:18
 def blank() = {
    Call("GET", "/login")
 }
@@ -101,13 +109,13 @@ def index() = {
 }
                             
 
-// @LINE:19
+// @LINE:21
 class ReverseAssets {
     
 
 
  
-// @LINE:19
+// @LINE:21
 def at(file:String) = {
    Call("GET", "/assets/" + implicitly[PathBindable[String]].unbind("file", file))
 }
@@ -121,27 +129,29 @@ def at(file:String) = {
                     
 
 
-// @LINE:19
-// @LINE:16
+// @LINE:21
+// @LINE:18
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 // @LINE:6
 package controllers.javascript {
 
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 class ReverseRestApp {
     
 
 
  
-// @LINE:9
+// @LINE:11
 def getUserLookById = JavascriptReverseRoute(
    "controllers.RestApp.getUserLookById",
    """
@@ -152,7 +162,7 @@ def getUserLookById = JavascriptReverseRoute(
 )
                                                         
  
-// @LINE:8
+// @LINE:10
 def getAllUserLooksByLookId = JavascriptReverseRoute(
    "controllers.RestApp.getAllUserLooksByLookId",
    """
@@ -163,7 +173,7 @@ def getAllUserLooksByLookId = JavascriptReverseRoute(
 )
                                                         
  
-// @LINE:7
+// @LINE:9
 def getLookById = JavascriptReverseRoute(
    "controllers.RestApp.getLookById",
    """
@@ -174,7 +184,7 @@ def getLookById = JavascriptReverseRoute(
 )
                                                         
  
-// @LINE:11
+// @LINE:13
 def saveUserLook = JavascriptReverseRoute(
    "controllers.RestApp.saveUserLook",
    """
@@ -185,7 +195,18 @@ def saveUserLook = JavascriptReverseRoute(
 )
                                                         
  
-// @LINE:13
+// @LINE:7
+def getLooks = JavascriptReverseRoute(
+   "controllers.RestApp.getLooks",
+   """
+      function(year,season,lookType) {
+      return _wA({method:"GET", url:"/api/looks" + _qS([(year == null ? """ +  implicitly[JavascriptLitteral[String]].to(null) + """ : (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("year", year)), (season == null ? """ +  implicitly[JavascriptLitteral[String]].to(null) + """ : (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("season", season)), (lookType == null ? """ +  implicitly[JavascriptLitteral[String]].to(null) + """ : (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("lookType", lookType))])})
+      }
+   """
+)
+                                                        
+ 
+// @LINE:15
 def deleteUserLookById = JavascriptReverseRoute(
    "controllers.RestApp.deleteUserLookById",
    """
@@ -201,13 +222,13 @@ def deleteUserLookById = JavascriptReverseRoute(
 }
                             
 
-// @LINE:16
+// @LINE:18
 class ReverseLogin {
     
 
 
  
-// @LINE:16
+// @LINE:18
 def blank = JavascriptReverseRoute(
    "controllers.Login.blank",
    """
@@ -245,13 +266,13 @@ def index = JavascriptReverseRoute(
 }
                             
 
-// @LINE:19
+// @LINE:21
 class ReverseAssets {
     
 
 
  
-// @LINE:19
+// @LINE:21
 def at = JavascriptReverseRoute(
    "controllers.Assets.at",
    """
@@ -270,51 +291,59 @@ def at = JavascriptReverseRoute(
                     
 
 
-// @LINE:19
-// @LINE:16
+// @LINE:21
+// @LINE:18
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 // @LINE:6
 package controllers.ref {
 
+// @LINE:15
 // @LINE:13
 // @LINE:11
+// @LINE:10
 // @LINE:9
-// @LINE:8
 // @LINE:7
 class ReverseRestApp {
     
 
 
  
-// @LINE:9
+// @LINE:11
 def getUserLookById(id:Long) = new play.api.mvc.HandlerRef(
    controllers.RestApp.getUserLookById(id), HandlerDef(this, "controllers.RestApp", "getUserLookById", Seq(classOf[Long]))
 )
                               
  
-// @LINE:8
+// @LINE:10
 def getAllUserLooksByLookId(id:Long) = new play.api.mvc.HandlerRef(
    controllers.RestApp.getAllUserLooksByLookId(id), HandlerDef(this, "controllers.RestApp", "getAllUserLooksByLookId", Seq(classOf[Long]))
 )
                               
  
-// @LINE:7
+// @LINE:9
 def getLookById(id:Long) = new play.api.mvc.HandlerRef(
    controllers.RestApp.getLookById(id), HandlerDef(this, "controllers.RestApp", "getLookById", Seq(classOf[Long]))
 )
                               
  
-// @LINE:11
+// @LINE:13
 def saveUserLook() = new play.api.mvc.HandlerRef(
    controllers.RestApp.saveUserLook(), HandlerDef(this, "controllers.RestApp", "saveUserLook", Seq())
 )
                               
  
-// @LINE:13
+// @LINE:7
+def getLooks(year:String, season:String, lookType:String) = new play.api.mvc.HandlerRef(
+   controllers.RestApp.getLooks(year, season, lookType), HandlerDef(this, "controllers.RestApp", "getLooks", Seq(classOf[String], classOf[String], classOf[String]))
+)
+                              
+ 
+// @LINE:15
 def deleteUserLookById(id:Long) = new play.api.mvc.HandlerRef(
    controllers.RestApp.deleteUserLookById(id), HandlerDef(this, "controllers.RestApp", "deleteUserLookById", Seq(classOf[Long]))
 )
@@ -325,13 +354,13 @@ def deleteUserLookById(id:Long) = new play.api.mvc.HandlerRef(
 }
                             
 
-// @LINE:16
+// @LINE:18
 class ReverseLogin {
     
 
 
  
-// @LINE:16
+// @LINE:18
 def blank() = new play.api.mvc.HandlerRef(
    controllers.Login.blank(), HandlerDef(this, "controllers.Login", "blank", Seq())
 )
@@ -359,13 +388,13 @@ def index() = new play.api.mvc.HandlerRef(
 }
                             
 
-// @LINE:19
+// @LINE:21
 class ReverseAssets {
     
 
 
  
-// @LINE:19
+// @LINE:21
 def at(path:String, file:String) = new play.api.mvc.HandlerRef(
    controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]))
 )

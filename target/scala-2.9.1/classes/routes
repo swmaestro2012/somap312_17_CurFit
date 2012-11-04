@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET		/api/looks					controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
+
 GET		/api/looks/:id				controllers.RestApp.getLookById(id: Long)
 GET		/api/looks/:id/userLooks	controllers.RestApp.getAllUserLooksByLookId(id: Long)
 GET		/api/userLook/:id			controllers.RestApp.getUserLookById(id: Long)
