@@ -1,7 +1,143 @@
-@(message: String)
+@(title :String)(username :String)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main(title)(username) {
+	<div id="shotChart">
+		<h2> Most shootings </h2>
+		<div class="like-well">
+			<div class="span8">			
+				<div id="shotPie">					
+					@chart("shotPie")					
+				</div>
+			</div>
+			<div class="span4 table-padding">
+			 		@table("가장 많이 찍힌 모델 TABLE", "mostShot") 
+			</div>
+		</div>								
+	</div>
+	<div id="likeChart">
+		<h2> Most Liked	</h2>
+		<div class="like-well">
+			<div class="span8">
+				<div id="likePie">
+					@chart("likePie")
+				</div>
+			</div>
+			<div class="span4 table-padding">
+				@table("가장 좋아한 모델 TABLE", "mostLike")
+			</div>		
+		</div>
+	</div>
+	
+}
+
+@table(title :String, id :String) = {
+	<div class="accordion table-margin">
+  		<div class="accordion-group">
+    		<div class="accordion-heading">
+    			<a class="accordion-toggle" data-toggle="collapse"  href="#@id">
+     					@title
+     					<i class="icon-chevron-down pull-right"></i>
+    			</a>
+    		</div>
+    		<div id="@id" class="accordion-body collapse in">
+    			<div class="accordion-inner">
+    				<table class="table">
+    					<thead>
+    						<tr>
+    							<th>	#	</th>
+    							<th>	Product Name	</th>
+    							<th>	Count	</th>    							
+    						</tr>
+    					</thead>
+    					<tbody>
+    						<tr>
+    							<th>	1	</th>
+    							<th>	Cardigan	</th>
+    							<th>	43	</th>
+    						</tr>
+    						<tr>
+    							<th>	2	</th>
+    							<th>	Slim Fit Pants	</th>
+    							<th>	38	</th>
+    						</tr>
+    						<tr>
+    							<th>	3	</th>
+    							<th>	Slim Cotton Pants	</th>
+    							<th>	31	</th>    							
+    						</tr>
+    						<tr>
+    							<th>	4	</th>
+    							<th>	V Neck T-Shirts	</th>
+    							<th>	22	</th>    							
+    						</tr>
+    						<tr>
+    							<th>	5	</th>
+    							<th>	Round Neck T-Shirts	</th>
+    							<th>	19	</th>    							
+    						</tr>
+    					</tbody>
+    				</table>
+    			</div>
+    		</div>
+  		</div>
+	</div>
+	
+}
+
+
+@chart(containerID :String) = {
+<script>
+	$(function () {
+	    var chart;
+	    $(document).ready(function() {
+	        chart = new Highcharts.Chart({
+	            chart: {
+	                renderTo: '@containerID',
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: true
+	            },
+	            title: {
+	                text: ''
+	            },
+	            tooltip: {
+	        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+	            	percentageDecimals: 1
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: true,
+	                        color: '#000000',
+	                        connectorColor: '#000000',
+	                        formatter: function() {
+	                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+	                        }
+	                    }
+	                }
+	            },
+	            series: [{
+	                type: 'pie',
+	                name: 'Browser share',
+	                data: [
+	                    ['Firefox',   45.0],
+	                    ['IE',       26.8],
+	                    {
+	                        name: 'Chrome',
+	                        y: 12.8,
+	                        sliced: true,
+	                        selected: true
+	                    },
+	                    ['Safari',    8.5],
+	                    ['Opera',     6.2],
+	                    ['Others',   0.7]
+	                ]
+	            }]
+	        });
+	    });
+	    
+	});
+</script>
 }

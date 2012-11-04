@@ -30,7 +30,7 @@ public class Application extends Controller {
 	  
 	  System.out.println(look.getUserLooks().size());
 	  
-    return ok(index.render("Your new application is ready."));
+    return ok(index.render("Welcome to Fashion Dashoboard.", "Han Jin-Soo"));
   }
   
   
