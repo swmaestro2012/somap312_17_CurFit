@@ -14,8 +14,12 @@ POST	/api/userLook				controllers.RestApp.saveUserLook()
 
 DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 
+
+GET		/looks						controllers.Looks.selectLooks()
+
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
 GET		/login						controllers.Login.blank()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

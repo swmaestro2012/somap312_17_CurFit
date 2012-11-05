@@ -14,9 +14,12 @@ tmp
 test-result
 eclipse
 server.pid
-
+target
 
 # Ignore Java 
 .classpath
 *.class
+<<<<<<< HEAD
 /target
+=======
+>>>>>>> origin/master
