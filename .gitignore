@@ -19,7 +19,4 @@ target
 # Ignore Java 
 .classpath
 *.class
-<<<<<<< HEAD
 /target
-=======
->>>>>>> origin/master
