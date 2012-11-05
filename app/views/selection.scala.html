@@ -2,26 +2,47 @@
 
 
 @main(title)(username){
-	<h1> Years </h1>
-	
-	<input id="years_" type="text">
-
-	<h1> Season </h1>
-	<div id ="season" class="btn-group" data-toggle="buttons-radio">
-		<button class = "btn"> 봄  </button>
-		<button class = "btn"> 여름 </button>
-		<button class = "btn"> 가을 </button>
-		<button class = "btn"> 겨울 </button>
+	<div id="years" class="control-group">
+		<h1> Years </h1>	
+		<input id="years_" type="text" class="input-small">
+		<p class="help-inline"></p>
 	</div>
 	
-	<h1> 상/하의 </h1>
-	<div class="btn-group" data-toggle="buttons-radio">
-		<button class = "btn"> 상의  </button>
-		<button class = "btn"> 하의 </button>		
+	<div id="season">
+		<h1> Season </h1>
+		<div id ="season_" class="btn-group" data-toggle="buttons-radio">
+			<button class = "btn">봄</button>
+			<button class = "btn">여름</button>
+			<button class = "btn">가을</button>
+			<button class = "btn">겨울</button>
+		</div>
+		<p class="help-inline"></p>
+	</div>	
+	
+	<div id="top-bottom">
+		<h1> 상/하의 </h1>
+		<div id="top-bottom_" class="btn-group" data-toggle="buttons-radio">
+			<button class = "btn">상의</button>
+			<button class = "btn">하의</button>		
+		</div>
+		<p class="help-inline"></p>		
 	</div>
 	
-	<h1> Price </h1>
-	<input type="text">
+	<button id="submit" class="btn btn-primary"> submit </button>
+	
+	@*
+	<div id="price">
+		<h1> Price </h1>
+		<input type="text" class="input-small"> ~ <input type="text" class="input-small">
+		<p class="help-inline"></p>		
+	</div>
+	*@
+	
+	<form id="confirm-form" action="/looks" method="POST">
+		<input id="years-form" type="hidden"/>
+		<input id="season-form" type="hidden"/>
+		<input id="top-bottom-form" type="hidden"/>
+	</form>
 	
 	<script src="@routes.Assets.at("javascripts/looks.js")"> </script>
 }
