@@ -5,6 +5,11 @@
 	padding : 10px;
 }
 
+.centered {
+	margin-left : auto;
+	margin-right : auto;
+}
+
 .container-margin {
 	margin-top : 40px;
 }

@@ -48,7 +48,6 @@ $(document).ready(function() {
 				return $years_.val();
 			},
 			season : function() {
-				
 				return patterns.season[selected.season()];
 			},
 			topBottom : function() {			
