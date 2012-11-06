@@ -1,5 +1,5 @@
 /*
- * 목표1. 변수로 담아둔 아이들 가변값도 받아주는지 테스트해보기.
+ * 목표1. 변수로 담아둔 아이들 가변값도 받아주는지 테스트해보기. -> 안됨.
  * 목표2, Submit 잘 작동시키기. 
  */
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
 			return $('#season_').find('.active').html();
 		},
 		topBottom : function() {
-			return $('#topBottom_').find('.active').html();
+			return $('#top-bottom_').find('.active').html();
 		},
 		price : {
 			0 : function() {
@@ -47,26 +47,33 @@ $(document).ready(function() {
 	var checkValues = function() {
 		var checkList = {
 			years : function() {
+				$years_.focus();
 				return $years_.val();
 			},
 			season : function() {
+				
 				return patterns.season[selected.season()];
 			},
-			topBottom : function() {
+			topBottom : function() {			
 				return patterns.topBottom[selected.topBottom()];
 			}
 		};				
 		if(checkList.years().match(patterns.years) === null ){
+			
 			return false;
 		}
 		
 		if(typeof checkList.season() === 'undefined'){
-			$('#season').find('.help-inline').text("계절을 선택하세요").css({ 'color' : '#B94A48' });			
+			$('')
+			$('#season').addClass('error');
+			$('#season').find('.help-inline').text("계절을 선택하세요"); //.css({ 'color' : '#B94A48' });			
 			return false;
 		}
 		
 		if(typeof checkList.topBottom() === 'undefined') {
-			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요").css({ 'color' : '#B94A48' });
+			$('#top-bottom').addClass('error');
+			$('#top-bottom').find('.help-inline').show();
+			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");//.css({ 'color' : '#B94A48' });
 			return false;
 		}
 		
@@ -104,10 +111,12 @@ $(document).ready(function() {
 		$helpInline.hide();
 	});	
 
-	$('#submit').click(function() {	
-		$('#confirm-form').submit(function() {
-			return checkValues();
-		});	
+	
+	$('#confirm-form').submit(function() {
+		return checkValues();
+	});
+	$('#submit').click(function() {			
+		$('#confirm-form').submit();
 	});
 	
 
