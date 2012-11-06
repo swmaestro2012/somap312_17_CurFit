@@ -15,6 +15,6 @@ public class Looks extends Controller {
 	}
 	
 	public static Result lookDetails(){
-		return ok(lookDetails.render());
+		return ok(lookDetails.render("Details Model", "Han Jin-Soo", "http://pds15.egloos.com/pds/200909/07/72/d0030472_4aa4949eaede3.jpg"));
 	}
 }

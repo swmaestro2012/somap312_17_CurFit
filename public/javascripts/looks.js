@@ -1,7 +1,4 @@
-/*
- * 목표1. 변수로 담아둔 아이들 가변값도 받아주는지 테스트해보기. -> 안됨.
- * 목표2, Submit 잘 작동시키기. 
- */
+
 
 $(document).ready(function() {
 	
@@ -75,6 +72,7 @@ $(document).ready(function() {
 			$('#top-bottom').addClass('error');
 			$('#top-bottom').find('.help-inline').show();
 			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");
+			return false;
 		}
 		
 		$('#years-form').val(checkList.years());
