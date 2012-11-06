@@ -1,6 +1,9 @@
 @(title :String)(username :String)(imgUrl :String)
 
-@main(title)(username){	
+@importCss = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/lookDetails.css")">
+}
+@main(title)(username)(importCss){	
 	@*
 		필요한 데이터.
 		1. 이름 / 시즌 / 상/하의 / 가격 / 설명 정보 => 무엇으로 날아오던지간에. 한번에 날아올 예정.

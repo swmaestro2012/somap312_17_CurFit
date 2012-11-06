@@ -1,7 +1,11 @@
 @(title :String)(username :String)
 
+@importCss = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/selection.css")">
+}
 
-@main(title)(username){
+
+@main(title)(username)(importCss){
 	<div id="years" class="control-group">
 		<h1> Years </h1>	
 		<input id="years_" type="text" class="input-small">

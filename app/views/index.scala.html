@@ -1,6 +1,10 @@
 @(title :String)(username :String)
 
-@main(title)(username) {
+@importCss = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
+}
+
+@main(title)(username)(importCss) {
 	<div id="shotChart">
 		<h2> Most shootings </h2>
 		<div class="like-well">
