@@ -13,4 +13,8 @@ public class Looks extends Controller {
 	public static Result selectLooks() {
 		return ok(selection.render("Select Models", "Han Jin-Soo"));
 	}
+	
+	public static Result lookDetails(){
+		return ok(lookDetails.render());
+	}
 }

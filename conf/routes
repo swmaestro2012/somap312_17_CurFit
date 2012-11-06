@@ -16,6 +16,7 @@ DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 
 
 GET		/looks						controllers.Looks.selectLooks()
+GET		/temp						controllers.Looks.lookDetails()
 
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
 GET		/login						controllers.Login.blank()

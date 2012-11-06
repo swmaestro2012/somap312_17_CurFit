@@ -64,17 +64,17 @@ $(document).ready(function() {
 		}
 		
 		if(typeof checkList.season() === 'undefined'){
-			$('')
+			
 			$('#season').addClass('error');
-			$('#season').find('.help-inline').text("계절을 선택하세요"); //.css({ 'color' : '#B94A48' });			
+			$('#season').find('.help-inline').show();
+			$('#season').find('.help-inline').text("계절을 선택하세요");
 			return false;
 		}
 		
 		if(typeof checkList.topBottom() === 'undefined') {
 			$('#top-bottom').addClass('error');
 			$('#top-bottom').find('.help-inline').show();
-			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");//.css({ 'color' : '#B94A48' });
-			return false;
+			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");
 		}
 		
 		$('#years-form').val(checkList.years());
