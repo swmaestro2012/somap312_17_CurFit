@@ -1,0 +1,19 @@
+img.center {
+	display : block;
+	margin-left : auto;
+	margin-right : auto;
+}
+
+table.center {
+	margin-left : auto;
+	margin-right : auto;
+}
+.small-padding{
+	margin-top : 30px;
+	margin-bottom : 50px;
+}
+
+#detail-info {
+	width : 500px;
+	height: 200px;
+}
