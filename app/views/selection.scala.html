@@ -5,37 +5,36 @@
 }
 
 
-@main(title)(username)(importCss){
-	<div class="row">
-		<div class="span3 affix">
-			<ul id="menu-nav" class="nav nav-list well short-padding">
-  				<li class="nav-header">Season</li>
-  				<li><a href="#">Spring</a></li>
-  				<li><a href="#">Summer</a></li>
-  				<li><a href="#">Fall</a></li>
-				<li><a href="#">Winter</a></li>
-				<li class="divider"></li>				
-				<li class="nav-header">Top-Bottom</li>
-				<li><a href="#">Tops</a></li>
-  				<li><a href="#">Bottoms</a></li>
-			</ul>			
-			<div id="menu-search" class="well">
-				<div id="years" class="control-group">
-					<h1> Search </h1>
+@main(title)(username)(importCss){	
+	<div class="span3">
+		<div class="affix">
+		<ul id="menu-nav" class="nav nav-list well short-padding">
+			<li class="nav-header">Season</li>
+			<li><a data-season="0" href="#">Spring</a></li>
+			<li><a data-season="1" href="#">Summer</a></li>
+			<li><a data-season="2" href="#">Fall</a></li>
+			<li><a data-season="3" href="#">Winter</a></li>
+			<li class="divider"></li>				
+			<li class="nav-header">Top-Bottom</li>
+			<li><a data-tb="0" href="#">Tops</a></li>
+  			<li><a data-tb="1" href="#">Bottoms</a></li>
+		</ul>			
+		<div id="menu-search" class="well">
+			<div id="years" class="control-group">
+					<h3> Search </h3>
 					<div>
 						<label>Years</label>	
 						<input id="years_" type="text" class="input">
 						<p class="help-inline"></p>
 					</div>
 				</div>
-	
 				<div id="season" class="control-group">
 					<label>Season</label>
-					<div id ="season_" class="btn-group" data-toggle="buttons-radio">
-						<button class = "btn">봄</button>
-						<button class = "btn">여름</button>
-						<button class = "btn">가을</button>
-						<button class = "btn">겨울</button>
+					<div id="season_" class="btn-group" data-toggle="buttons-radio">
+						<button class="btn">봄</button>
+						<button class="btn">여름</button>
+						<button class="btn">가을</button>
+						<button class="btn">겨울</button>
 					</div>
 					<p class="help-inline"></p>
 				</div>	
@@ -47,11 +46,13 @@
 					</div>
 					<p class="help-inline"></p>		
 				</div>	
-				<button id="submit" class="btn btn-primary"> submit </button>
-			</div>			
+					<button id="submit" class="btn btn-primary"> submit </button>			
 		</div>
+		</div>			
+	</div>
 		<div class="span9">
-			ss
+			<div id="result-contents">				
+			</div>
 		</div>
 	</div>
 	
@@ -70,5 +71,5 @@
 		<input id="top-bottom-form" type="hidden"/>
 	</form>
 	
-	<script src="@routes.Assets.at("javascripts/looks.js")"> </script>
+	<script src="@routes.Assets.at("javascripts/selection.js")"> </script>
 }

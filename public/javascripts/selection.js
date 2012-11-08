@@ -1,6 +1,53 @@
-
+@*
+	버그1. 검색 빨강파랑
+	버그2. 검색 옆으로 늘어난다.
+	할일1. 이미지 크기 줄이기.
+	할일2. 검색구현
+*@
 
 $(document).ready(function() {
+	var template = function(data){
+		var tags =
+			'<div>' +
+				'<img src="' + data.imageUrl + '">' +
+				'<label>'+ data.name +'</label>' +
+			'</div>'
+		return $('#result-contents').append(tags);		
+	};
+	var clearTag = function() {
+		$('#result-contents').html("");
+	}
+	
+	$('ul[id^=menu-nav]>li>a').click(function() {
+		clearTag();
+		var getVal = $(this).attr('data-season')
+		if (typeof getVal === 'undefined'){
+			var getVal = $(this).attr('data-tb');
+			menuAjax({ lookType : getVal});
+		}else{
+			menuAjax({ season : getVal });
+		}
+	});
+
+	var menuAjax = function(datas) {
+		$.ajax({
+			type : 'GET',
+			url : '/api/looks',
+			dataType: 'json',
+			data : datas,
+			success : function(obj) {
+				$(obj).each(function(i, v) {
+					if(v.code != 2){
+						template(v);
+					}					
+				});
+			},
+			error : function() {
+				alert('오류입니다..');
+			}
+		});		
+	};
+	
 	
 	var $years_ = $('#years_');
 	var $season_ = $('#season_');
@@ -30,7 +77,7 @@ $(document).ready(function() {
 	var patterns = {
 		years : /^[1-2][0-9]{3}$/,
 		season : {
-			"봄" : 0 ,
+			"봄" : 0,
 			"여름" : 1,
 			"가을" : 2,
 			"겨울" : 3
@@ -54,8 +101,7 @@ $(document).ready(function() {
 				return patterns.topBottom[selected.topBottom()];
 			}
 		};				
-		if(checkList.years().match(patterns.years) === null ){
-			
+		if(checkList.years().match(patterns.years) === null ){			
 			return false;
 		}
 		
