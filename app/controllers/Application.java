@@ -6,6 +6,7 @@ import models.Look;
 import models.UserLook;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.Logger;
 import views.html.index;
 
 public class Application extends Controller {
@@ -37,11 +38,17 @@ public class Application extends Controller {
 //	  System.out.println(look.getUserLooks().size());
 //	  
 	  
-	  
 	  List<Look> mostShootingLookList = Look.find.where().orderBy("shotCount desc").setMaxRows(5).findList();
 	  List<UserLook> mostLikedUserLookList = UserLook.find.where().orderBy("likeCount desc").setMaxRows(5).findList();
 	  
-    return ok(index.render("Welcome to Fashion Dashoboard.", "Han Jin-Soo", mostShootingLookList, mostLikedUserLookList));
+	  Integer shotTotal = 0;	  
+	  for (Look elem : mostShootingLookList){
+		  shotTotal += elem.getShotCount();
+	  }	  
+	
+	  Logger.info(shotTotal.toString());
+	  
+    return ok(index.render("Welcome to Fashion Dashboard.", "Han Jin-Soo", mostShootingLookList, mostLikedUserLookList, shotTotal));
   }
   
   
@@ -51,5 +58,13 @@ public class Application extends Controller {
 	  return ok();
   }
   
-  
+  private Integer getMostLiked(List<UserLook> user){
+	  Integer count = 0;
+	  
+	  for (UserLook elem : user){
+		  count += elem.getLikeCount();
+	  }
+	  
+	  return count;
+  }
 }

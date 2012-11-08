@@ -16,7 +16,7 @@ DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 
 
 # Home page
-GET     /  			                        controllers.Application.index()
+GET     /dashboard	                        controllers.Application.index()
 GET		/dashboard/looks					controllers.Looks.selectLooks()
 GET		/dashboard/temp						controllers.Looks.lookDetails()
 

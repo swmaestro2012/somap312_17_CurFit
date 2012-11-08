@@ -1,103 +1,107 @@
-@(title :String)(username :String)(mostShootingLookList: List[Look])(mostLikedUserLookList: List[UserLook])
-
-@*
-   버그1. 자바스크립트로 그라데이션 파이차트를 만들었더니. 검은색으로 나온다.
+@(title :String)(username :String)(mostShootingLookList :List[Look])(mostLikedUserLookList: List[UserLook])(shotTotal :Int)
+@* 
+	버그1. 자바스크립트로 그라데이션 파이차트를 만들었더니. 검은색으로 나온다.
 *@
 @importCss = {
-	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
 }
 
 @main(title)(username)(importCss) {
-	<div id="shotChart">
-		<h2> Most shootings </h2>
-		<div class="like-well">
-			<div class="span8">			
-				<div id="shotPie">					
-					@chart("shotPie")					
+<div id="shotChart">
+	<h2>Most shootings</h2>
+	<div class="like-well">
+		<div class="span8">
+			<div id="shotPie">
+				@* 파이그래프 들어가는 곳 *@
+			</div>
+		</div>
+		<div class="span4 table-padding">
+			<div class="accordion table-margin">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
+							가장 많이 찍힌 모델 Table <i class="icon-chevron-down pull-right"></i>
+						</a>
+					</div>
+					<div id="mostShot" class="accordion-body collapse in">
+						<div class="accordion-inner">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Product Name</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								@for(i <- 0 to 4) {
+									<tr>
+										<th>@(i+1)</th>
+										<th>@mostShootingLookList(i).getName()</th>
+										<th>@mostShootingLookList(i).getShotCount()</th>
+									</tr>
+
+									
+								}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="span4 table-padding">
-			 		@table("가장 많이 찍힌 모델 TABLE", "mostShot") 
-			</div>
-		</div>								
-	</div>
-	<div id="likeChart">
-		<h2> Most Liked	</h2>
-		<div class="like-well">
-			<div class="span8">
-				<div id="likePie">
-					@chart("likePie")
-				</div>
-			</div>
-			<div class="span4 table-padding">
-				@table("가장 좋아한 모델 TABLE", "mostLike")
-			</div>		
 		</div>
 	</div>
-	
-}
+</div>
+<div id="likeChart">
+	<h2>Most Liked</h2>
+	<div class="like-well">
+		<div class="span8">
+			<div id="likePie">@chart("likePie")</div>
+		</div>
+		<div class="span4 table-padding">
+			<div class="accordion table-margin">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
+							가장 많이 찍힌 모델 Table <i class="icon-chevron-down pull-right"></i>
+						</a>
+					</div>
+					<div id="mostShot" class="accordion-body collapse in">
+						<div class="accordion-inner">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Product Name</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								@*
+								@for(i <- 0 to 4) {
+									<tr>
+										<th>@(i+1)</th>
+										<th>@(mostShootingLookListmostLikedUserLookList(i).getLookId()</th>
+										<th>@mostLikedUserLookList(i).getShotCount()</th>
+									</tr>
 
-@table(title :String, id :String) = {
-	<div class="accordion table-margin">
-  		<div class="accordion-group">
-    		<div class="accordion-heading">
-    			<a class="accordion-toggle" data-toggle="collapse"  href="#@id">
-     					@title
-     					<i class="icon-chevron-down pull-right"></i>
-    			</a>
-    		</div>
-    		<div id="@id" class="accordion-body collapse in">
-    			<div class="accordion-inner">
-    				<table class="table">
-    					<thead>
-    						<tr>
-    							<th>	#	</th>
-    							<th>	Product Name	</th>
-    							<th>	Count	</th>    							
-    						</tr>
-    					</thead>
-    					<tbody>
-    						<tr>
-    							<th>	1	</th>
-    							<th>	Cardigan	</th>
-    							<th>	43	</th>
-    						</tr>
-    						<tr>
-    							<th>	2	</th>
-    							<th>	Slim Fit Pants	</th>
-    							<th>	38	</th>
-    						</tr>
-    						<tr>
-    							<th>	3	</th>
-    							<th>	Slim Cotton Pants	</th>
-    							<th>	31	</th>    							
-    						</tr>
-    						<tr>
-    							<th>	4	</th>
-    							<th>	V Neck T-Shirts	</th>
-    							<th>	22	</th>    							
-    						</tr>
-    						<tr>
-    							<th>	5	</th>
-    							<th>	Round Neck T-Shirts	</th>
-    							<th>	19	</th>    							
-    						</tr>
-    					</tbody>
-    				</table>
-    			</div>
-    		</div>
-  		</div>
+									
+								}
+								*@
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	
-}
+</div>
 
-
-@chart(containerID :String) = {
 <script>
-$(function () {
-    var chart;
-    $(document).ready(function() {
-    	@* 
+$(document).ready(function() {
+		var chart;
+    	
     	Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
 		    return {
 		        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
@@ -107,10 +111,10 @@ $(function () {
 		        ]
 		    };
 		});
-    	*@
+    	
         chart = new Highcharts.Chart({
             chart: {
-                renderTo: '@containerID',
+                renderTo: 'shotPie',
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
@@ -119,7 +123,7 @@ $(function () {
                 text: ''
             },
             tooltip: {
-        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+        	    pointFormat: '{series.name}: <b>{point.percentage}% ( {point.y} )</b>',
             	percentageDecimals: 1
             },
             plotOptions: {
@@ -131,30 +135,86 @@ $(function () {
                         color: '#000000',
                         connectorColor: '#000000',
                         formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
                         }
                     }
                 }
             },
             series: [{
                 type: 'pie',
-                name: 'Browser share',
+                name: 'Most Shootings',
                 data: [
-                    ['Firefox',   45.0],
-                    ['IE',       26.8],
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['Safari',    8.5],
-                    ['Opera',     6.2],
-                    ['Others',   0.7]
+					{
+    					name: '@mostShootingLookList(0).getName()',
+    					y: @(mostShootingLookList(0).getShotCount()),
+    					sliced: true,
+					    selected: true
+					},
+                    ['@mostShootingLookList(1).getName()',   @{(mostShootingLookList(1).getShotCount())}],
+                    ['@mostShootingLookList(2).getName()',   @(mostShootingLookList(2).getShotCount())],                    
+                    ['@mostShootingLookList(3).getName()',   @(mostShootingLookList(3).getShotCount())],
+                    ['@mostShootingLookList(4).getName()',   @(mostShootingLookList(4).getShotCount())],                    
                 ]
             }]
         });
-    });    
-});
+    });
 </script>
+});
+
+
+
+
+@table(title :String, id :String) = {
+<div class="accordion table-margin">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" href="#@id">
+				@title <i class="icon-chevron-down pull-right"></i>
+			</a>
+		</div>
+		<div id="@id" class="accordion-body collapse in">
+			<div class="accordion-inner">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Product Name</th>
+							<th>Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>1</th>
+							<th>Cardigan</th>
+							<th>43</th>
+						</tr>
+						<tr>
+							<th>2</th>
+							<th>Slim Fit Pants</th>
+							<th>38</th>
+						</tr>
+						<tr>
+							<th>3</th>
+							<th>Slim Cotton Pants</th>
+							<th>31</th>
+						</tr>
+						<tr>
+							<th>4</th>
+							<th>V Neck T-Shirts</th>
+							<th>22</th>
+						</tr>
+						<tr>
+							<th>5</th>
+							<th>Round Neck T-Shirts</th>
+							<th>19</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+} @chart(containerID :String) = {
+
 }
