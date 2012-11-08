@@ -2,8 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Application.index()
+# Api
+
 GET		/api/looks					controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
 
 GET		/api/looks/:id				controllers.RestApp.getLookById(id: Long)
@@ -15,13 +15,14 @@ POST	/api/userLook				controllers.RestApp.saveUserLook()
 DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 
 
-GET		/looks						controllers.Looks.selectLooks()
-GET		/temp						controllers.Looks.lookDetails()
+# Home page
+GET     /  			                        controllers.Application.index()
+GET		/dashboard/looks					controllers.Looks.selectLooks()
+GET		/dashboard/temp						controllers.Looks.lookDetails()
 
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
-GET		/login						controllers.Login.blank()
-POST	/login						controllers.Login.login()
-
+GET		/dashoboard/login						controllers.Login.blank()
+POST	/dashoboard/login						controllers.Login.login()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
