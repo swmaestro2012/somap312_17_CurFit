@@ -20,6 +20,7 @@ GET		/temp						controllers.Looks.lookDetails()
 
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
 GET		/login						controllers.Login.blank()
+POST	/login						controllers.Login.login()
 
 
 # Map static resources from the /public folder to the /assets URL path

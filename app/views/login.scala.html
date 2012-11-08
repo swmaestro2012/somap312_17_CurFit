@@ -1,4 +1,4 @@
-@()
+@(msg: String)
 
 
 <!DOCTYPE html>
@@ -16,21 +16,22 @@
     <body>
     <div class ="cover" style="background-image : url('@routes.Assets.at("images/blurIndex.png")')">
     	@* Temporary, I modified action's value. It must go to login method. *@
-    	<form action="/" method="POST">
+    	<form action="/login" method="POST">
     	<div class="modal">
     		<div class="modal-header">
     			<h3> Sign in to Fashion Dashboard. </h3>
     		</div>
     		<div class="modal-body">
     			<div>
-	    			<input name="username" class ="inputbox" placeholder="Username" type="text"/>
+	    			<input name="userId" class ="inputbox" placeholder="Username" type="text"/>
 	    		</div>
 	    		<div>
 	    			<input name="password" class = "inputbox" placeholder="Password" type="password"/>
 	    		</div>    		
 			</div>
 			<div class="modal-footer">	
-				<input class="pull-right btn btn-primary" type="submit" value="Submit"/>
+				<h4 class="pull-left"> @msg </h4>
+                <input class="pull-right btn btn-primary" type="submit" value="Submit"/>
 			</div>
         </div>
         </form> 

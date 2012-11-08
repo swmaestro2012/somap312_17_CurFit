@@ -28,6 +28,7 @@ public class UserLook extends Model {
 	private int likeCount;
 	@Required
 	private String imageUrl;
+	private String imageHash;
 	private Date date;
 	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
@@ -38,7 +39,7 @@ public class UserLook extends Model {
 		super();
 	}
 
-	public UserLook(Long id, Look look, int size, int likeCount, String imageUrl, Date date) {
+	public UserLook(Long id, Look look, int size, int likeCount, String imageUrl, String imageHash, Date date) {
 		super();
 		this.id = id;
 		this.look = look;
@@ -46,6 +47,15 @@ public class UserLook extends Model {
 		this.likeCount = likeCount;
 		this.imageUrl = imageUrl;
 		this.date = date;
+		this.imageHash = imageHash;
+	}
+	
+	public String getImageHash(){
+		return imageHash;
+	}
+	
+	public void setImageHash(String imageHash){
+		this.imageHash = imageHash;
 	}
 	
 	public Date getDate(){

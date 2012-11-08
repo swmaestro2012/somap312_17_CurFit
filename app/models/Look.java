@@ -21,12 +21,13 @@ public class Look extends Model {
 	private Long id;
 
 	private String name;
-	private int lookCount;
+	private int shotCount;
 	private int year;
 	private int season;
 	private int lookType;
 	private int price;
 	private String imageUrl;
+	private String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<UserLook> userLooks;
@@ -37,18 +38,27 @@ public class Look extends Model {
 		super();
 	}
 
-	public Look(Long id, String name, int lookCount, int year, int season, int lookType,
-			int price, String imageUrl, List<UserLook> userLooks) {
+	public Look(Long id, String name, int shotCount, int year, int season, int lookType,
+			int price, String imageUrl, String description, List<UserLook> userLooks) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.lookCount = lookCount;
+		this.shotCount = shotCount;
 		this.year = year;
 		this.season = season;
 		this.lookType = lookType;
 		this.price = price;
 		this.imageUrl = imageUrl;
+		this.description = description;
 		this.userLooks = userLooks;
+	}
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	public void setDescription(String description){
+		this.description = description;
 	}
 	
 	public String getName(){
@@ -59,12 +69,12 @@ public class Look extends Model {
 		this.name = name;
 	}
 
-	public int getLookCount() {
-		return lookCount;
+	public int getShotCount() {
+		return shotCount;
 	}
 
-	public void setLookCount(int lookCount) {
-		this.lookCount = lookCount;
+	public void setShotCount(int shotCount) {
+		this.shotCount = shotCount;
 	}
 
 	public Long getId() {
