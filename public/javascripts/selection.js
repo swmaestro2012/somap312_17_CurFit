@@ -3,13 +3,13 @@
 	버그2. 검색 옆으로 늘어난다.
 	할일1. 이미지 크기 줄이기. - 완료
 	할일2. 검색구현
-	할일3. 라우트 시키기.
+	할일3. 라우트 시키기. - 완료
 */
 $(document).ready(function() {
 	var template = function(data){
 		var tags =
 			'<div class="products-container">' +
-				'<a href="/">' +
+				'<a href="/dashboard/looks/' + data.id + '">' +
 				'<img class="products-img" src="' + data.imageUrl + '">' +
 				'<label class="products-label">'+ data.name +'</label>' +
 				'</a>' +

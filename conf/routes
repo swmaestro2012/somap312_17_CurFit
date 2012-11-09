@@ -19,7 +19,7 @@ DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 GET     /dashboard	                        controllers.Application.index()
 GET     /dashboard/	                        controllers.Application.index()
 GET		/dashboard/looks					controllers.Looks.selectLooks()
-GET		/dashboard/:id						controllers.Looks.lookDetails(id :Long)
+GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
 
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
 GET		/dashoboard/login						controllers.Login.blank()

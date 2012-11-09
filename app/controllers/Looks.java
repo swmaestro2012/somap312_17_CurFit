@@ -14,7 +14,13 @@ public class Looks extends Controller {
 		return ok(selection.render("Select Models", "Han Jin-Soo"));
 	}
 	
-	public static Result lookDetails(){
-		return ok(lookDetails.render("Details Model", "Han Jin-Soo", "http://pds15.egloos.com/pds/200909/07/72/d0030472_4aa4949eaede3.jpg"));
+	public static Result lookDetails(Long id){
+		Look look = Look.find.byId(id);
+		if (look != null){
+			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look.getImageUrl() ));
+		}
+		else {
+			return notFound();
+		}
 	}
 }
