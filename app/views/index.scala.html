@@ -20,7 +20,7 @@
 				<div class="accordion-group">
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
-							가장 많이 찍힌 모델 Table <i class="icon-chevron-down pull-right"></i>
+							가장 많이 찍힌 상 Table <i class="icon-chevron-down pull-right"></i>
 						</a>
 					</div>
 					<div id="mostShot" class="accordion-body collapse in">
@@ -56,14 +56,16 @@
 	<h2>Most Liked</h2>
 	<div class="like-well">
 		<div class="span8">
-			<div id="likePie">@chart("likePie")</div>
+			<div id="likePie">
+			@* 파이그래프 들어가는 곳 *@
+			</div>
 		</div>
 		<div class="span4 table-padding">
 			<div class="accordion table-margin">
 				<div class="accordion-group">
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
-							가장 많이 찍힌 모델 Table <i class="icon-chevron-down pull-right"></i>
+							가장 많이 라이크된 상품 Table <i class="icon-chevron-down pull-right"></i>
 						</a>
 					</div>
 					<div id="mostShot" class="accordion-body collapse in">
@@ -77,17 +79,13 @@
 									</tr>
 								</thead>
 								<tbody>
-								
-								
+									@for(i <- 0 to 4 ){
 									<tr>
-										<th>1</th>
-										<th>@mostLikedUserLookList(0).getLook().getName()</th>
-										<th>@mostLikedUserLookList(0).getLikeCount()</th>
+										<th>@(i+1)</th>
+										<th>@mostLikedUserLookList(i).getLook().getName()</th>
+										<th>@mostLikedUserLookList(i).getLikeCount()</th>
 									</tr>
-
-									
-								
-								
+									}
 								</tbody>
 							</table>
 						</div>
@@ -99,7 +97,7 @@
 </div>
 <script>
 $(document).ready(function() {
-		var chart;
+		var shotChart;
     	
     	Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
 		    return {
@@ -111,7 +109,7 @@ $(document).ready(function() {
 		    };
 		});
     	
-        chart = new Highcharts.Chart({
+        shotChart = new Highcharts.Chart({
             chart: {
                 renderTo: 'shotPie',
                 plotBackgroundColor: null,
@@ -156,64 +154,55 @@ $(document).ready(function() {
                 ]
             }]
         });
+        
+		var likeChart;
+    	
+        likeChart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'likePie',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+        	    pointFormat: '{series.name}: <b>{point.percentage}% ( {point.y} )</b>',
+            	percentageDecimals: 1
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Most Liked',
+                data: [
+					{
+    					name: '@mostLikedUserLookList(0).getLook().getName()',
+    					y: @mostLikedUserLookList(0).getLikeCount(),
+    					sliced: true,
+					    selected: true
+					},
+                    ['@mostLikedUserLookList(1).getLook().getName()',   @mostLikedUserLookList(1).getLikeCount()],
+                    ['@mostLikedUserLookList(2).getLook().getName()',   @(mostLikedUserLookList(2).getLikeCount())],                    
+                    ['@mostLikedUserLookList(3).getLook().getName()',   @(mostLikedUserLookList(3).getLikeCount())],
+                    ['@mostLikedUserLookList(4).getLook().getName()',   @(mostLikedUserLookList(4).getLikeCount())],                    
+                ]
+            }]
+        });
 });
 </script>
 
 }
-
-
-
-@table(title :String, id :String) = {
-<div class="accordion table-margin">
-	<div class="accordion-group">
-		<div class="accordion-heading">
-			<a class="accordion-toggle" data-toggle="collapse" href="#@id">
-				@title <i class="icon-chevron-down pull-right"></i>
-			</a>
-		</div>
-		<div id="@id" class="accordion-body collapse in">
-			<div class="accordion-inner">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Product Name</th>
-							<th>Count</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>1</th>
-							<th>Cardigan</th>
-							<th>43</th>
-						</tr>
-						<tr>
-							<th>2</th>
-							<th>Slim Fit Pants</th>
-							<th>38</th>
-						</tr>
-						<tr>
-							<th>3</th>
-							<th>Slim Cotton Pants</th>
-							<th>31</th>
-						</tr>
-						<tr>
-							<th>4</th>
-							<th>V Neck T-Shirts</th>
-							<th>22</th>
-						</tr>
-						<tr>
-							<th>5</th>
-							<th>Round Neck T-Shirts</th>
-							<th>19</th>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
-
-}
-
-@chart(name :String) = {}
