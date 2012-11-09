@@ -9,6 +9,17 @@
 	paading-bottom : 8px;
 }
 
+.products-container {
+	display : inline-block;
+	margin-right : 10px;
+}
+.products-img {
+	width : 200px;
+}
+.products-label {
+	text-align : center;
+	
+}
 label {
 	font-size : 20px;
 }

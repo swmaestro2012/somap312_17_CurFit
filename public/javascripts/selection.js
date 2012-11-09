@@ -1,16 +1,18 @@
-@*
+/*
 	버그1. 검색 빨강파랑
 	버그2. 검색 옆으로 늘어난다.
-	할일1. 이미지 크기 줄이기.
+	할일1. 이미지 크기 줄이기. - 완료
 	할일2. 검색구현
-*@
-
+	할일3. 라우트 시키기.
+*/
 $(document).ready(function() {
 	var template = function(data){
 		var tags =
-			'<div>' +
-				'<img src="' + data.imageUrl + '">' +
-				'<label>'+ data.name +'</label>' +
+			'<div class="products-container">' +
+				'<a href="/">' +
+				'<img class="products-img" src="' + data.imageUrl + '">' +
+				'<label class="products-label">'+ data.name +'</label>' +
+				'</a>' +
 			'</div>'
 		return $('#result-contents').append(tags);		
 	};
