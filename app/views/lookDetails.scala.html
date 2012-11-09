@@ -1,8 +1,10 @@
-@(title :String)(username :String)(imgUrl :String)
+@(title :String)(username :String)(look :Look)
 
 @importCss = {
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/lookDetails.css")">
 }
+
+
 @main(title)(username)(importCss){	
 	@*
 		필요한 데이터.
@@ -10,12 +12,13 @@
 		2. 이번주 촬영 횟수.
 		3. 제품 이미지의 url
 	*@
+
 	<div>				
 		<div class="span1"></div>
 		<div class="span10">
 			<h1> 상품정보 </h1>
 			<div id="product-info">
-				<img class="center" src="@imgUrl" />				
+				<img class="center" src="@look.getImageUrl()" />				
 				<table id="detail-info" class="table table-bordered small-padding center">
 					<thead>
 						<tr>
@@ -25,24 +28,24 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td> 이름 </td>
-							<td>  </td>
+							<td>이름</td>
+							<td>@look.getName()</td>
 						</tr>
 						<tr>
-							<td> 시즌 </td>
-							<td>  </td>
+							<td>시즌</td>
+							<td id="season-value"></td>
 						</tr>
 						<tr>
-							<td> 상/하의 </td>
-							<td>  </td>
+							<td>상/하의</td>
+							<td id="top-bottom-value"></td>
 						</tr>
 						<tr>
-							<td> 가격 </td>
-							<td>  </td>
+							<td>가격</td>
+							<td>@look.getPrice()</td>
 						</tr>
 						<tr>
-							<td> 설명 </td>
-							<td>  </td>
+							<td>설명</td>
+							<td>@look.getDescription</td>
 						</tr>
 					</tbody>
 				</table>
@@ -55,4 +58,6 @@
 		<div class="span1"></div>
 	</div>
 	
+	<script src="@routes.Assets.at("javascripts/lookDetails.js")"> </script>
+	<script> insertTableInfo({ season : @look.getSeason, topBottom : @look.getLookType })</script> 
 }

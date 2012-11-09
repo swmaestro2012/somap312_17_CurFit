@@ -17,7 +17,7 @@ public class Looks extends Controller {
 	public static Result lookDetails(Long id){
 		Look look = Look.find.byId(id);
 		if (look != null){
-			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look.getImageUrl() ));
+			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look ));
 		}
 		else {
 			return notFound();

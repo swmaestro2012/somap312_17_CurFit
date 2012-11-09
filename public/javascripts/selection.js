@@ -121,11 +121,12 @@ $(document).ready(function() {
 			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");
 			return false;
 		}
-		
+						
+		/*
 		$('#years-form').val(checkList.years());
 		$('#season-form').val(checkList.season());
 		$('#top-bottom-form').val(checkList.topBottom());
-		
+		*/
 		return true;
 	};
 	
@@ -161,9 +162,11 @@ $(document).ready(function() {
 		return checkValues();
 	});
 	$('#submit').click(function() {			
-		$('#confirm-form').submit();
-	});
-	
-
+		menuAjax({
+			year : $('#years_').val(),
+			season : patterns.season[selected.season()],
+			lookType : patterns.topBottom[selected.topBottom()]			
+		})
+	});	
 });
 	
