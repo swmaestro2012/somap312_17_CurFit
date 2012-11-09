@@ -39,9 +39,13 @@ $(document).ready(function() {
 			data : datas,
 			success : function(obj) {
 				$(obj).each(function(i, v) {
-					if(v.code != 2){
+					if(v.code !== 2){
+						console.log(v.name);
 						template(v);
-					}					
+					}
+					else if (v.code === 2){
+						$('#result-contents').html("검색결과에 맞는 상품이 존재하지 않습니다.");
+					}
 				});
 			},
 			error : function() {
@@ -161,12 +165,14 @@ $(document).ready(function() {
 	$('#confirm-form').submit(function() {
 		return checkValues();
 	});
-	$('#submit').click(function() {			
-		menuAjax({
-			year : $('#years_').val(),
-			season : patterns.season[selected.season()],
-			lookType : patterns.topBottom[selected.topBottom()]			
-		})
+	$('#submit').click(function() {
+		if (checkValues()){
+			menuAjax({
+				year : $('#years_').val(),
+				season : patterns.season[selected.season()],
+				lookType : patterns.topBottom[selected.topBottom()]			
+			})
+		}
 	});	
 });
 	
