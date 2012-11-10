@@ -15,4 +15,6 @@ var insertTableInfo = function(data){
 		$('#season-value').html(seasons[data.season]);
 		$('#top-bottom-value').html(topBottoms[data.topBottom]);
 	})();
+
+	
 }	
