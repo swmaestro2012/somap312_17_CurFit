@@ -167,6 +167,7 @@ $(document).ready(function() {
 	});
 	$('#submit').click(function() {
 		if (checkValues()){
+			clearTag();
 			menuAjax({
 				year : $('#years_').val(),
 				season : patterns.season[selected.season()],
