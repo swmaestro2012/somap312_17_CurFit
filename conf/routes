@@ -22,8 +22,12 @@ GET		/dashboard/looks					controllers.Looks.selectLooks()
 GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
 
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
-GET		/dashoboard/login						controllers.Login.blank()
-POST	/dashoboard/login						controllers.Login.login()
+GET		/dashboard/login					controllers.Login.blank()
+POST	/dashboard/login					controllers.Login.login()
+
+# Spao Copy Pages
+GET		/shop/spao							controllers.Spao.index()
+GET		/shop/spao/							controllers.Spao.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
