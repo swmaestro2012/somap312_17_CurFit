@@ -18,3 +18,11 @@ var insertTableInfo = function(data){
 
 	
 }	
+
+
+$('.click').click(function() {
+	var eventedObject = $(this).attr('href');
+	var position = $(eventedObject).offset();
+	$('html, body').animate( { scrollTop : position.top }, 1000);
+});
+	

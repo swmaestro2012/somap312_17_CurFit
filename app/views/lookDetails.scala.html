@@ -45,22 +45,22 @@
 						<div id="menu-nav" class="well">
 							<ul class="nav nav-list">
 	  							<li class="nav-header">Product Info</li>
-  								<li class="active"><a href="#">Image</a></li>
-  								<li><a href="#Description">Description</a></li>
+  								<li><a class="click" href="#image">Image</a></li>
+  								<li><a class="click" href="#description">Description</a></li>
   								<li class="divider"></li>
   								<li class="nav-header">User Looks</li>
-  								<li><a href="#">User Looks</a></li>
+  								<li><a class="click" href="#looks">User Looks</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="span9">
-					<section>
+					<section id="image">
 						<div class="page-header">
   							<h1>Product Image <small> 상품의 이미지입니다.</small></h1>
 						</div>
 						<img src="@look.getImageFileName()" />
 					</section>
-					<section>					
+					<section id="description">					
 						<div class="page-header">
   							<h1>Description <small> 상품의 상세정보입니다.</small></h1>
 						</div>						
@@ -97,7 +97,7 @@
 							</table>
 						</div>
 					</section>
-					<section>
+					<section id="looks">
 						<div class="page-header">
   							<h1>User Looks <small> 상품을 입고 찍은 사진들입니다.</small></h1>
 						</div>
