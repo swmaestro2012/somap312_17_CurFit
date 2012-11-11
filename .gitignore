@@ -20,6 +20,6 @@ server.pid
 *.class
 /target
 /project/target
-
+/public/lookImages
 /.classpath
 /.settings/org.scala-ide.sdt.core.prefs
