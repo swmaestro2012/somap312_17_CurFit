@@ -23,6 +23,10 @@ GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
 GET		/dashboard/login					controllers.Login.blank()
 POST	/dashboard/login					controllers.Login.login()
 
+# Mobile Page
+GET		/mobile/							controllers.Mobile.index()
+GET		/mobile								controllers.Mobile.index()
+
 # Spao Copy Pages
 GET		/shop/spao							controllers.Spao.index()
 GET		/shop/spao/							controllers.Spao.index()
