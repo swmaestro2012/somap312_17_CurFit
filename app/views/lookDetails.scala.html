@@ -54,7 +54,10 @@
 			<section>
 			<h1> 상품정보 </h1>
 			<div id="product-info">
-				<img class="center" src="@look.getImageUrl()" />				
+			@*
+				<img class="center" src="@routes.Assets.at("lookImages/" + look.getImageFileName())" />		
+			*@
+				<img class="center" src="@look.getImageFileName()" />				
 				<table id="detail-info" class="table table-bordered small-padding center">
 					<thead>
 						<tr>

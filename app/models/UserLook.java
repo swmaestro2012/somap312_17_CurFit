@@ -26,8 +26,7 @@ public class UserLook extends Model {
 	@Required
 	private int size;
 	private int likeCount;
-	@Required
-	private String imageUrl;
+	private String imageFileName;
 	private String imageHash;
 	private Date date;
 	
@@ -39,13 +38,13 @@ public class UserLook extends Model {
 		super();
 	}
 
-	public UserLook(Long id, Look look, int size, int likeCount, String imageUrl, String imageHash, Date date) {
+	public UserLook(Long id, Look look, int size, int likeCount, String imageFileName, String imageHash, Date date) {
 		super();
 		this.id = id;
 		this.look = look;
 		this.size = size;
 		this.likeCount = likeCount;
-		this.imageUrl = imageUrl;
+		this.imageFileName = imageFileName;
 		this.date = date;
 		this.imageHash = imageHash;
 	}
@@ -99,12 +98,12 @@ public class UserLook extends Model {
 		this.likeCount = likeCount;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getImageFileName() {
+		return imageFileName;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 	
 	

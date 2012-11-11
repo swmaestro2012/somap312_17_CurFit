@@ -11,7 +11,7 @@ create table look (
   season                    integer,
   look_type                 integer,
   price                     integer,
-  image_url                 varchar(255),
+  image_file_name           varchar(255),
   description               varchar(255),
   constraint pk_look primary key (id))
 ;
@@ -30,7 +30,7 @@ create table user_look (
   look_id                   bigint,
   size                      integer,
   like_count                integer,
-  image_url                 varchar(255),
+  image_file_name           varchar(255),
   image_hash                varchar(255),
   date                      datetime,
   constraint pk_user_look primary key (id))

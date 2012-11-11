@@ -1,5 +1,12 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.Calendar;
 import java.util.List;
 
 import models.Look;
@@ -12,10 +19,13 @@ import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.RequestBody;
 import play.mvc.Result;
+import so.tree.imageUploadMQ.ImageMessage;
 
 public class RestApp extends Controller {
-
+	
+	static String imageFilePath = "public/lookImages/";
 	static JSONObject jsonObject;
 
 	public static Result getLooks(String year, String season, String lookType) throws JSONException {
@@ -97,20 +107,91 @@ public class RestApp extends Controller {
 
 		Form<UserLook> form = new Form<UserLook>(UserLook.class)
 				.bindFromRequest();
+
+		jsonObject = new JSONObject();
+		
 		try{
+			Long lookId = Long.parseLong(request().body().asMultipartFormData().asFormUrlEncoded().get("lookId")[0]);
+			Look look = Look.find.byId(lookId);
+			if (look == null) {
+				Logger.error("[code: -3] Can't find look.");
+				jsonObject = new JSONObject();
+				jsonObject.put("code", -3);
+				jsonObject.put("msg", "Can't find look.");	
+				return ok(jsonObject.toString()).as("application/json");
+				
+			}
+			
 			UserLook userLook = form.get();
-			userLook.save();
-		}catch(IllegalStateException e){
-			Logger.error("[code: -1] Parameter error.");
+			userLook.setLook(look);
+			userLook.setDate(Calendar.getInstance().getTime());
+			
+			
+			RequestBody request = request().body();
+			String fileName = request.asMultipartFormData().getFiles().get(0).getFilename();
+			File file = request.asMultipartFormData().getFiles().get(0).getFile();
+			
+
 			jsonObject = new JSONObject();
+
+			FileChannel inChannel = new FileInputStream(file).getChannel();
+			FileChannel outChannel = new FileOutputStream(new File(imageFilePath + "/" + fileName)).getChannel();
+			
+			ByteBuffer buf = ByteBuffer.allocate(1024);
+			
+			while(true){
+				if(inChannel.read(buf) == -1){
+					break;
+				}else{
+					buf.flip();
+					outChannel.write(buf);
+					buf.clear();
+				}
+			}
+			
+			userLook.setImageFileName(fileName);
+			userLook.save();
+
+			ImageMessage imageMessage = new ImageMessage("localhost", fileName);
+			imageMessage.send();
+			
+			jsonObject.put("code", 0);
+			jsonObject.put("msg", "ok");
+		
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Logger.error("[code: -1] Parameter error.");
 			jsonObject.put("code", -1);
 			jsonObject.put("msg", "Parameter error.");
-			return ok(jsonObject.toString()).as("application/json");
+		
+		}catch(IllegalStateException e){
+			e.printStackTrace();
+			Logger.error("[code: -2] Parameter error.");
+			jsonObject.put("code", -1);
+			jsonObject.put("msg", "Parameter error.");
+		
+		}catch (IOException e) {
+			e.printStackTrace();
+			Logger.error("[code: -3] File upload error.");
+			jsonObject.put("code", -4);
+			jsonObject.put("msg", "File upload error");
+		
+		}catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			Logger.error("[code: -4] File upload error.");
+			jsonObject.put("code", -4);
+			jsonObject.put("msg", "File upload error");
+		
+		}catch (NumberFormatException e){
+			e.printStackTrace();
+			Logger.error("[code: -5] Wrong input.");
+			jsonObject.put("code", -1);
+			jsonObject.put("msg", "Wrong input.");
+		
 		}
 		
-		jsonObject = new JSONObject();
-		jsonObject.put("code", 0);
-		jsonObject.put("msg", "ok");
+		
+		
 		return ok(jsonObject.toString()).as("application/json");
 	}
 
@@ -131,5 +212,5 @@ public class RestApp extends Controller {
 		jsonObject.put("msg", "ok");
 		return ok(jsonObject.toString()).as("application/json");
 	}
-
+	
 }

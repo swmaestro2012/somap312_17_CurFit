@@ -9,9 +9,11 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
         "org.json" % "json" % "20090211",
-        "mysql" % "mysql-connector-java" % "5.1.21"
+        "mysql" % "mysql-connector-java" % "5.1.21",
+        "com.rabbitmq" % "amqp-client" % "2.8.7"
     )
-
+    
+    
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       // Add your own project settings here      
     )

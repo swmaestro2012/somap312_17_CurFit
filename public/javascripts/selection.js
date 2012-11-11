@@ -10,7 +10,7 @@ $(document).ready(function() {
 		var tags =
 			'<div class="products-container">' +
 				'<a href="/dashboard/looks/' + data.id + '">' +
-				'<img class="products-img" src="' + data.imageUrl + '">' +
+				'<img class="products-img" src="' + data.imageFileName + '">' +
 				'<label class="products-label">'+ data.name +'</label>' +
 				'</a>' +
 			'</div>'

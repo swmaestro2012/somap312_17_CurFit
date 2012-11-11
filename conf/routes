@@ -9,9 +9,7 @@ GET		/api/looks					controllers.RestApp.getLooks(year ?= null, season ?= null, l
 GET		/api/looks/:id				controllers.RestApp.getLookById(id: Long)
 GET		/api/looks/:id/userLooks	controllers.RestApp.getAllUserLooksByLookId(id: Long)
 GET		/api/userLook/:id			controllers.RestApp.getUserLookById(id: Long)
-
 POST	/api/userLook				controllers.RestApp.saveUserLook()
-
 DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
 
 

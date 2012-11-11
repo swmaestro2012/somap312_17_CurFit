@@ -26,7 +26,7 @@ public class Look extends Model {
 	private int season;
 	private int lookType;
 	private int price;
-	private String imageUrl;
+	private String imageFileName;
 	private String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -39,7 +39,7 @@ public class Look extends Model {
 	}
 
 	public Look(Long id, String name, int shotCount, int year, int season, int lookType,
-			int price, String imageUrl, String description, List<UserLook> userLooks) {
+			int price, String imageFileName, String description, List<UserLook> userLooks) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,7 +48,7 @@ public class Look extends Model {
 		this.season = season;
 		this.lookType = lookType;
 		this.price = price;
-		this.imageUrl = imageUrl;
+		this.imageFileName = imageFileName;
 		this.description = description;
 		this.userLooks = userLooks;
 	}
@@ -117,12 +117,12 @@ public class Look extends Model {
 		this.price = price;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getImageFileName() {
+		return imageFileName;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	@JsonIgnore
