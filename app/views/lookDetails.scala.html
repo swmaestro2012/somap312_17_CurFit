@@ -19,7 +19,7 @@
     			<div class="container">				
    					<ul class="nav">
     					<li> <a href="/dashboard"> Home </a> </li>  						
-  						<li> <a href="/dashboard/looks"> View Product </a> </li>  						
+  						<li class="active"> <a href="/dashboard/looks"> Product </a> </li>  						
     				</ul>
     				    
     				<ul class="nav pull-right">
@@ -94,6 +94,89 @@
 	</div>      	
 	    </div>
 	        
+					<div class="span3">
+						<div id="menu-nav" class="well">
+							<ul class="nav nav-list">
+	  							<li class="nav-header">Product Info</li>
+  								<li class="active"><a href="#">Image</a></li>
+  								<li><a href="#">Description</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="span9">
+					<section>
+						<div class="page-header">
+  							<h1>Product Image<small>상품의 이미지입니다.</small></h1>
+						</div>
+						<img src="@look.getImageUrl()" />
+					</section>
+					<section>					
+						<div class="page-header">
+  							<h1>Description<small>상품의 상세정보입니다.</small></h1>
+						</div>						
+						<div id="product-info">							
+							<table id="detail-info" class="table table-bordered small-padding center">
+								<thead>
+									<tr>
+										<td> info </td>
+										<td> value </td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>이름</td>
+										<td>@look.getName()</td>
+									</tr>
+									<tr>
+										<td>시즌</td>
+										<td id="season-value"></td>
+									</tr>
+									<tr>
+										<td>상/하의</td>
+										<td id="top-bottom-value"></td>
+									</tr>
+									<tr>
+										<td>가격</td>
+										<td>@look.getPrice()</td>
+									</tr>
+									<tr>
+										<td>설명</td>
+										<td>@look.getDescription</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
+					<section>
+						<div class="page-header">
+  							<h1>User Looks<small>이 상품을 입고 찍은 사진들입니다.</small></h1>
+						</div>
+						<ul class="thumbnails">
+  							<li class="span4">
+    							<a href="#" class="thumbnail">
+      								<img src="http://placehold.it/260x180" alt="">
+    							</a>
+  							</li>
+  							<li class="span4">
+    							<a href="#" class="thumbnail">
+      								<img src="http://placehold.it/260x180" alt="">
+    							</a>
+  							</li>
+  							<li class="span4">
+    							<a href="#" class="thumbnail">
+      								<img src="http://placehold.it/260x180" alt="">
+    							</a>
+  							</li>
+  							<li class="span4">
+    							<a href="#" class="thumbnail">
+      								<img src="http://placehold.it/260x180" alt="">
+    							</a>
+  							</li>
+						</ul>
+					</section>
+					</div>
+				</div>      	
+	    	</div>	        
         </div>
         <footer class="footer">
         	<div class="container">
