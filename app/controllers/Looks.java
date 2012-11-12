@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import models.Look;
 import models.UserLook;
@@ -11,7 +13,8 @@ import views.html.helper.select;
 
 public class Looks extends Controller {
 	public static Result selectLooks() {
-		return ok(selection.render("Select Models", "Han Jin-Soo"));
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		return ok(selection.render("Select Models", "Han Jin-Soo", currentYear));
 	}
 	
 	public static Result lookDetails(Long id){

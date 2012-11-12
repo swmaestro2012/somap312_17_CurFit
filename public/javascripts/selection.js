@@ -20,7 +20,7 @@ $(document).ready(function() {
 		$('#result-contents').html("");
 	}
 	
-	$('ul[id^=menu-nav]>li>a').click(function() {
+	$('ul[id^=nav-list]>li>a').click(function() {
 		clearTag();
 		var getVal = $(this).attr('data-season')
 		if (typeof getVal === 'undefined'){
@@ -106,23 +106,30 @@ $(document).ready(function() {
 			topBottom : function() {			
 				return patterns.topBottom[selected.topBottom()];
 			}
-		};				
+		};
+		/*
 		if(checkList.years().match(patterns.years) === null ){			
 			return false;
 		}
+		*/
 		
 		if(typeof checkList.season() === 'undefined'){
 			
 			$('#season').addClass('error');
-			$('#season').find('.help-inline').show();
-			$('#season').find('.help-inline').text("계절을 선택하세요");
+			$('#season').find('.help-inline').show()
+			.text("계절을 선택하세요");
 			return false;
 		}
 		
 		if(typeof checkList.topBottom() === 'undefined') {
 			$('#top-bottom').addClass('error');
+			$('#top-bottom').find('.help-inline')
+			.show()
+			.text("상의/하의를 선택하세요");
+			/*
 			$('#top-bottom').find('.help-inline').show();
 			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");
+			*/
 			return false;
 		}
 						
@@ -134,7 +141,7 @@ $(document).ready(function() {
 		return true;
 	};
 	
-	
+	/*
 	$years_
 	.focus(function() {
 		$helpInline.hide();
@@ -160,20 +167,21 @@ $(document).ready(function() {
 	.blur(function() {
 		$helpInline.hide();
 	});	
-
+	*/
 	
 	$('#confirm-form').submit(function() {
 		return checkValues();
 	});
 	$('#submit').click(function() {
-		if (checkValues()){
+		
+//		if (checkValues()){
 			clearTag();
 			menuAjax({
 				year : $('#years_').val(),
 				season : patterns.season[selected.season()],
 				lookType : patterns.topBottom[selected.topBottom()]			
 			})
-		}
+//		}
 	});	
 });
 	
