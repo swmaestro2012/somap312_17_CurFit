@@ -1,0 +1,7 @@
+.ui-page {
+	background: #cb171a;
+}
+
+div[data-role=content] img {
+    width: 100%;
+}

@@ -8,6 +8,6 @@ public class Mobile extends Controller {
 		return ok(mobileIndex.render());
 	}
 	public static Result otherUserLook() {
-		return ok();
+		return ok(mobileOtherLook.render());
 	} 
 }
