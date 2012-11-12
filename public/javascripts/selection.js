@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	// decleare variables.
+	
 	var template = function(data){
 		var tags =
 			'<div class="products-container">' +
@@ -162,19 +164,21 @@ $(document).ready(function() {
 	});	
 	*/
 	
+	
+	// use methods.
+	
+	$('#product').addClass('active');
+	
 	$('#confirm-form').submit(function() {
 		return checkValues();
 	});
 	$('#submit').click(function() {
-		
-//		if (checkValues()){
-			clearTag();
-			menuAjax({
-				year : $('#years_').val(),
-				season : patterns.season[selected.season()],
-				lookType : patterns.topBottom[selected.topBottom()]			
-			})
-//		}
+		clearTag();
+		menuAjax({
+			year : $('#years_').val(),
+			season : patterns.season[selected.season()],
+			lookType : patterns.topBottom[selected.topBottom()]			
+		})
 	});	
 });
 	
