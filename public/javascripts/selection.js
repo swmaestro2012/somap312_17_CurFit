@@ -1,10 +1,3 @@
-/*
-	버그1. 검색 빨강파랑
-	버그2. 검색 옆으로 늘어난다.
-	할일1. 이미지 크기 줄이기. - 완료
-	할일2. 검색구현 - 완료
-	할일3. 라우트 시키기. - 완료
-*/
 $(document).ready(function() {
 	var template = function(data){
 		var tags =
