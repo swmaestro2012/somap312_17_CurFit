@@ -5,82 +5,90 @@
 }
 
 
-@main(title)(username)(importCss){	
+@main(title)(username)(importCss){
+<div class="transparent">
+	<div id="loading-container">
+		<h1> loading... </h1>
+		<div class="progress progress-striped active">
+			<div class="bar" style="width: 40%;"></div>
+		</div>
+	</div>
+</div>	
 <div class="container container-margin">
 	<div class="row">
-	<div class="span3">
-		<div id="menu-nav" class="well">		
-			<h3> Category </h3>
-			<ul id="nav-list" class="nav nav-list">
-				<li class="nav-header">Season</li>
-				<li><a data-season="0" href="#">Spring</a></li>
-				<li><a data-season="1" href="#">Summer</a></li>
-				<li><a data-season="2" href="#">Fall</a></li>
-				<li><a data-season="3" href="#">Winter</a></li>
-				<li class="divider"></li>				
-				<li class="nav-header">Top-Bottom</li>
-				<li><a data-tb="0" href="#">Tops</a></li>
-	  			<li><a data-tb="1" href="#">Bottoms</a></li>
-			</ul>
-		</div>			
-		<div id="menu-search" class="well">
-			<div id="years" class="control-group">
-				<h3> Search </h3>
-				<div>
-					<label>Years</label>	
-					<select id="years_" name="birthyear">
-						@for(i <- 2009 to currentYear){							
-							<option value="@i">@i</option>
-						}							
-					</select>
-						@* <input type="date" name="user_date" /> *@
-						@* <input id="years_" type="text" class="input"> *@
-						<p class="help-inline"></p>
+		<div class="span3">
+			<div id="menu-nav" class="well">		
+				<h3> Category </h3>
+				<ul id="nav-list" class="nav nav-list">
+					<li class="nav-header">Season</li>
+					<li><a data-season="0" href="#">Spring</a></li>
+					<li><a data-season="1" href="#">Summer</a></li>
+					<li><a data-season="2" href="#">Fall</a></li>
+					<li><a data-season="3" href="#">Winter</a></li>
+					<li class="divider"></li>				
+					<li class="nav-header">Top-Bottom</li>
+					<li><a data-tb="0" href="#">Tops</a></li>
+		  			<li><a data-tb="1" href="#">Bottoms</a></li>
+				</ul>
+			</div>			
+			<div id="menu-search" class="well">
+				<div id="years" class="control-group">
+					<h3> Search </h3>
+					<div>
+						<label>Years</label>	
+						<select id="years_" name="birthyear">
+							@for(i <- 2009 to currentYear){							
+								<option value="@i">@i</option>
+							}							
+						</select>
+							@* <input type="date" name="user_date" /> *@
+							@* <input id="years_" type="text" class="input"> *@
+							<p class="help-inline"></p>
+					</div>
 				</div>
+				<label>Season</label>				
+				<div id="season" class="control-group">
+					<div id="season_" class="btn-group" data-toggle="buttons-radio">
+						<button class="btn">봄</button>
+						<button class="btn">여름</button>
+						<button class="btn">가을</button>
+						<button class="btn">겨울</button>
+					</div>
+					<p class="help-inline"></p>
+				</div>
+				<label>상/하의</label>				
+				<div id="top-bottom" class="control-group">
+					<div id="top-bottom_" class="btn-group" data-toggle="buttons-radio">
+						<button class = "btn">상의</button>
+						<button class = "btn">하의</button>		
+					</div>
+					<p class="help-inline"></p>		
+				</div>	
+				<button id="submit" class="btn btn-primary"> submit </button>			
 			</div>
-			<label>Season</label>				
-			<div id="season" class="control-group">
-				<div id="season_" class="btn-group" data-toggle="buttons-radio">
-					<button class="btn">봄</button>
-					<button class="btn">여름</button>
-					<button class="btn">가을</button>
-					<button class="btn">겨울</button>
-				</div>
-				<p class="help-inline"></p>
+		</div>
+		<div class="span9">
+			<div id="result-contents">				
 			</div>
-			<label>상/하의</label>				
-			<div id="top-bottom" class="control-group">
-				<div id="top-bottom_" class="btn-group" data-toggle="buttons-radio">
-					<button class = "btn">상의</button>
-					<button class = "btn">하의</button>		
-				</div>
-				<p class="help-inline"></p>		
-			</div>	
-			<button id="submit" class="btn btn-primary"> submit </button>			
+		</div>	
+		
+		
+		@*
+		<div id="price">
+			<h1> Price </h1>
+			<input type="text" class="input-small"> ~ <input type="text" class="input-small">
+			<p class="help-inline"></p>		
 		</div>
+		*@
+		
+		@*
+		<form id="confirm-form" action="/looks" method="POST">
+			<input id="years-form" type="hidden"/>
+			<input id="season-form" type="hidden"/>
+			<input id="top-bottom-form" type="hidden"/>
+		</form>
+		*@
+		<script src="@routes.Assets.at("javascripts/selection.js")"> </script>
 	</div>
-	<div class="span9">
-		<div id="result-contents">				
-		</div>
-	</div>	
-	
-	
-	@*
-	<div id="price">
-		<h1> Price </h1>
-		<input type="text" class="input-small"> ~ <input type="text" class="input-small">
-		<p class="help-inline"></p>		
-	</div>
-	*@
-	
-	@*
-	<form id="confirm-form" action="/looks" method="POST">
-		<input id="years-form" type="hidden"/>
-		<input id="season-form" type="hidden"/>
-		<input id="top-bottom-form" type="hidden"/>
-	</form>
-	*@
-	<script src="@routes.Assets.at("javascripts/selection.js")"> </script>
-</div>
 </div>
 }

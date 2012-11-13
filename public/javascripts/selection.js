@@ -16,6 +16,8 @@ $(document).ready(function() {
 	}
 	
 	$('ul[id^=nav-list]>li>a').click(function() {
+		$('.transparent').show();
+		$('.bar').width('10%');
 		clearTag();
 		var getVal = $(this).attr('data-season')
 		if (typeof getVal === 'undefined'){
@@ -24,6 +26,7 @@ $(document).ready(function() {
 		}else{
 			menuAjax({ season : getVal });
 		}
+		$('.bar').width('100%');
 	});
 
 	var menuAjax = function(datas) {
@@ -34,6 +37,7 @@ $(document).ready(function() {
 			data : datas,
 			success : function(obj) {
 				$(obj).each(function(i, v) {
+					$('.bar').width('50%');
 					if(v.code !== 2){
 						console.log(v.name);
 						template(v);
@@ -41,6 +45,7 @@ $(document).ready(function() {
 					else if (v.code === 2){
 						$('#result-contents').html("검색결과에 맞는 상품이 존재하지 않습니다.");
 					}
+					$('.transparent').hide();
 				});
 			},
 			error : function() {
@@ -166,19 +171,22 @@ $(document).ready(function() {
 	
 	
 	// use methods.
-	
-	$('#product').addClass('active');
+	$('.transparent').hide();
+	$('#product').addClass('active');	
 	
 	$('#confirm-form').submit(function() {
 		return checkValues();
 	});
 	$('#submit').click(function() {
+		$('.transparent').show();
+		$('.bar').width('10%');
 		clearTag();
 		menuAjax({
 			year : $('#years_').val(),
 			season : patterns.season[selected.season()],
 			lookType : patterns.topBottom[selected.topBottom()]			
 		})
+		
 	});	
 });
 	
