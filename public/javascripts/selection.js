@@ -37,7 +37,6 @@ $(document).ready(function() {
 			data : datas,
 			success : function(obj) {
 				$(obj).each(function(i, v) {
-					$('.bar').width('50%');
 					if(v.code !== 2){
 						console.log(v.name);
 						template(v);
@@ -46,6 +45,7 @@ $(document).ready(function() {
 						$('#result-contents').html("검색결과에 맞는 상품이 존재하지 않습니다.");
 					}
 					$('.transparent').hide();
+					$('.bar').width('10%');
 				});
 			},
 			error : function() {
@@ -186,7 +186,7 @@ $(document).ready(function() {
 			season : patterns.season[selected.season()],
 			lookType : patterns.topBottom[selected.topBottom()]			
 		})
-		
+		$('.bar').width('100%');
 	});	
 });
 	
