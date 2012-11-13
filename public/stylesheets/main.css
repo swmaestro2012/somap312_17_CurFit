@@ -1,5 +1,24 @@
-#shotChart {
-	
+#dashboard-name {
+	margin-top : 40px;
+	height : 120px;
+	background: #1e5799;
+	background: -moz-linear-gradient(left, #1e5799 0%, #2989d8 50%, #7db9e8 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#1e5799), color-stop(50%,#2989d8), color-stop(100%,#7db9e8));
+	background: -webkit-linear-gradient(left, #1e5799 0%,#2989d8 50%,#7db9e8 100%);
+	background: -o-linear-gradient(left, #1e5799 0%,#2989d8 50%,#7db9e8 100%);
+	background: -ms-linear-gradient(left, #1e5799 0%,#2989d8 50%,#7db9e8 100%);
+	background: linear-gradient(to right, #1e5799 0%,#2989d8 50%,#7db9e8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 );
+}
+#dashboard-text {
+	margin-top : 40px;
+	color : #fff;
+	font-size : 50px;
+}
+#container {
+	margin-top : 30px;
+}
+#shotChart {	
 	margin-bottom : 80px; 
 }
 
