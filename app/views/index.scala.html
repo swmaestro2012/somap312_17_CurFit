@@ -11,95 +11,94 @@
 </header>
 <div id="container" class="container">
 	<div class="row">
-
-<div id="shotChart">
-	<h2>Most shootings</h2>
-	<div class="like-well">
-		<div class="span8">
-			<div id="shotPie">
-				@* 파이그래프 들어가는 곳 *@
-			</div>
-		</div>
-		<div class="span4 table-padding">
-			<div class="accordion table-margin">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
-							가장 많이 찍힌 상품 Table <i class="icon-chevron-down pull-right"></i>
-						</a>
+		<div id="shotChart">
+			<h2>Most shootings</h2>
+			<div class="like-well">
+				<div class="span8">
+					<div id="shotPie">
+						@* 파이그래프 들어가는 곳 *@
 					</div>
-					<div id="mostShot" class="accordion-body collapse in">
-						<div class="accordion-inner">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Product Name</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-								@for(i <- 0 to 4) {
-									<tr>
-										<th>@(i+1)</th>
-										<th>@mostShootingLookList(i).getName()</th>
-										<th>@mostShootingLookList(i).getShotCount()</th>
-									</tr>
-								}
-								</tbody>
-							</table>
+				</div>
+				<div class="span4 table-padding">
+					<div class="accordion table-margin">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
+									가장 많이 찍힌 상품 Table <i class="icon-chevron-down pull-right"></i>
+								</a>
+							</div>
+							<div id="mostShot" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product Name</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										@for(i <- 0 to 4) {
+											<tr>
+												<th>@(i+1)</th>
+												<th>@mostShootingLookList(i).getName()</th>
+												<th>@mostShootingLookList(i).getShotCount()</th>
+											</tr>
+										}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<div id="likeChart">
-	<h2>Most Liked</h2>
-	<div class="like-well">
-		<div class="span8">
-			<div id="likePie">
-			@* 파이그래프 들어가는 곳 *@
-			</div>
-		</div>
-		<div class="span4 table-padding">
-			<div class="accordion table-margin">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="#mostLike">
-							가장 많이 라이크된 상품 Table <i class="icon-chevron-down pull-right"></i>
-						</a>
+		<div id="likeChart">
+			<h2>Most Liked</h2>
+			<div class="like-well">
+				<div class="span8">
+					<div id="likePie">
+					@* 파이그래프 들어가는 곳 *@
 					</div>
-					<div id="mostLike" class="accordion-body collapse in">
-						<div class="accordion-inner">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Product Name</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									@for(i <- 0 to 4 ){
-									<tr>
-										<th>@(i+1)</th>
-										<th>@mostLikedUserLookList(i).getLook().getName()</th>
-										<th>@mostLikedUserLookList(i).getLikeCount()</th>
-									</tr>
-									}
-								</tbody>
-							</table>
+				</div>
+				<div class="span4 table-padding">
+					<div class="accordion table-margin">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" href="#mostLike">
+									가장 많이 라이크된 상품 Table <i class="icon-chevron-down pull-right"></i>
+								</a>
+							</div>
+							<div id="mostLike" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product Name</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											@for(i <- 0 to 4 ){
+											<tr>
+												<th>@(i+1)</th>
+												<th>@mostLikedUserLookList(i).getLook().getName()</th>
+												<th>@mostLikedUserLookList(i).getLikeCount()</th>
+											</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	        
 </div>
-	        </div>	        
-        </div>
 
 <script src="@routes.Assets.at("javascripts/index.js")"></script>
 <script>
