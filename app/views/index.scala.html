@@ -1,100 +1,106 @@
 @(title :String)(username :String)(mostShootingLookList :List[Look])(mostLikedUserLookList: List[UserLook])(shotTotal :Int)
-@* 
-	버그1. 자바스크립트로 그라데이션 파이차트를 만들었더니. 검은색으로 나온다.
-*@
 @importCss = {
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
 }
 
 @main(title)(username)(importCss) {
-<div id="shotChart">
-	<h2>Most shootings</h2>
-	<div class="like-well">
-		<div class="span8">
-			<div id="shotPie">
-				@* 파이그래프 들어가는 곳 *@
+<header id="dashboard-name">
+	<div class="container">
+		<h1 id="dashboard-text"> Dashboard </h1>
+	</div>
+</header>
+<div id="container" class="container">
+	<div class="row">
+		<div id="shotChart">
+			<h2>Most shootings</h2>
+			<div class="like-well">
+				<div class="span8">
+					<div id="shotPie">
+						@* 파이그래프 들어가는 곳 *@
+					</div>
+				</div>
+				<div class="span4 table-padding">
+					<div class="accordion table-margin">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
+									가장 많이 찍힌 상품 Table <i class="icon-chevron-down pull-right"></i>
+								</a>
+							</div>
+							<div id="mostShot" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product Name</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										@for(i <- 0 to 4) {
+											<tr>
+												<td>@(i+1)</td>
+												<td><a href="/dashboard/looks/@mostShootingLookList(i).getId()">@mostShootingLookList(i).getName()</a></td>
+												<td>@mostShootingLookList(i).getShotCount()</td>
+											</tr>
+										}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="span4 table-padding">
-			<div class="accordion table-margin">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
-							가장 많이 찍힌 상 Table <i class="icon-chevron-down pull-right"></i>
-						</a>
+		<div id="likeChart">
+			<h2>Most Liked</h2>
+			<div class="like-well">
+				<div class="span8">
+					<div id="likePie">
+					@* 파이그래프 들어가는 곳 *@
 					</div>
-					<div id="mostShot" class="accordion-body collapse in">
-						<div class="accordion-inner">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Product Name</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-								@for(i <- 0 to 4) {
-									<tr>
-										<th>@(i+1)</th>
-										<th>@mostShootingLookList(i).getName()</th>
-										<th>@mostShootingLookList(i).getShotCount()</th>
-									</tr>
+				</div>
+				<div class="span4 table-padding">
+					<div class="accordion table-margin">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle" data-toggle="collapse" href="#mostLike">
+									가장 많이 라이크된 상품 Table <i class="icon-chevron-down pull-right"></i>
+								</a>
+							</div>
+							<div id="mostLike" class="accordion-body collapse in">
+								<div class="accordion-inner">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product Name</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											@for(i <- 0 to 4 ){
+											<tr>
+												<td>@(i+1)</td>
+												<td><a href="/dashboard/looks/@mostLikedUserLookList(i).getLook().getId()">@mostLikedUserLookList(i).getLook().getName()</a></td>												
+												<td>@mostLikedUserLookList(i).getLikeCount()</td>
+											</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	        
+</div>
 
-									
-								}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div id="likeChart">
-	<h2>Most Liked</h2>
-	<div class="like-well">
-		<div class="span8">
-			<div id="likePie">
-			@* 파이그래프 들어가는 곳 *@
-			</div>
-		</div>
-		<div class="span4 table-padding">
-			<div class="accordion table-margin">
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" href="#mostShot">
-							가장 많이 라이크된 상품 Table <i class="icon-chevron-down pull-right"></i>
-						</a>
-					</div>
-					<div id="mostShot" class="accordion-body collapse in">
-						<div class="accordion-inner">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Product Name</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									@for(i <- 0 to 4 ){
-									<tr>
-										<th>@(i+1)</th>
-										<th>@mostLikedUserLookList(i).getLook().getName()</th>
-										<th>@mostLikedUserLookList(i).getLikeCount()</th>
-									</tr>
-									}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<script src="@routes.Assets.at("javascripts/index.js")"></script>
 <script>
 $(document).ready(function() {
 		var shotChart;
@@ -142,15 +148,15 @@ $(document).ready(function() {
                 name: 'Most Shootings',
                 data: [
 					{
-    					name: '@mostShootingLookList(0).getName()',
+    					name: '<a href="/dashboard/looks/@mostShootingLookList(0).getId()">@mostShootingLookList(0).getName()</a>',
     					y: @(mostShootingLookList(0).getShotCount()),
     					sliced: true,
 					    selected: true
 					},
-                    ['@mostShootingLookList(1).getName()',   @mostShootingLookList(1).getShotCount()],
-                    ['@mostShootingLookList(2).getName()',   @mostShootingLookList(2).getShotCount()],                    
-                    ['@mostShootingLookList(3).getName()',   @mostShootingLookList(3).getShotCount()],
-                    ['@mostShootingLookList(4).getName()',   @mostShootingLookList(4).getShotCount()],                    
+                    ['<a href="/dashboard/looks/@mostShootingLookList(1).getId()">@mostShootingLookList(1).getName()</a>',   @mostShootingLookList(1).getShotCount()],
+                    ['<a href="/dashboard/looks/@mostShootingLookList(2).getId()">@mostShootingLookList(2).getName()</a>',   @mostShootingLookList(2).getShotCount()],                    
+                    ['<a href="/dashboard/looks/@mostShootingLookList(3).getId()">@mostShootingLookList(3).getName()</a>',   @mostShootingLookList(3).getShotCount()],
+                    ['<a href="/dashboard/looks/@mostShootingLookList(4).getId()">@mostShootingLookList(4).getName()</a>',   @mostShootingLookList(4).getShotCount()],                    
                 ]
             }]
         });
@@ -190,15 +196,15 @@ $(document).ready(function() {
                 name: 'Most Liked',
                 data: [
 					{
-    					name: '@mostLikedUserLookList(0).getLook().getName()',
+    					name: '<a href="/dashborad/looks/@mostLikedUserLookList(0).getLook().getId()">@mostLikedUserLookList(0).getLook().getName()</a>',
     					y: @mostLikedUserLookList(0).getLikeCount(),
     					sliced: true,
 					    selected: true
 					},
-                    ['@mostLikedUserLookList(1).getLook().getName()',   @mostLikedUserLookList(1).getLikeCount()],
-                    ['@mostLikedUserLookList(2).getLook().getName()',   @mostLikedUserLookList(2).getLikeCount()],                    
-                    ['@mostLikedUserLookList(3).getLook().getName()',   @mostLikedUserLookList(3).getLikeCount()],
-                    ['@mostLikedUserLookList(4).getLook().getName()',   @mostLikedUserLookList(4).getLikeCount()],                    
+                    ['<a href="/dashboard/looks/@mostLikedUserLookList(1).getLook().getId()">@mostLikedUserLookList(1).getLook().getName()</a>',   @mostLikedUserLookList(1).getLikeCount()],
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(2).getLook().getId()">@mostLikedUserLookList(2).getLook().getName()</a>',   @mostLikedUserLookList(2).getLikeCount()],                    
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(3).getLook().getId()">@mostLikedUserLookList(3).getLook().getName()</a>',   @mostLikedUserLookList(3).getLikeCount()],
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(4).getLook().getId()">@mostLikedUserLookList(4).getLook().getName()</a>',   @mostLikedUserLookList(4).getLikeCount()],                    
                 ]
             }]
         });

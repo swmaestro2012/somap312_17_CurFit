@@ -40,79 +40,29 @@
 		</header>
     	<div class="container container-detail-margin">
     		<div class="row">
-	        	<div>
-		<div class="span3">
-			<div id="menu-nav" class="well">
-				<ul class="nav nav-list">
-	  				<li class="nav-header">Product Info</li>
-  					<li class="active"><a href="#">Image</a></li>
-  					<li><a href="#">Description</a></li>
-			</ul>
-			</div>
-		</div>
-		<div class="span9">
-			<section>
-			<h1> 상품정보 </h1>
-			<div id="product-info">
-			@*
-				<img class="center" src="@routes.Assets.at("lookImages/" + look.getImageFileName())" />		
-			*@
-				<img class="center" src="@look.getImageFileName()" />				
-				<table id="detail-info" class="table table-bordered small-padding center">
-					<thead>
-						<tr>
-							<td> info </td>
-							<td> value </td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>이름</td>
-							<td>@look.getName()</td>
-						</tr>
-						<tr>
-							<td>시즌</td>
-							<td id="season-value"></td>
-						</tr>
-						<tr>
-							<td>상/하의</td>
-							<td id="top-bottom-value"></td>
-						</tr>
-						<tr>
-							<td>가격</td>
-							<td>@look.getPrice()</td>
-						</tr>
-						<tr>
-							<td>설명</td>
-							<td>@look.getDescription</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			</section>
-		</div>
-	</div>      	
-	    </div>
-	        
+	        	<div>	        
 					<div class="span3">
 						<div id="menu-nav" class="well">
 							<ul class="nav nav-list">
 	  							<li class="nav-header">Product Info</li>
-  								<li class="active"><a href="#">Image</a></li>
-  								<li><a href="#">Description</a></li>
+  								<li><a class="click" href="#image">Image</a></li>
+  								<li><a class="click" href="#description">Description</a></li>
+  								<li class="divider"></li>
+  								<li class="nav-header">User Looks</li>
+  								<li><a class="click" href="#looks">User Looks</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="span9">
-					<section>
+					<section id="image">
 						<div class="page-header">
-  							<h1>Product Image<small>상품의 이미지입니다.</small></h1>
+  							<h1>Product Image <small class="desc-text"> 상품의 이미지입니다.</small></h1>
 						</div>
 						<img src="@look.getImageFileName()" />
 					</section>
-					<section>					
+					<section id="description">					
 						<div class="page-header">
-  							<h1>Description<small>상품의 상세정보입니다.</small></h1>
+  							<h1>Description <small class="desc-text"> 상품의 상세정보입니다.</small></h1>
 						</div>						
 						<div id="product-info">							
 							<table id="detail-info" class="table table-bordered small-padding center">
@@ -147,32 +97,90 @@
 							</table>
 						</div>
 					</section>
-					<section>
+					<section id="looks">
 						<div class="page-header">
-  							<h1>User Looks<small>이 상품을 입고 찍은 사진들입니다.</small></h1>
+  							<h1>User Looks <small class="desc-text"> 상품을 입고 찍은 사진들입니다.</small></h1>
 						</div>
-						<ul class="thumbnails">
-  							<li class="span4">
-    							<a href="#" class="thumbnail">
-      								<img src="http://placehold.it/260x180" alt="">
-    							</a>
-  							</li>
-  							<li class="span4">
-    							<a href="#" class="thumbnail">
-      								<img src="http://placehold.it/260x180" alt="">
-    							</a>
-  							</li>
-  							<li class="span4">
-    							<a href="#" class="thumbnail">
-      								<img src="http://placehold.it/260x180" alt="">
-    							</a>
-  							</li>
-  							<li class="span4">
-    							<a href="#" class="thumbnail">
-      								<img src="http://placehold.it/260x180" alt="">
-    							</a>
-  							</li>
-						</ul>
+						<div id="myCarousel" class="carousel slide">
+  						<!-- Carousel items -->
+  							<div class="carousel-inner">
+    							<div class="active item item-margin">
+    								<ul class="thumbnails">
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+			  							</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+			    							<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+									</ul>
+    							</div>
+    							<div class="item item-margin">
+    								<ul class="thumbnails">
+  										<li class="span4">
+	    									<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+			  							</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+			    							<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+									</ul>
+    							</div>
+    							<div class="item item-margin">
+    								<ul class="thumbnails">
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+			  							</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+    										<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+  										<li class="span4">
+			    							<a href="#" class="thumbnail">
+      											<img src="http://placehold.it/260x180" alt="">
+    										</a>
+  										</li>
+									</ul>
+    							</div>
+  							</div>
+  						<!-- Carousel nav -->
+  							<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  							<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+						</div>
 					</section>
 					</div>
 				</div>      	

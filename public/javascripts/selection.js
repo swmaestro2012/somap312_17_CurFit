@@ -1,11 +1,6 @@
-/*
-	버그1. 검색 빨강파랑
-	버그2. 검색 옆으로 늘어난다.
-	할일1. 이미지 크기 줄이기. - 완료
-	할일2. 검색구현 - 완료
-	할일3. 라우트 시키기. - 완료
-*/
 $(document).ready(function() {
+	// decleare variables.
+	
 	var template = function(data){
 		var tags =
 			'<div class="products-container">' +
@@ -20,7 +15,9 @@ $(document).ready(function() {
 		$('#result-contents').html("");
 	}
 	
-	$('ul[id^=menu-nav]>li>a').click(function() {
+	$('ul[id^=nav-list]>li>a').click(function() {
+		$('.transparent').show();
+		$('.bar').width('10%');
 		clearTag();
 		var getVal = $(this).attr('data-season')
 		if (typeof getVal === 'undefined'){
@@ -29,6 +26,7 @@ $(document).ready(function() {
 		}else{
 			menuAjax({ season : getVal });
 		}
+		$('.bar').width('100%');
 	});
 
 	var menuAjax = function(datas) {
@@ -46,6 +44,8 @@ $(document).ready(function() {
 					else if (v.code === 2){
 						$('#result-contents').html("검색결과에 맞는 상품이 존재하지 않습니다.");
 					}
+					$('.transparent').hide();
+					$('.bar').width('10%');
 				});
 			},
 			error : function() {
@@ -106,23 +106,30 @@ $(document).ready(function() {
 			topBottom : function() {			
 				return patterns.topBottom[selected.topBottom()];
 			}
-		};				
+		};
+		/*
 		if(checkList.years().match(patterns.years) === null ){			
 			return false;
 		}
+		*/
 		
 		if(typeof checkList.season() === 'undefined'){
 			
 			$('#season').addClass('error');
-			$('#season').find('.help-inline').show();
-			$('#season').find('.help-inline').text("계절을 선택하세요");
+			$('#season').find('.help-inline').show()
+			.text("계절을 선택하세요");
 			return false;
 		}
 		
 		if(typeof checkList.topBottom() === 'undefined') {
 			$('#top-bottom').addClass('error');
+			$('#top-bottom').find('.help-inline')
+			.show()
+			.text("상의/하의를 선택하세요");
+			/*
 			$('#top-bottom').find('.help-inline').show();
 			$('#top-bottom').find('.help-inline').text("상의/하의를 선택하세요");
+			*/
 			return false;
 		}
 						
@@ -134,7 +141,7 @@ $(document).ready(function() {
 		return true;
 	};
 	
-	
+	/*
 	$years_
 	.focus(function() {
 		$helpInline.hide();
@@ -160,20 +167,26 @@ $(document).ready(function() {
 	.blur(function() {
 		$helpInline.hide();
 	});	
-
+	*/
+	
+	
+	// use methods.
+	$('.transparent').hide();
+	$('#product').addClass('active');	
 	
 	$('#confirm-form').submit(function() {
 		return checkValues();
 	});
 	$('#submit').click(function() {
-		if (checkValues()){
-			clearTag();
-			menuAjax({
-				year : $('#years_').val(),
-				season : patterns.season[selected.season()],
-				lookType : patterns.topBottom[selected.topBottom()]			
-			})
-		}
+		$('.transparent').show();
+		$('.bar').width('10%');
+		clearTag();
+		menuAjax({
+			year : $('#years_').val(),
+			season : patterns.season[selected.season()],
+			lookType : patterns.topBottom[selected.topBottom()]			
+		})
+		$('.bar').width('100%');
 	});	
 });
 	

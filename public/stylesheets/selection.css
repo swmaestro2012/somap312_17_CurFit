@@ -1,8 +1,12 @@
 #menu-nav {
 	padding-top : 8px;
 	padding-bottom : 8px;
+	padding-left : 3px;
+	padding-right : 3px;
 }
-
+#menu-nav h3 {
+	padding-left : 10px;
+}
 #menu-search {
 	margin-top : 10px;
 	padding-top : 8px;
@@ -22,4 +26,40 @@
 }
 label {
 	font-size : 20px;
+}
+
+.transparent {
+	width : 100%;
+	height : 100%;
+	z-index : 10000;
+	position : fixed;
+	top : 0px;
+    /* 기본 배경색 지정-투명도가 모두 적용되지 않았을 때 색상 */
+   	/* background: #FF0000; */
+    /* RGBa 적용 - Firefox, Chrome, Safari, Opera ... */
+    background: rgba(0,0,0,0.5);
+    /* IE에서 Filter적용을 위해 배경을 지움 */
+    background: transparent !ie;
+    /* 정상적인 Filter적용을 위해 zoom:1을 적용 */
+    zoom:1;
+    /* IE5.5-7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f990000, endColorstr=#7f990000);
+    /* IE8,9 */
+    -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f990000, endColorstr=#7f990000)";
+}
+
+#loading-container {
+	top:50%;
+	left:40%;	
+	width : 500px;
+	height : 100px;
+	background : #fff;
+	margin-top:-120px; 
+	margin-left : auto;
+	margin-right : auto;
+	position:absolute;
+	padding-left : 10px;
+	padding-right : 10px;
+	-moz-border-radius: 15px;
+	border-radius: 5px;	
 }
