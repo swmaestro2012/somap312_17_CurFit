@@ -148,15 +148,15 @@ $(document).ready(function() {
                 name: 'Most Shootings',
                 data: [
 					{
-    					name: '@mostShootingLookList(0).getName()',
+    					name: '<a href="/dashboard/looks/@mostShootingLookList(0).getId()">@mostShootingLookList(0).getName()</a>',
     					y: @(mostShootingLookList(0).getShotCount()),
     					sliced: true,
 					    selected: true
 					},
-                    ['@mostShootingLookList(1).getName()',   @mostShootingLookList(1).getShotCount()],
-                    ['@mostShootingLookList(2).getName()',   @mostShootingLookList(2).getShotCount()],                    
-                    ['@mostShootingLookList(3).getName()',   @mostShootingLookList(3).getShotCount()],
-                    ['@mostShootingLookList(4).getName()',   @mostShootingLookList(4).getShotCount()],                    
+                    ['<a href="/dashboard/looks/@mostShootingLookList(1).getId()">@mostShootingLookList(1).getName()</a>',   @mostShootingLookList(1).getShotCount()],
+                    ['<a href="/dashboard/looks/@mostShootingLookList(2).getId()">@mostShootingLookList(2).getName()</a>',   @mostShootingLookList(2).getShotCount()],                    
+                    ['<a href="/dashboard/looks/@mostShootingLookList(3).getId()">@mostShootingLookList(3).getName()</a>',   @mostShootingLookList(3).getShotCount()],
+                    ['<a href="/dashboard/looks/@mostShootingLookList(4).getId()">@mostShootingLookList(4).getName()</a>',   @mostShootingLookList(4).getShotCount()],                    
                 ]
             }]
         });
@@ -196,15 +196,15 @@ $(document).ready(function() {
                 name: 'Most Liked',
                 data: [
 					{
-    					name: '@mostLikedUserLookList(0).getLook().getName()',
+    					name: '<a href="/dashborad/looks/@mostLikedUserLookList(0).getLook().getId()">@mostLikedUserLookList(0).getLook().getName()</a>',
     					y: @mostLikedUserLookList(0).getLikeCount(),
     					sliced: true,
 					    selected: true
 					},
-                    ['@mostLikedUserLookList(1).getLook().getName()',   @mostLikedUserLookList(1).getLikeCount()],
-                    ['@mostLikedUserLookList(2).getLook().getName()',   @mostLikedUserLookList(2).getLikeCount()],                    
-                    ['@mostLikedUserLookList(3).getLook().getName()',   @mostLikedUserLookList(3).getLikeCount()],
-                    ['@mostLikedUserLookList(4).getLook().getName()',   @mostLikedUserLookList(4).getLikeCount()],                    
+                    ['<a href="/dashboard/looks/@mostLikedUserLookList(1).getLook().getId()">@mostLikedUserLookList(1).getLook().getName()</a>',   @mostLikedUserLookList(1).getLikeCount()],
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(2).getLook().getId()">@mostLikedUserLookList(2).getLook().getName()</a>',   @mostLikedUserLookList(2).getLikeCount()],                    
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(3).getLook().getId()">@mostLikedUserLookList(3).getLook().getName()</a>',   @mostLikedUserLookList(3).getLikeCount()],
+                    ['<a href="/dashborad/looks/@mostLikedUserLookList(4).getLook().getId()">@mostLikedUserLookList(4).getLook().getName()</a>',   @mostLikedUserLookList(4).getLikeCount()],                    
                 ]
             }]
         });
