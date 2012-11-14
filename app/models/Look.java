@@ -26,20 +26,23 @@ public class Look extends Model {
 	private int season;
 	private int lookType;
 	private int price;
+	private String barcode;
 	private String imageFileName;
 	private String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<UserLook> userLooks;
 
-	public static Finder<Long, Look> find = new Finder<Long, Look>(Long.class, Look.class);
+	public static Finder<Long, Look> find = new Finder<Long, Look>(Long.class,
+			Look.class);
 
 	public Look() {
 		super();
 	}
 
-	public Look(Long id, String name, int shotCount, int year, int season, int lookType,
-			int price, String imageFileName, String description, List<UserLook> userLooks) {
+	public Look(Long id, String name, int shotCount, int year, int season,
+			int lookType, int price, String barcode, String imageFileName,
+			String description, List<UserLook> userLooks) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,24 +51,25 @@ public class Look extends Model {
 		this.season = season;
 		this.lookType = lookType;
 		this.price = price;
+		this.barcode = barcode;
 		this.imageFileName = imageFileName;
 		this.description = description;
 		this.userLooks = userLooks;
 	}
-	
-	public String getDescription(){
+
+	public String getDescription() {
 		return description;
 	}
-	
-	public void setDescription(String description){
+
+	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -132,6 +136,14 @@ public class Look extends Model {
 
 	public void setUserLooks(List<UserLook> userLooks) {
 		this.userLooks = userLooks;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 }

@@ -20,7 +20,7 @@ public class Looks extends Controller {
 	public static Result lookDetails(Long id){
 		Look look = Look.find.byId(id);
 		if (look != null){
-			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look ));
+			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look, look.getUserLooks() ));
 		}
 		else {
 			return notFound();

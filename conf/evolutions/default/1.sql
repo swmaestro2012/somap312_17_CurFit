@@ -20,6 +20,7 @@ create table look (
   season                    integer,
   look_type                 integer,
   price                     integer,
+  barcode                   varchar(255),
   image_file_name           varchar(255),
   description               varchar(255),
   constraint pk_look primary key (id))

@@ -2,12 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Api
 
 GET 	/									controllers.Application.index()
 
-GET		/api/looks							controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
+# Api
 
+GET		/api/looks							controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
+GET		/api/looksByBarcode/:barcode		controllers.RestApp.getLookByBarcode(barcode: String)
 GET		/api/looks/:id						controllers.RestApp.getLookById(id: Long)
 GET		/api/looks/:id/userLooks			controllers.RestApp.getAllUserLooksByLookId(id: Long)
 GET		/api/userLook/:id					controllers.RestApp.getUserLookById(id: Long)

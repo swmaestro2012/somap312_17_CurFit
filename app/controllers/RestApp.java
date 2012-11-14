@@ -78,6 +78,19 @@ public class RestApp extends Controller {
 		}
 		return ok(Json.toJson(look)).as("application/json");
 	}
+	
+	public static Result getLookByBarcode(String barcode) throws JSONException {
+
+		Look look = Look.find.where().ilike("barcode", barcode).findUnique();
+		if (look == null) {
+			Logger.error("[code: -3] Can't find look.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find look.");
+			return ok(jsonObject.toString()).as("application/json");
+		}
+		return ok(Json.toJson(look)).as("application/json");
+	}
 
 	public static Result getAllUserLooksByLookId(Long id) throws JSONException {
 
@@ -117,7 +130,7 @@ public class RestApp extends Controller {
 		
 		return ok(Json.toJson(userLook));
 	}
-
+	
 	public static Result saveUserLook() throws JSONException {
 
 		Form<UserLook> form = new Form<UserLook>(UserLook.class)
@@ -143,14 +156,23 @@ public class RestApp extends Controller {
 			
 			
 			RequestBody request = request().body();
-			String fileName = request.asMultipartFormData().getFiles().get(0).getFilename();
 			File file = request.asMultipartFormData().getFiles().get(0).getFile();
 			
+			try {
+				userLook.setImageHash(calculateHash(MessageDigest.getInstance("MD5"), file));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
+			
 			jsonObject = new JSONObject();
 
 			FileChannel inChannel = new FileInputStream(file).getChannel();
-			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + fileName)).getChannel();
+			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + userLook.getImageHash() + ".png")).getChannel();
 			
 			ByteBuffer buf = ByteBuffer.allocate(1024);
 			
@@ -164,23 +186,13 @@ public class RestApp extends Controller {
 				}
 			}
 			
-			try {
-				userLook.setImageHash(calculateHash(MessageDigest.getInstance("SHA1"), file));
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 			Coupon coupon = new Coupon();
 			coupon.setPrice(3000);
 			coupon.setUsed(false);
 			coupon.setUserlookHash(userLook.getImageHash());
 			coupon.save();
 
-			userLook.setImageFileName(userLook.getImageHash() + ".jpg");
+			userLook.setImageFileName(userLook.getImageHash() + ".png");
 			userLook.save();
 			
 			
