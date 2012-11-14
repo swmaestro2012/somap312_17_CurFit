@@ -23,3 +23,11 @@ server.pid
 /public/lookImages
 /.classpath
 /.settings/org.scala-ide.sdt.core.prefs
+
+/project/target/scala-2.9.1/sbt-0.11.3/cache/compile/compile
+/project/target/scala-2.9.1/sbt-0.11.3/cache/update/inputs
+/project/target/scala-2.9.1/sbt-0.11.3/cache/update/output
+/project/target/streams/$global/compilers/$global/out
+/project/target/streams/$global/ivy-configuration/$global/out
+/project/target/streams/$global/update/$global/out
+/project/target/streams/compile/compile/$global/out

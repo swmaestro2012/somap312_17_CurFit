@@ -4,6 +4,8 @@
 
 # Api
 
+GET 	/									controllers.Application.index()
+
 GET		/api/looks							controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
 
 GET		/api/looks/:id						controllers.RestApp.getLookById(id: Long)
@@ -15,8 +17,8 @@ PUT		/api/imageToS3/:fileName			controllers.RestApp.imageToS3(fileName: String)
 
 
 # Home page
-GET     /dashboard	                        controllers.Application.index()
-GET     /dashboard/	                        controllers.Application.index()
+GET     /dashboard	                        controllers.Dashboard.index()
+GET     /dashboard/	                        controllers.Dashboard.index()
 GET		/dashboard/looks					controllers.Looks.selectLooks()
 GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
 

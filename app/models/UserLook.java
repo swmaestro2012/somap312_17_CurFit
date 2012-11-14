@@ -29,6 +29,7 @@ public class UserLook extends Model {
 	private String imageFileName;
 	private String imageHash;
 	private Date date;
+	private Long matchUserLookId;
 	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
 		    Long.class, UserLook.class
@@ -37,18 +38,22 @@ public class UserLook extends Model {
 	public UserLook(){
 		super();
 	}
-
-	public UserLook(Long id, Look look, int size, int likeCount, String imageFileName, String imageHash, Date date) {
+	
+	public UserLook(Long id, Look look, int size, int likeCount,
+			String imageFileName, String imageHash, Date date,
+			Long matchUserLookId) {
 		super();
 		this.id = id;
 		this.look = look;
 		this.size = size;
 		this.likeCount = likeCount;
 		this.imageFileName = imageFileName;
-		this.date = date;
 		this.imageHash = imageHash;
+		this.date = date;
+		this.setMatchUserLookId(matchUserLookId);
 	}
-	
+
+
 	public String getImageHash(){
 		return imageHash;
 	}
@@ -104,6 +109,14 @@ public class UserLook extends Model {
 
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
+	}
+
+	public Long getMatchUserLookId() {
+		return matchUserLookId;
+	}
+
+	public void setMatchUserLookId(Long matchUserLookId) {
+		this.matchUserLookId = matchUserLookId;
 	}
 	
 	

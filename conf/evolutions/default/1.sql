@@ -3,6 +3,13 @@
 
 # --- !Ups
 
+create table coupon (
+  id                        bigint auto_increment not null,
+  userlook_hash             varchar(255),
+  used                      tinyint(1) default 0,
+  constraint pk_coupon primary key (id))
+;
+
 create table look (
   id                        bigint auto_increment not null,
   name                      varchar(255),
@@ -33,6 +40,7 @@ create table user_look (
   image_file_name           varchar(255),
   image_hash                varchar(255),
   date                      datetime,
+  match_user_look_id        bigint,
   constraint pk_user_look primary key (id))
 ;
 
@@ -44,6 +52,8 @@ create index ix_user_look_look_1 on user_look (look_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table coupon;
 
 drop table look;
 
