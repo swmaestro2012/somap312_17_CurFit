@@ -20,6 +20,9 @@ var insertTableInfo = function(data){
 }	
 
 $(document).ready(function() {
+	var sleep = function(source) {
+		
+	};
 	$('.click').click(function() {
 		var eventedObject = $(this).attr('href');
 		var position = $(eventedObject).offset();
@@ -31,11 +34,14 @@ $(document).ready(function() {
 		$('.transparent').hide();
 	});	
 	
-	$('li[class^=span4]>a').click(function() {
+	$('li[class^=span3]>a').click(function() {
 		$('.transparent').show();
 		var src = $(this).children().attr('src');
-		setTimeout(function() {
-			$('#photo').attr('src', src);
-		}, 1000);	
+		(function() {
+				setTimeout(function() {
+					$('#photo').attr('src', src);
+					console.log(src);
+				}, 1000);			
+		})();
 	});
 });
