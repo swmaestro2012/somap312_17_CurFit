@@ -40,9 +40,9 @@
 										<tbody>
 										@for(i <- 0 to 4) {
 											<tr>
-												<th>@(i+1)</th>
-												<th>@mostShootingLookList(i).getName()</th>
-												<th>@mostShootingLookList(i).getShotCount()</th>
+												<td>@(i+1)</td>
+												<td><a href="/dashboard/looks/@mostShootingLookList(i).getId()">@mostShootingLookList(i).getName()</a></td>
+												<td>@mostShootingLookList(i).getShotCount()</td>
 											</tr>
 										}
 										</tbody>
@@ -83,9 +83,9 @@
 										<tbody>
 											@for(i <- 0 to 4 ){
 											<tr>
-												<th>@(i+1)</th>
-												<th>@mostLikedUserLookList(i).getLook().getName()</th>
-												<th>@mostLikedUserLookList(i).getLikeCount()</th>
+												<td>@(i+1)</td>
+												<td><a href="/dashboard/looks/@mostLikedUserLookList(i).getLook().getId()">@mostLikedUserLookList(i).getLook().getName()</a></td>												
+												<td>@mostLikedUserLookList(i).getLikeCount()</td>
 											</tr>
 											}
 										</tbody>

@@ -1,0 +1,2333 @@
+@()
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <base href="http://www.spao.com/shop/product_detail.aspx?PC=SPCK248C01">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SPAO</title>
+    <script type="text/javascript" src="/Common/Js/jquery-1.7.1.min.js" ></script>
+    <script type="text/javascript" src="/Common/Js/Common.js" ></script>
+    <script type="text/javascript" src="/Common/Js/prototype.js" ></script>
+    <script type="text/javascript" src="/Common/Js/StyleCommon.js" ></script>
+    <script language="javascript" type="text/javascript">
+        var $J = jQuery.noConflict();
+    </script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/common.css")">        
+   <link rel="stylesheet" media="screen" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+   <link rel="shortcut icon" href="http://www.spao.com/favicon.ico">
+   <link rel="stylesheet" href="@routes.Assets.at("stylesheets/spao.css")">            
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/default.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/layout.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/Common.css" />
+    
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/cart.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/detail.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/man.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/plan.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/pop.css" />
+    
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/mypage.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/cs.css" />
+    <link type="text/css" rel="stylesheet" href="/Common/CSS/spao.css" />
+    
+    
+
+<script type="text/javascript" src="/Common/Js/ajax.js"></script>
+<script type="text/javascript" src="/Common/Js/prototype.js"></script>
+<script type="text/javascript" src="/Common/Js/AC_RunActiveContent.js"></script>
+<script src="http://twitter.github.com/assets/js/bootstrap-carousel.js""></script>
+<script type="text/javascript">
+
+var _iMaxBuyCount = 0;
+var _ProductCost=0;
+var _DisProductCost = 0;
+
+Event.observe(window, "load", init);
+function init() {	
+	resetDescHeight();                              // 상세설명 높이 조절
+}
+
+function SelectBoxHideFnc(hvalue) {
+  
+}
+
+function resetDescHeight() {
+
+    var pDesc = document.getElementById("ifProductDesc");
+	pDesc.style.height = String(pDesc.contentWindow.document.body.scrollHeight) + "px";
+}
+
+function goEventPage(snowItem)
+{
+    
+        alert("로그인 하셔야합니다.");
+        Login_PopWindow();
+    
+}
+function CloseItem()
+{
+    document.getElementById('divitem').style.display = "none";
+}
+
+// 상품 크게 보기
+function goDetailView(PC) {
+    window.open("popDetailView.aspx?PC=" + PC, "", "width=790, height=650");
+}
+
+//최소값을 반환한다.
+function getMinValue(pParam1, pParam2) {
+	if (pParam1 == "" || pParam2 == "") return;
+	var minValue = 0;
+	
+	try {
+		var param1 = parseInt(pParam1);
+		var param2 = parseInt(pParam2);
+		
+		if (param1 > param2)
+			minValue = param2;
+		else
+			minValue = param1;
+	} catch(e) { }
+	return minValue;
+}
+
+function SubTotalCost(){
+    
+   
+}
+
+
+function CheckItem() {    
+
+    var OptLen = $J("#ctl00_ContentPlaceHolder1_ddlItem option").size();
+    var sObj = "";
+    sObj = $J("#ctl00_ContentPlaceHolder1_ddlItem").get(0);
+        
+	var strInfo = sObj.value;
+	var arrInfo = strInfo.split("|");
+	
+	var strString = "";
+	
+	var sCouponNo = $J("#ctl00_ContentPlaceHolder1_txtCouponNo").val();
+	var title = "["+$J("#ctl00_ContentPlaceHolder1_lblBrand").val()+"]"+$J("#ctl00_ContentPlaceHolder1_lblProductName").val();
+	
+	/******************************************************************************************************************/
+	
+	/******************************************************************************************************************/
+	
+	$J("#ctl00_ContentPlaceHolder1_ProductTitle").get(0).innerHTML = titleReform(title);
+	
+	$J('#ctl00_ContentPlaceHolder1_txtBuyCount').get(0).value = 1;
+	
+	
+	if (arrInfo != null && arrInfo != "")
+	{   
+//		$J("#ctl00_ContentPlaceHolder1_lblItemCode").get(0).innerText = arrInfo[0];
+		$J("#ctl00_ContentPlaceHolder1_lblSalePrice").get(0).innerHTML = "<strong>" + setSalePrice(arrInfo[2], arrInfo[1]) + "</strong>";
+		$J("#ctl00_ContentPlaceHolder1_lblProductPrice").get(0).innerHTML = setComma(arrInfo[1]);
+
+//		if (sCouponNo > 0 )
+//		{
+//		    window.TdCouponInfo.style.display = "";
+//		    $J("#ctl00_ContentPlaceHolder1_lblCouponPrice").get(0).innerHTML = "<strong>" + setCouponDCPrice(arrInfo[2], arrInfo[1]) + "</strong>";
+//		}
+//		else
+//		{
+//		    window.TdCouponInfo.style.display = "none";
+//		    
+//		    //window.TdCouponInfo.innerHTML = "";
+//		}
+		
+		_iMaxBuyCount = getMinValue(arrInfo[3], $J("#ctl00_ContentPlaceHolder1_hiMaxQty").val());
+		//_iMaxBuyCount = $J("ctl00_ContentPlaceHolder1_hiMaxQty").value;
+		if( $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").size() == 0) return;
+		
+		if ($J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").size() == 1) {
+		    $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").index(0);
+		} else {
+		    $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option:selected").val($J("#ctl00_ContentPlaceHolder1_ddlItem option:selected").val());
+		}
+		
+		var objDeliMark = $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0);
+		
+		if(objDeliMark) {
+		    if(Number($J("#ctl00_ContentPlaceHolder1_ddlSalePrice").val()) >= Number($J("ctl00_ContentPlaceHolder1_hiDeliveryBasisFee").val())) {
+		        $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0).style.display = "";
+		    } else {
+		        $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0).style.display = "none";
+		    }
+		}
+	}else if (arrInfo == "")
+	{   
+	    strInfo = sObj[1].value;
+	    arrInfo = strInfo.split("|");
+//		$J("#ctl00_ContentPlaceHolder1_lblItemCode").get(0).innerText = arrInfo[0];
+		$J("#ctl00_ContentPlaceHolder1_lblSalePrice").get(0).innerHTML = "<strong>" + setSalePrice(arrInfo[2], arrInfo[1]) + "</strong><strong>" + strString + "</strong>";
+		$J("#ctl00_ContentPlaceHolder1_lblProductPrice").get(0).innerHTML = setComma(arrInfo[1]);
+
+//		if (sCouponNo > 0 )
+//		{
+//		    window.TdCouponInfo.style.display = "";
+//		    $J("#ctl00_ContentPlaceHolder1_lblCouponPrice").get(0).innerHTML = "<strong>" + setCouponDCPrice(arrInfo[2], arrInfo[1]) + "</strong>";
+//		}
+//		else
+//		{
+//		    window.TdCouponInfo.style.display = "none";
+//		    
+//		    //window.TdCouponInfo.innerHTML = "";
+//		}
+		
+		_iMaxBuyCount = getMinValue(arrInfo[3], $J("ctl00_ContentPlaceHolder1_hiMaxQty").value);
+		//_iMaxBuyCount = $J("ctl00_ContentPlaceHolder1_hiMaxQty").value;
+		if( $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").size() == 0) return;
+		
+		if ($J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").size() == 1) {
+		    $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option").index(0);
+		} else {
+		    $J("#ctl00_ContentPlaceHolder1_ddlSalePrice option:selected").val( $J("#ctl00_ContentPlaceHolder1_ddlItem option:selected").val());
+        }
+        
+		var objDeliMark = $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0);
+		
+		if(objDeliMark) {
+		    if(parseInt($J("#ctl00_ContentPlaceHolder1_ddlSalePrice option:selected").val()) >= parseInt($J("#ctl00_ContentPlaceHolder1_hiDeliveryBasisFee").val())) {
+		        $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0).style.display = "";
+		    } else {
+		        $J("#ctl00_ContentPlaceHolder1_DeliMark").get(0).style.display = "none";
+		    }
+		}
+	}	
+	
+}
+
+function setSalePrice(prc, sprc) {
+    var str = '';
+    
+//    if (parseInt(sprc) < parseInt(prc)) {
+//        str = '<span class="sale">' + costCheck1(setComma(prc)) + '</span>;';
+//        str += costCheck2(setComma(sprc));
+//    } else {
+        str =  costCheck2(setComma(sprc));
+//    }
+    return str;
+}
+/******************************************************************************************************************/
+
+function lwGetByte(s) { 
+      var ls_str = s; 
+      var li_str_len = ls_str.length; 
+      
+      var i = 0; 
+      var li_byte = 0; 
+      var ls_one_char = ""; 
+      var ls_str2 = ""; 
+      
+      for(i=0; i< li_str_len; i++) { 
+            ls_one_char = ls_str.charAt(i); 
+            if (escape(ls_one_char).length > 4) { 
+                  li_byte += 2; 
+            } else { 
+                  li_byte++; 
+            } 
+      } 
+      return li_byte;
+} 
+
+
+
+function titleReform(title){
+    title = title.replace("%", "%25"); 
+    title = title.replace("&", "%26"); 
+    title = title.replace("+", "%2B");
+     
+    var titlewidth = lwGetByte(title); 
+    var swfHeight = 25;  
+    if(titlewidth>46){
+        swfHeight = 50;
+    }else{
+        swfHeight = 25;
+    }   
+   
+    var str = AC_FL_RunContent2(
+	    'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0',
+	    'width', '330',
+	    'height', ''+swfHeight+'',
+	    'src', '/images/20101101/swf/txtTitle.swf',
+	    'quality', 'high',
+	    'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+	    'align', 'middle',
+	    'play', 'true',
+	    'loop', 'true',
+	    'scale', 'showall',
+	    'wmode', 'transparent',
+	    'devicefont', 'false',
+	    'id', 'txtTitle',
+	    'bgcolor', '#ffffff',
+	    'name', 'txtTitle',
+	    'menu', 'true',
+	    'allowFullScreen', 'false',
+	    'allowScriptAccess','sameDomain',
+	    'movie', '/images/20101101/swf/txtTitle',
+	    'flashVars', 'title='+title+'&size=18&color=000000',
+	    'salign', ''
+	); //end AC code
+	
+	return str;
+}
+
+function costCheck1(cost){
+    var costwidth = lwGetByte(cost);
+   costwidth = parseInt(costwidth)*12; 
+   
+    var str = AC_FL_RunContent2(
+	    'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0',
+	    'width', ''+costwidth+'',
+	    'height', '25',
+	    'src', '/images/20101101/swf/money.swf',
+	    'quality', 'high',
+	    'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+	    'align', 'middle',
+	    'play', 'true',
+	    'loop', 'true',
+	    'scale', 'showall',
+	    'wmode', 'transparent',
+	    'devicefont', 'false',
+	    'id', 'money',
+	    'bgcolor', '#ffffff',
+	    'name', 'money',
+	    'menu', 'true',
+	    'allowFullScreen', 'false',
+	    'allowScriptAccess','sameDomain',
+	    'flashVars', 'money='+cost+'&size=17&color=6b6b6b&line=1',
+	    'movie', '/images/20101101/swf/money',
+	    'salign', ''
+	    ); 
+	    
+	    return str;
+}
+
+function costCheck2(cost){
+        var costwidth = lwGetByte(cost);
+        costwidth = parseInt(costwidth)*24; 
+        
+    	var str = AC_FL_RunContent2(
+			    'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0',
+			    'width', ''+costwidth+'',
+			    'height', '45',
+			    'src', '/images/20101101/swf/money.swf',
+			    'quality', 'high',
+			    'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+			    'align', 'middle',
+			    'play', 'true',
+			    'loop', 'true',
+			    'scale', 'showall',
+			    'wmode', 'transparent',
+			    'devicefont', 'false',
+			    'id', 'money',
+			    'bgcolor', '#ffffff',
+			    'name', 'money',
+			    'menu', 'true',
+			    'allowFullScreen', 'false',
+			    'allowScriptAccess','sameDomain',
+
+			    'flashVars', 'money='+cost+'&size=40&color=9f0000&line=0',
+
+			    'movie', '/images/20101101/swf/money', 
+			    'salign', ''
+        );
+    return str; 
+}
+
+function costCheck3(cost){
+    var costwidth = lwGetByte(cost);
+    costwidth = parseInt(costwidth)*14; 
+    
+    var str =AC_FL_RunContent2(
+			'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0',
+			'width',  ''+costwidth+'',
+			'height', '28',
+			'src', '/images/20101101/swf/money.swf',
+			'quality', 'high',
+			'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+			'align', 'middle',
+			'play', 'true',
+			'loop', 'true',
+			'scale', 'showall',
+			'wmode', 'transparent',
+			'devicefont', 'false',
+			'id', 'money',
+			'bgcolor', '#ffffff',
+			'name', 'money',
+			'menu', 'true',
+			'allowFullScreen', 'false',
+			'allowScriptAccess','sameDomain',
+
+			'flashVars', 'money='+cost+'&size=25&color=d4350e&line=0',
+
+			'movie', '/images/20101101/swf/money',
+			'salign', ''
+			); //end AC code
+     return str; 
+}
+/******************************************************************************************************************/
+function calc(floatNum) {
+    var vRetVal;
+    vRetVal =  Math.floor(floatNum / 10)*10 ;
+    return vRetVal;
+}
+
+
+function setCouponDCPrice(prc, sprc){
+    var str = '';
+    
+    var sCouponNo = $J("#ctl00_ContentPlaceHolder1_txtCouponNo").get(0).value;
+    var sDCApplyGubun  = $J("#ctl00_ContentPlaceHolder1_txtDCApplyGubun").get(0).value;
+    var sDCRate  = $J("#ctl00_ContentPlaceHolder1_txtDCRate").get(0).value;
+    var sDCAmount  = $J("#ctl00_ContentPlaceHolder1_txtDCAmount").get(0).value;
+   
+    if (sDCApplyGubun =="P")
+    {
+        str = costCheck3(setComma(parseInt(sprc)-parseInt(sDCAmount)));
+        
+    }
+    else if (sDCApplyGubun =="R")
+    {
+        str = costCheck3(setComma(parseInt(sprc)-(calc(parseInt(sprc) * sDCRate))))+'&nbsp;<font color="#CC0033"><span class="TxORG">('+ parseInt(sDCRate * 100) +'%)</span></font>';
+    }
+    
+    return str;
+    
+}
+
+function setCouponPrice(prc, sprc){
+    var str = '';
+    
+    var sCouponNo = $J("ctl00_ContentPlaceHolder1_txtCouponNo").value;
+    var sDCApplyGubun  = $J("ctl00_ContentPlaceHolder1_txtDCApplyGubun").value;
+    var sDCRate  = $J("ctl00_ContentPlaceHolder1_txtDCRate").value;
+    var sDCAmount  = $J("ctl00_ContentPlaceHolder1_txtDCAmount").value;
+   
+    if (sDCApplyGubun =="P")
+    {
+        str = '<font color="#CC0033">-'+costCheck3(setComma(parseInt(sDCAmount)))+'</font>';
+    }
+    else if (sDCApplyGubun =="R")
+    {
+        str = '<font color="#CC0033">-'+costCheck3(setComma((calc(parseInt(sprc) * sDCRate))))+'&nbsp;<span class="TxORG">('+ parseInt(sDCRate * 100) +'%)</span></font>';
+    }
+    return str;
+    
+}
+
+
+
+function castingCount(count) {  
+    //var obj = document.frm.ctl00_ContentPlaceHolder1_txtBuyCount; 
+    var obj = $J("#ctl00_ContentPlaceHolder1_txtBuyCount").get(0);
+   
+    if(obj) {
+        var iCnt = 0;
+        if(obj.value == "") { iCnt = 0;}
+        else iCnt = parseInt(obj.value);  
+      
+        iCnt += count;
+        
+        if(iCnt < 1) iCnt = 1;
+        if(iCnt > _iMaxBuyCount) {
+            alert("최대 구매가능 수량은 " + _iMaxBuyCount + "개 입니다.");
+            iCnt = _iMaxBuyCount;
+        }
+        
+        obj.value = iCnt; 
+    }
+}
+function upCasting() {
+    castingCount(1);
+}
+function downCasting() {
+    castingCount(-1);
+}
+function handlerNum(obj) {
+    e = window.event;
+    if(e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode == 8 || e.keyCode == 46) {
+        if(e.keyCode == 48 || e.keyCode == 96) {
+            if(obj.value == "" )
+                e.returnValue=false;
+            else
+                return;
+        }
+        else
+            return;
+    }
+    else
+        e.returnValue=false;
+}
+function handleBlur(obj) {
+    if(obj.value == "") {
+        obj.value = 1;
+    } else {
+        if(parseInt(obj.value) < 1)
+            obj.value = 1;
+        else if(parseInt(obj.value) > _iMaxBuyCount)
+        {
+            alert("1회 최대구매수량을 초과했습니다.\n본 상품은 1회 최대 " + _iMaxBuyCount + "개까지 구매가능합니다");
+            obj.value = _iMaxBuyCount;
+        }
+    }
+}
+
+
+function goWishList() {
+
+    Login_PopWindow();
+
+}
+// 찜하기 등록 결과
+function showResponseWishList(req) {
+    if (req.responseText == "true")
+        alert("찜하기를 하였습니다.");
+    else
+        alert("찜하기중 에러가 발생 했습니다..");
+}
+function btnBasketAdd_Click() { 
+
+    Login_PopWindow();
+
+
+}
+
+var actMode = "";
+function CallBackProc(req) {
+    try
+    {
+	    if (req.readyState == 4) {
+		    if (req.status == 200) {
+			    var rtnValue = req.responseText;
+			    switch(actMode) {
+				    case "BasketAdd":
+					    BasketProc(rtnValue);
+					    break;
+			    }
+			    actMode = "";
+		    }
+	    }
+    } catch(e) {
+	    switch(actMode) {
+		    case "BasketAdd":
+			    alert("상품을 장바구니에 추가중 에러가 발생 하였습니다."); 
+			    break;
+	    }
+    }
+}
+function BasketProc(pIsSuccessed) {
+	if (pIsSuccessed == "I") {	
+        BasketCheckView('I');
+    }
+    else if(pIsSuccessed == "U") {    
+        BasketCheckView('U');
+    }
+    
+	
+	else
+		alert("장바구니를 저장중 에러가 발생하셨습니다");
+}
+
+function goOrder() {
+
+    Login_PopWindow();
+
+}
+
+function ChangeThumnailImage(oSrcObj) {
+    //var tObj = document.getElementById("imgDetail");
+    var tObj = $J("#ctl00_ContentPlaceHolder1_imgDetail").get(0);
+    var str = (oSrcObj.src).split("?",2);
+    tObj.src = str[0].replace("/130/", "/600/") //+ "?cmd=thumb&width=350&height=350";
+}
+
+function ChangeBigThumnailImage(oSrcObj) {
+    //var tObj = document.getElementById("BigimgDetail");
+    
+    var str = (oSrcObj.src).split("?",2);
+    tObj.src = str[0].replace("/80/", "/600/") //+ "?cmd=thumb&width=350&height=350";
+}
+
+
+
+function btnProductCoupon_Click()
+{
+    var sCouponNo = $J("#ctl00_ContentPlaceHolder1_txtCouponNo").get(0).value;
+    
+    
+
+    alert("로그인 후 쿠폰받기가 가능합니다..");
+    Login_PopWindow();
+    
+}
+
+
+
+function ProcutCoupon_CallBackProc(req) 
+{  
+    try
+    {  
+	    if (req.readyState == 4) {
+		    if (req.status == 200)  {
+			    var rtnValue = req.responseText;
+			    
+			    if (rtnValue == "99999999")
+			    {
+			        alert("사용가능한 할인 쿠폰이 이미 발급되었습니다.");
+			    }
+			    else
+			    {    
+			        if (rtnValue == "00000000" ) {
+			            alert("a쿠폰 발행중 에러가 발생했습니다."); 
+			        }
+			        else {
+			            //alert("상품별 쿠폰이 쿠폰함에 담겼습니다.\r\n주문서 작성 시 사용쿠폰으로 선택하시면\r\n할인 혜택을 받으실 수 있습니다."); 
+			            
+			            var orgLeft = 0;
+                        var orgTop  = 0;
+                        
+                        divCouponCheck.style.display ="block";
+                        
+                        orgLeft = (document.body.clientWidth  - 332) /2 ;
+                        orgTop = (document.body.scrollTop + 225);
+                        divCouponCheck.style.left = orgLeft ;
+                        divCouponCheck.style.top = orgTop;
+    
+    
+			        //    window.TdCouponInfo.style.display = "none";
+			        //    window.TdCouponSaleInfo.style.display = "";
+			        }
+				}	    
+			   
+		    }
+	    }
+    } 
+    catch(e) {
+	    switch(actMode) {
+		    case "ProductCoupon":
+			    alert("v쿠폰 발행중 에러가 발생했습니다."); 
+			    break;
+	    }
+    }
+}
+
+
+function coupon_close()
+{
+    divCouponCheck.style.display ="none";
+}
+
+//네이트 스크랩 팝업 창
+function scrap()
+{   
+    var TargetURL = "http://api.cyworld.com/openscrap/shopping/v1/?xu=";
+    var LinkURL = "http://www.spao.com/shop/Product_Detail_Natescrap.aspx?PC="
+                    + "SPCK248C01" + "&hiDeliveryBasisFee=" + "30000&sid=s0200009";
+    var fullURL = TargetURL + escape(LinkURL) + "&sid=s0200009";
+    
+    window.open(fullURL, 'cyopenscrap','width=450,height=410');    
+} 
+
+
+function openNateInfo(nSel)
+{
+	var objDiv = document.getElementById("divNate");	
+	
+	if (nSel == 0) {
+		objDiv.style.visibility	= "visible";
+	} else {
+		objDiv.style.visibility	= "hidden";
+	}
+}
+
+function SideCommentFunc(idx) {
+    var objComment = document.all["SideViewBtn"];
+    var  tempIdx = 0;
+           
+    if(idx%2 == 0 ){
+        tempIdx = parseInt(idx) + parseInt(1);
+        objComment[idx].style.display = (objComment[idx].style.display == "") ? "none" : "";
+        objComment[tempIdx].style.display = (objComment[tempIdx].style.display == "") ? "none" : "";
+        
+        for(var i=0;i<6;i=i+2){
+            if(i != idx){
+                var tempi = parseInt(i) + parseInt(1)
+                objComment[i].style.display = "";
+                objComment[tempi].style.display = "none";
+            }
+        }
+        
+    } else{
+        tempIdx = parseInt(idx) - parseInt(1) ;
+        objComment[idx].style.display = (objComment[idx].style.display == "") ? "none" : "";
+        objComment[tempIdx].style.display = (objComment[tempIdx].style.display == "") ? "none" : "";
+    }   
+   
+   if(objComment[0].style.display=="" && objComment[2].style.display=="" && objComment[4].style.display ==""){
+        objComment[0].style.display="none";
+        objComment[1].style.display="";
+   }
+}
+
+var favoriteurl="http://www.spao.com/shop/new_BrandShop.aspx?Brandcode="
+var favoritetitle="☆ 모던하우스 브랜드 샵" 
+
+function addfavorites (strBrandCode){
+
+	if (document.all) window.external.AddFavorite(favoriteurl+strBrandCode,favoritetitle);
+	
+}
+
+//사이즈조견표
+function popSizeView() {
+    var boxwidth = "566";
+    var boxheight = "514";
+    var strURL = "/shop/PopSizeView.aspx"
+    var mask = $J("<div />");
+    mask.addClass('mask');
+    mask.attr('id', 'mask');
+    mask.height($J(document).height() + "px");
+    mask.appendTo('body');
+
+    var box = $J('<div />');
+    box.addClass('box');
+    box.attr('id', 'pe_pop');
+    box.attr('style', 'display:block');
+    box.attr('style', 'boarder:0');
+    //box.attr('style', 'padding-top:0px;padding-left:3px;');
+    box.width(boxwidth + "px");
+    box.height(boxheight + "px");
+
+    
+    box.css('left', (document.documentElement.offsetWidth - boxwidth + 273) / 2);
+
+    //    alert($J(window).scrollTop());
+
+    box.css('top', $J(window).scrollTop() + 200);
+    box.appendTo('body');
+
+    var iframe = $J('<iframe  frameborder=0 scrolling=no />');
+    iframe.attr('id', 'Ifrm');
+    iframe.attr("src", strURL);
+    iframe.width("566px");
+    iframe.height("514px");
+    iframe.appendTo('#pe_pop');
+}
+
+function closePop() {
+    $J("#mask").remove();
+    $J("#pe_pop").remove();
+}
+</script>
+
+<span id="DivDetail" style="display: none">
+
+<p align="center"><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/top.JPG" /><br />
+	<br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01.jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (2).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (3).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (4).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (5).jpg" /><br a />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (6).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (7).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (8).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (9).jpg" /><br />
+	</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01 (10).jpg" /><br />
+	</p>
+
+<p align="center">&amp;nbsp;</p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01_size.jpg" /></p>
+
+<p align="center">
+	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/exchange.jpg" /></p></span>
+<style type="text/css">
+    .style1
+    {
+        height: 15px;
+    }
+</style>
+
+  </head>
+<body>
+<form name="aspnetForm" method="post" action="product_detail.aspx?PC=SPCK248C01" id="aspnetForm" enctype="multipart/form-data">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNDU3NjM2NzAxD2QWAmYPZBYCAgMPZBYGAgEPZBYCZg8WAh4HVmlzaWJsZWdkAgMPZBYmAgQPEGQPFg1mAgECAgIDAgQCBQIGAgcCCAIJAgoCCwIMFg0QBQUxOTkwMAUFMTk5MDBnEAUFMTk5MDAFBTE5OTAwZxAFBTE5OTAwBQUxOTkwMGcQBQUxOTkwMAUFMTk5MDBnEAUFMTk5MDAFBTE5OTAwZxAFBTE5OTAwBQUxOTkwMGcQBQUxOTkwMAUFMTk5MDBnEAUFMTk5MDAFBTE5OTAwZxAFBTE5OTAwBQUxOTkwMGcQBQUxOTkwMAUFMTk5MDBnEAUFMTk5MDAFBTE5OTAwZxAFBTE5OTAwBQUxOTkwMGcQBQUxOTkwMAUFMTk5MDBnZGQCDA8WAh4EVGV4dGVkAhkPDxYCHwEFClNQQ0syNDhDMDFkZAIkDw8WAh8BBboBPGEgaHJlZj0nL3Nob3AvcHJvZHVjdF9kZXRhaWwuYXNweD9QQz1TUEpEMjQ5QzAxJz48aW1nIHNyYz0naHR0cDovL2ltYWdlc2VydmVyLjIwMDFvdXRsZXQuY29tLy9JbWFnZUZpbGUvUHJvZHVjdHMvQ05PMjAwMS8yMDEyLzExL1NQSkQyNDlDMDFfMS5qcGcnIGFsdD0nJyB3aWR0aD0nMjMxJyBoZWlnaHQ9JzIzNScgLz48L2E+ZGQCJQ8WAh8BBRrrsqDsnbTsp4Eg64uk7Jq0IOuyoOyKpO2KuGQCJg8WAh8BBQYyOSw5MDBkAicPFgIfAQUGMjksOTAwZAIoDw8WAh8BBboBPGEgaHJlZj0nL3Nob3AvcHJvZHVjdF9kZXRhaWwuYXNweD9QQz1TUEpEMjRUQzAyJz48aW1nIHNyYz0naHR0cDovL2ltYWdlc2VydmVyLjIwMDFvdXRsZXQuY29tLy9JbWFnZUZpbGUvUHJvZHVjdHMvQ05PMjAwMS8yMDEyLzExL1NQSkQyNFRDMDJfMS5KUEcnIGFsdD0nJyB3aWR0aD0nMjMxJyBoZWlnaHQ9JzIzNScgLz48L2E+ZGQCKQ8WAh8BBRfrsqDsnbTsp4Eg64uk7Jq0IOygkO2NvGQCKg8WAh8BBQY1OSw5MDBkAisPFgIfAQUGMjksOTAwZAIsDw8WAh8BBboBPGEgaHJlZj0nL3Nob3AvcHJvZHVjdF9kZXRhaWwuYXNweD9QQz1TUEpEMjQ5RzAxJz48aW1nIHNyYz0naHR0cDovL2ltYWdlc2VydmVyLjIwMDFvdXRsZXQuY29tLy9JbWFnZUZpbGUvUHJvZHVjdHMvQ05PMjAwMS8yMDEyLzExL1NQSkQyNDlHMDFfMS5qcGcnIGFsdD0nJyB3aWR0aD0nMjMxJyBoZWlnaHQ9JzIzNScgLz48L2E+ZGQCLQ8WAh8BBR7sl6zshLEg67Kg7J207KeBIOuLpOyatCDrsqAuLi5kAi4PFgIfAQUGMjksOTAwZAIvDxYCHwEFBjI5LDkwMGQCMA8PFgIfAQW6ATxhIGhyZWY9Jy9zaG9wL3Byb2R1Y3RfZGV0YWlsLmFzcHg/UEM9U1BNWjIyMUcwMSc+PGltZyBzcmM9J2h0dHA6Ly9pbWFnZXNlcnZlci4yMDAxb3V0bGV0LmNvbS8vSW1hZ2VGaWxlL1Byb2R1Y3RzL0NOTzIwMDEvMjAxMi8xMC9TUE1aMjIxRzAxXzEuanBnJyBhbHQ9Jycgd2lkdGg9JzIzMScgaGVpZ2h0PScyMzUnIC8+PC9hPmRkAjEPFgIfAQUe7Iqk7YyM7JikIOyXrOyEsSDrsqDsnbTsp4EgLi4uZAIyDxYCHwEFBjEyLDkwMGQCMw8WAh8BBQYyOSw5MDBkAgcPZBYCZg9kFghmDxYCHwEFEQ0KDQo8cD4mbmJzcDs8L3A+ZAIBDxYCHwEFATBkAgIPFgIfAQVlPGxpIGNsYXNzPSdtYV9iNSc+PGEgaHJlZj0nIyc+PGltZyBzcmM9Jy9pbWFnZXMvY29tbW9uL3F1aWNrL3F1aWNrX2JveC5naWYnIGFsdD0n7IOB7ZKIMScgLz48L2E+PC9saT5kAgMPFgIfAQW8ATxhIGhyZWY9Imh0dHA6Ly93d3cuc3Bhby5jb20vc2hvcC9wcm9kdWN0X2RldGFpbC5hc3B4P1BDPVNQamQyNHRjMDIiPg0KCTxpbWcgYm9yZGVyPSIwIiBhbHQ9IiIgc3JjPSJodHRwOi8vaW1hZ2VzZXJ2ZXIuMjAwMW91dGxldC5jb20vSW1hZ2VGaWxlL01haW5EZXNpZ24vc3Bhby8yMDEyMTAzMV93aW5nX2JuLmpwZyIgLz48L2E+ZGQFUNa16ETPfWeTl9tlK7mXSnLJPQ==" />
+</div>
+
+<script type="text/javascript">
+function SetDolDoli() {
+ProductList.style.height = 5;
+}
+</script>
+
+<!-- Header 시작 -->
+<div id="wrap">
+
+ <script type="text/javascript" src="/Common/Js/StyleCommon.js" ></script>
+<script language="javascript">
+
+    function fnTopMenuOut()
+    {
+        $J("#div1").css("display","none");
+        $J("#div2").css("display","none");
+    }
+
+    $J(function() {
+        if (window.navigator.appName.indexOf("Netscape") > -1 && (0 == "1" || 0 == "2")) {
+            $J("._SMenuList").css("top","48px");
+        }
+            
+        var midx = 0;
+        $J(".SMenu").css("cursor", "pointer");
+        $J(".SMenuImg").css("cursor", "pointer");
+        $J(".TMenu").each(function(index) {
+            
+            $J(this).hover(
+            function() { //            
+                
+                    //최초 메인 메뉴 화면
+                    if((0 == 0 || 0 == 0) || (0 > 0 && index != "0" && index != "1" && index != "4" && index != "5")){ 
+                        $J(".SMenu").not(index).hide();
+                        $J(".SMenu").eq(index).show();
+                    }
+                                  
+                    //서브 메인화면(메뉴버튼 클릭후 메뉴화면)
+                    if(0 > 0 && index == "0"  || index == "1" || index == "4" || index == "5"){ 
+                        //
+                        $J(".SMenu").not(index).hide();                   
+                        $J(".SMenu").eq(-1).hide();
+                        
+                    }
+                    $J("#hdnSelCIdx").val(index-1); //
+                },
+                function(){ //                
+                    if(0 > 0 && (index == "0" || index == "1" ||  index == "4" || index == "5")){ 
+                        //
+                        $J(".SMenu").not(index).hide();
+                        $J(".SMenu").eq(index).show();                                    
+                }
+            }
+            );
+        });
+      
+        $J(".SMenu").each(function(index) {
+        
+            //
+            $J(this).hover(
+                function(){ //
+                    midx = 1 + 2 * (1 - 1 + index);
+                    if(midx < 10){
+                        midx = "0" + midx;
+                    }
+
+                    $J(".TMenu").eq(index).attr("src","/images/common/gnb/gnb_" + midx + "_o.gif"); //
+                    if(0 < 1 ){
+                        $J(".SMenu").eq(index).show();
+                        $J(".SMenu").eq(6).hide();   //
+                    }
+                },
+                function(){ //
+                
+                    var pidx = 0;                    
+                    if(0 > 0  ) //
+                    {                       
+                        var didx = 0;                            
+                        
+                        if(didx == 3)
+                        {   
+                            didx = 1;   pidx=1;                        
+                        }
+                        else if(didx == 1)
+                        { 
+                            didx = 2;   pidx=2;                     
+                        }
+                        else if(didx == 2)
+                        { 
+                            didx = 3;   pidx=3;                     
+                        }
+                        else if(didx == 4)
+                        {
+                            didx = 4;   pidx=4;    
+                        }                                              
+                        else // (didx == 5)
+                        {
+                            didx = 0;   pidx=0;    
+                        }             
+                        midx = 1 + 2 * (1 - 1 + index);
+                        didx = 1 + 2 * (1 - 1 + didx);                                            
+                        
+                        if(midx < 10){ //
+                            midx = "0" + midx;
+                        }
+                        if(didx < 10){ //
+                            didx = "0" + didx;
+                        }
+                        
+                        $J(".TMenu").eq(index).attr("src","/images/common/gnb/gnb_" + midx + ".gif"); // 
+                        //$J(".TMenu").eq(pidx).attr("src","/images/common/gnb/gnb_" + didx + "_o.gif"); // 
+                    }
+                    else //
+                    { 
+                        var didx = -1;                   
+                        
+                        midx = 1 + 2 * (1 - 1 + index);
+                        didx = 1 + 2 * (1 - 1 + didx);                                           
+                        
+                        if(midx < 10){ //
+                            midx = "0" + midx;
+                        }
+                        if(didx < 10){ //
+                            didx = "0" + didx;
+                        }
+                        
+                        $J(".TMenu").eq(index).attr("src","/images/common/gnb/gnb_" + midx + ".gif"); // 
+                        //$J(".TMenu").eq(-1).attr("src","/images/common/gnb/gnb_" + didx + "_o.gif"); // 
+                    }
+                    
+                    $J(".SMenu").eq(index).hide();    //
+                    if(0 > 0  ){           //
+                        $J(".SMenu").eq(pidx).show(); //                        
+                    }else{                            //
+                        $J(".SMenu").eq(6).show();    //
+                    }
+                }
+            );
+        });
+        
+        $J("#DivTopMenu").hover(
+            function(){
+                $J(".SMenu").hide();
+                if(0 > 0  ){ 
+                    //
+                    
+                    var didx = 0;  
+                    var pidx = 0;                           
+                        
+                    if     (didx == 3) pidx=1;                                            
+                    else if(didx == 1) pidx=2;                                        
+                    else if(didx == 2) pidx=3;                                        
+                    else if(didx == 4) pidx=4;                                                                  
+                    else               pidx=0;                                  
+                        
+                    $J(".SMenu").eq(pidx).show(); 
+                }
+                else{  
+                    //
+                    $J(".SMenu").eq(6).show(); 
+                }
+            },
+            function(){}
+        );
+        
+        $J(".NewInSM").each(function(index){
+            $J(this).hover(
+                function(){ //
+                    $J(".NewInSMSub").hide();
+                    $J(".NewInSMSub").eq(index).show();
+                    
+                    ChangeSMSub("NewInSM", index);
+                },
+                function(){}
+            );
+        });
+        
+        $J(".SaleSM").each(function(index){
+            $J(this).hover(
+                function(){ 
+                    $J(".SaleSMSub").hide();
+                    $J(".SaleSMSub").eq(index).show();
+                    
+                    ChangeSMSub("SaleSM", index);
+                },
+                function(){}
+            );
+        });
+
+        
+        var ChangeSMSub = function(obj, idx){
+            var Men = "/images/common/top_menu/ss/new_main_m.png"
+            var MenOv = "/images/common/top_menu/ss/new_main_m_ov.png";
+            var Women = "/images/common/top_menu/ss/new_main_w.png";
+            var WomenOv = "/images/common/top_menu/ss/new_main_w_ov.png";
+            
+            if(idx == 0){
+                $J("." + obj).eq(0).css("background","url('" + MenOv + "')");
+                $J("." + obj).eq(1).css("background","url('" + Women + "')");
+            }
+            if(idx == 1){
+                $J("." + obj).eq(0).css("background","url('" + Men + "')");
+                $J("." + obj).eq(1).css("background","url('" + WomenOv + "')");
+            }
+        };
+        
+        
+        $J(".imgCategory").each(function(index){
+            $J(this).hover(
+                function(){           
+                    $J(".tdCategory").eq(index).attr("background","/images/common/gnb/sub_menu_arr.png");
+                },
+                function(){
+                    $J(".tdCategory").eq(index).attr("background","");
+                }
+             );
+        });
+
+    });
+</script>
+
+
+<script type="text/javascript">
+<!--
+    $J('#header').ready(function() {
+        $J('[id^="lnb01"]').each(function() {
+            swapHeaderImg($J(this));
+        });
+        $J('[id^="lnb02"]').each(function() {
+            swapHeaderImg($J(this));
+        });
+    });
+
+    function swapHeaderImg(obj) {
+        $J(obj).bind('mouseover', function() {
+            $J(this).attr('src', $J(this).attr('src').replace('.gif', '_o.gif'));
+        });
+        $J(obj).bind('mouseout', function() {
+            $J(this).attr('src', $J(this).attr('src').replace('_o.gif', '.gif'));
+        });
+    }
+
+    function goMyOrder() {
+    
+        Login_PopWindow();
+    
+    }
+    
+    function goMyPage() {
+    
+        Login_PopWindow();        
+    
+    }
+    
+    function goMyBasket() {
+    
+        Login_PopWindow();
+    
+    }    
+
+    function goWingBasket() {
+    
+        Login_PopWindow();
+    
+    }
+//-->
+</script>
+
+<script type="text/javascript">
+
+    function logout() {
+
+        location.href = "/Member/LogOut.aspx";
+    }
+
+    function Join() {
+        window.open("http://www.spao.com/Member/oneclick/CheckPop.aspx", "onclickCheck", "width=575, height=600, top=30 ,left=100, scrollbars=0");
+    }
+</script>
+<div id="header">
+<h1><a href="http://www.spao.com/default.aspx"><img src="/images/common/logo.gif" alt="logo" /></a></h1>
+        <!-- topMenu -->
+        <div class="topMenu">
+       	 <h2 class="blind">탑메뉴 영역</h2>
+        	<ul class="topMenu_01">
+            	<li><a href="javascript:Join()" ><img src="/images/common/gnb/topmenu_01.gif" alt="Join" onmouseover="this.src='/images/common/gnb/topmenu_01_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_01.gif'" /></a></li>
+                <li class="topmenu_bar01"><img src="/images/common/gnb/topmenu_bar01.gif" alt="" /></li>
+                <li class="topmenu_bar01">
+                <span id="ctl00_TopMenu_isLogin1"><img src="/images/common/gnb/topmenu_02.gif" onmouseout="this.src='/images/common/gnb/topmenu_02.gif'" onmouseover="this.src='/images/common/gnb/topmenu_02_ov.gif'" onclick="Login_PopWindow()" style="cursor:hand" /></span>
+                
+                </li>
+                <li class="topmenu_bar01"><img src="/images/common/gnb/topmenu_bar01.gif" alt="" /></li>
+                <li><a href="javascript:goMyBasket();"><img src="/images/common/gnb/topmenu_03.gif" alt="Cart" onmouseover="this.src='/images/common/gnb/topmenu_03_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_03.gif'"  /></a></li>
+                <li class="topmenu_bar01"><img src="/images/common/gnb/topmenu_bar01.gif" alt="" /></li>
+                <li class="topmenu_bar01"><a href="javascript:goMyPage();"><img src="/images/common/gnb/topmenu_04.gif" alt="My page" onmouseover="this.src='/images/common/gnb/topmenu_04_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_04.gif'"  /></a></li>
+                <li class="topmenu_bar01"><img src="/images/common/gnb/topmenu_bar01.gif" alt="" /></li>
+                <li><a href="/CallCenter/faq.aspx?_wpoint=TOPCUSTOM"><img src="/images/common/gnb/topmenu_05.gif" alt="CS Center" onmouseover="this.src='/images/common/gnb/topmenu_05_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_05.gif'"  /></a></li>
+                <li class="topmenu_bar01"><img src="/images/common/gnb/topmenu_bar01.gif" alt="" /></li>
+                <li><a href="http://www.elandclub.com/?_wpoint=TOP_EC" target="_blank"><img src="/images/common/gnb/topmenu_06.gif" alt="Eland Club" onmouseover="this.src='/images/common/gnb/topmenu_06_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_06.gif'"  /></a></li>
+            </ul>
+            <ul class="topMenu_02 pd_t5">
+            	<li><a href="http://www.spao.com/About/SpaoIs.aspx"><img src="/images/common/gnb/topmenu_07.gif" alt="Spao Is" onmouseover="this.src='/images/common/gnb/topmenu_07_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_07.gif'"  /></a></li>
+                <li class="topmenu_bar02"><img src="/images/common/gnb/topmenu_bar02.gif" alt="" /></li>
+                <li><a href="http://www.spao.com/About/StoreInfo.aspx"><img src="/images/common/gnb/topmenu_08.gif" alt="Store Locator" onmouseover="this.src='/images/common/gnb/topmenu_08_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_08.gif'"  /></a></li>
+                <li class="topmenu_bar02"><img src="/images/common/gnb/topmenu_bar02.gif" alt="" /></li>
+                <li><a href="http://www.spao.com/About/SiteMap.aspx"><img src="/images/common/gnb/topmenu_09.gif" alt="Sitemap" onmouseover="this.src='/images/common/gnb/topmenu_09_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_09.gif'"  /></a></li>
+                <li class="topmenu_bar02"><img src="/images/common/gnb/topmenu_bar02.gif" alt="" /></li>
+                <li><a href="http://www.spao.com/About/News.aspx"><img src="/images/common/gnb/topmenu_10.gif" alt="Notice" onmouseover="this.src='/images/common/gnb/topmenu_10_ov.gif'" onmouseout="this.src='/images/common/gnb/topmenu_10.gif'"  /></a></li>
+            </ul>
+            <!-- topBanner -->
+            <div class="topBanner">
+            <h2 class="blind">상단 배너 영역</h2>
+            <p>
+            
+                
+
+<p>&nbsp;</p>
+            
+            </p>
+            </div>
+            <!-- //topBanner -->
+      	</div>
+      	<!-- //topMenu-->
+      	<!-- topNotice -->
+      	<div class="topNotice">
+      		<h2 class="blind">상단 공지사항 배너</h2>
+        	<p><a>10월 무이자 EVENT</a> </p>
+      	</div>
+      	<!-- //topNotice -->
+      	<!-- topSearch -->
+      	<div class="topSearch">
+      		<h2 class="blind">검색영역</h2>
+        	<p>    
+        	    <table border="0" cellspacing="0" cellpadding="0">
+                <tr> 	
+                    <td>
+        	            
+                        <input name="query" id="query" type="text" size="25" onclick="initSText();" onkeypress="javascript: return Search_Keydown(event);" style=""  class="inp_box01" />
+                        
+                    </td>
+                    <td>
+                        <a href="javascript:Search($J('#query'))"><img src="/images/common/btn/top_searchBt.gif" alt="" /></a>    
+                    </td>
+                </tr>
+                </table>
+        	</p>
+   	  </div>
+      	<!-- //topSearch -->
+ </div>     	
+        
+  <!-- Menu -->
+
+<div style="z-index:99999;margin-bottom:5px; margin-top:25px;" class="gnb">
+    <input type="hidden" id="hdnSelCIdx" value="0" />
+    <table width="930" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      
+      
+      <td><a href="/default.aspx"><img class="TMenu" src="/images/common/gnb/gnb_01.gif" onmouseout="this.src='/images/common/gnb/gnb_01.gif'" onmouseover="this.src='/images/common/gnb/gnb_01_o.gif'"/></a></td>
+      
+      <td><img src="/images/common/gnb/gnb_bar.gif"/></td>
+    
+      
+      
+      <td><a href="/Theme/Themewide.aspx?SeqNo=5934&SC=43088"><img class="TMenu" src="/images/common/gnb/gnb_03.gif" onmouseout="this.src='/images/common/gnb/gnb_03.gif'" onmouseover="this.src='/images/common/gnb/gnb_03_o.gif'"/></a></td>
+      
+      <td><img src="/images/common/gnb/gnb_bar.gif"/></td>
+      
+      
+      
+      <td><a href="/shop/product_main.aspx?CAT1=42776 &_wpoint=MENU_CATE1&Catstate=close"><img class="TMenu" src="/images/common/gnb/gnb_05.gif" onmouseout="this.src='/images/common/gnb/gnb_05.gif'" onmouseover="this.src='/images/common/gnb/gnb_05_o.gif'"/></a></td>
+      
+      <td><img src="/images/common/gnb/gnb_bar.gif"/></td>
+      
+      
+      
+      <td><a href="/shop/product_main.aspx?CAT1=42777 &_wpoint=MENU_CATE1&Catstate=close"><img class="TMenu" src="/images/common/gnb/gnb_07.gif" onmouseout="this.src='/images/common/gnb/gnb_07.gif'" onmouseover="this.src='/images/common/gnb/gnb_07_o.gif'"/></a></td>
+      
+      <td><img src="/images/common/gnb/gnb_bar.gif"/></td>      
+      
+      
+      
+      <td><a href="/Theme/Themewide.aspx?SeqNo=5936&SC=43089"><img class="TMenu" src="/images/common/gnb/gnb_09.gif" onmouseout="this.src='/images/common/gnb/gnb_09.gif'" onmouseover="this.src='/images/common/gnb/gnb_09_o.gif'"/></a></td>
+      
+      <td><img src="/images/common/gnb/gnb_bar.gif"/></td>
+     
+      
+      
+      <td><a href="javascript:alert('준비중입니다.'); location.href='http://www.spao.com/default.aspx';"><img class="TMenu" src="/images/common/gnb/gnb_11.gif" onmouseout="this.src='/images/common/gnb/gnb_11.gif'" onmouseover="this.src='/images/common/gnb/gnb_11_o.gif'"/></a></td>
+      
+    </tr>
+    </table>
+</div>
+
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td style='position:relative' height='115'>
+    <div class='_SMenuList' align="center" style="position:absolute; left:0px; top:0px; width:930px; z-index:99999; background:url('/images/common/gnb/gnbBg_back.png')">
+	    		<table width='930' border='0' cellspacing='0' cellpadding='0'>	    <tr>	    <td width='1' style='width:1px; '></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='/Theme/Themewide.aspx?SeqNo=5934&SC=43088'><img class='imgCategory' src='/images/common/gnb/gnb01_01.png' /></a></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='/Theme/Themewide.aspx?SeqNo=5936&SC=43089'><img class='imgCategory' src='/images/common/gnb/gnb01_02.png'/></a></td>		    </tr>		    <tr>		    <td width='16' align='left' height='14'></td>		    <td align='left'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='javascript:alert("준비중입니다.")'><img class='imgCategory' src='/images/common/gnb/gnb01_03.png'/></a></td>		    </tr>		    </table>	    </td>	    <td width='302' align='left' valign='top' style='background-image:url(/images/common/top_menu/men/sub_menu_line.png); background-repeat:repeat-y;' >			<table width='302' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_01.png'/></td>		    <td width='12' align='left'></td>		    <td width='139' align='left'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_02.png' onclick="goList('42789','42776')" /></td>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_06.png' onclick="goList('42794','42776')" /></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_03.png' onclick="goList('42791','42776')" /></td>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_07.png' onclick="goList('42795','42776')" /></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_04.png' onclick="goList('42792','42776')" /></td>		    <td width='12' align='left'></td>		    <td width='139' align='left'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_05.png' onclick="goList('42793','42776')"/></td>		    <td width='12' align='left'></td>		    <td width='139' align='left'></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/men/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_02.png' onclick="goList('42802','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_03.png' onclick="goList('42803','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_04.png' onclick="goList('42804','42776')"/></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/men/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_02.png' onclick="goList('42805','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_03.png' onclick="goList('42806','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_06.png' onclick="goList('42807','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_05.png' onclick="goList('42808','42776')"/></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/men/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_02.png' onclick="goList('42809','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_03.png' onclick="goList('42811','42776')"/></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_02.png' onclick="goList('76')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_03.png' onclick="goList('77')"/></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    </table>	    </td>	    </tr>	    </table>
+    </div>
+</td></tr>
+</table>
+</div>
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td style='position:relative' height='115'>
+    	<div class='_SMenuList' align="center" style="position:absolute; left:0px; top:0px; width:930px; z-index:99999; background:url('/images/common/gnb/gnbBg_back.png')">
+	    	    <table width='930' border='0' cellspacing='0' cellpadding='0'>	    <tr>	    <td width='1' ></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='/Theme/Themewide.aspx?SeqNo=5934&SC=43088'><img class='imgCategory' src='/images/common/gnb/gnb01_01.png' /></a></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='/Theme/Themewide.aspx?SeqNo=5936&SC=43089'><img class='imgCategory' src='/images/common/gnb/gnb01_02.png'/></td>		    </tr>		    <tr>		    <td width='16' align='left' height='14'></td>		    <td align='left'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><a href='javascript:alert("준비중입니다.")'><img class='imgCategory' src='/images/common/gnb/gnb01_03.png'/></a></td>		    </tr>		    </table>	    </td>	    <td width='302' align='left' valign='top' style='width:1px; background-image:url(/images/common/top_menu/women/sub_menu_line.png); background-repeat:repeat-y'>		    <table width='302' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_01.png'/></td>		    <td width='12' align='left'></td>		    <td width='139' align='left'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_02.png' onclick="goList('42816','42777')"/></td>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_06.png' onclick="goList('42820','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_03.png' onclick="goList('42817','42777')"/></td>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_07.png' onclick="goList('42821','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_04.png' onclick="goList('42818','42777')"/></td>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_08.png' onclick="goList('42822','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb02_05.png' onclick="goList('42819','42777')"/></td>		    <td width='12' align='left'></td>		    <td width='139' align='left'></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/women/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_02.png' onclick="goList('42823','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_03.png' onclick="goList('42824','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_04.png' onclick="goList('42825','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb03_05.png' onclick="goList('42826','42777')"/></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/women/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_02.png' onclick="goList('42827','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_03.png' onclick="goList('42828','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_06.png' onclick="goList('42829','42776')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb04_04.png' onclick="goList('42830','42777')"/></td>		    </tr>		    </table>	    </td>	    <td width='1' style='width:1px; background-image:url(/images/common/top_menu/women/sub_menu_line.png); background-repeat:repeat-y'></td>	    <td width='151' align='left' valign='top'>		    <table width='151' border='0' cellspacing='0' cellpadding='0'>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_02.png' onclick="goList('42831','42777')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb05_03.png' onclick="goList('42833','42777')"/></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_01.png'/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_02.png' onclick="goList('82')"/></td>		    </tr>		    <tr>		    <td class='tdCategory' width='12' align='left'></td>		    <td width='139' align='left'><img class='imgCategory' src='/images/common/gnb/gnb06_03.png' onclick="goList('83')"/></td>		    </tr>		    <tr>		    <td width='12' height='10'></td>		    <td width='139' height='10'></td>		    </tr>		    </table>	    </td>	    </tr>	    </table>
+    </div>
+</td></tr>
+</table>
+</div>
+    
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td></td></tr>
+</table>
+</div>
+
+
+
+
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:none">
+
+<table width="930" border="0" cellspacing="0" cellpadding="0">
+<tr><td></td></tr>
+</table>
+</div>
+
+<div class="SMenu" align="center" style="position:absolute; left:0px; top:125px; width:930px;z-index:99999;display:block"></div>
+
+
+    
+  
+
+
+
+
+
+<script type="text/javascript">
+
+    function Search(obj) {
+        var query = obj.val();
+        //obj.css("background-Image").val();        
+        query = $J.trim(query);
+        if (query == "") {
+            alert("검색어를 입력해주십시오");
+            obj.focus();
+            return;
+        }
+
+        location.href = "http://www.spao.com/FTS/Product_Search_FTS.aspx?_wpoint=SEARCHTAB&amp;Skey=" + encodeURIComponent(query);
+    }
+
+    function Search_Keydown(key) {
+
+
+        switch (key.keyCode) {
+            case 13: // enter keyCode
+
+                Search($J('#query'));
+                Event.stop(key);
+
+                break;
+        }
+    }
+
+    function initSText() {
+        $J('#query').css("background-Image", "");
+    }
+
+</script>
+
+
+<!-- Header 끝 -->
+<!-- Contents 시작 -->
+  
+    
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$hiMaxQty" id="ctl00_ContentPlaceHolder1_hiMaxQty" value="10" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnCount" id="ctl00_ContentPlaceHolder1_hdnCount" value="4" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$hiDeliveryBasisFee" id="ctl00_ContentPlaceHolder1_hiDeliveryBasisFee" value="30000" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$hiDeliveryFee" id="ctl00_ContentPlaceHolder1_hiDeliveryFee" value="3000" />
+    <select name="ctl00$ContentPlaceHolder1$ddlSalePrice" id="ctl00_ContentPlaceHolder1_ddlSalePrice" style="display: none">
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+	<option value="19900">19900</option>
+
+</select>
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$txtCouponNo" id="ctl00_ContentPlaceHolder1_txtCouponNo" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$txtDCApplyGubun" id="ctl00_ContentPlaceHolder1_txtDCApplyGubun" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$txtDCRate" id="ctl00_ContentPlaceHolder1_txtDCRate" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$txtDCAmount" id="ctl00_ContentPlaceHolder1_txtDCAmount" />
+    <input type="hidden" name="ctl00$ContentPlaceHolder1$txtSPrice" id="ctl00_ContentPlaceHolder1_txtSPrice" />
+    <!-- 카테고리 시작 //-->
+    <!--
+<script>
+function ShowOCate( vl ) {
+    var obj = document.all["layer_otherCat"];
+    var objCom = document.all["ddlItem"];
+    if(objCom)
+        objCom.style.display = (vl) ? "none" : "";
+
+    if(obj)
+        obj.style.display = (vl) ? "" : "none";
+
+}
+</script>
+
+      <table width="100" border="0" cellspacing="0" cellpadding="0">
+
+        <tr> 
+          <td><a href="/shop/product_main.aspx?CAT1="><img src="/images/20080401/product2/leftTitle/.gif" border="0" /></a></td>
+        </tr>
+      </table>
+      
+      //-->
+    <!-- 카테고리 끝 //-->
+    <!-- 신상품 시작 //-->
+    <!--
+    //-->
+    <!-- 신상품 끝 //-->
+    <div id="header" align="center">
+        <!-- Header 끝 -->
+        <div id="common" align="center">
+            <div id="container" align="left" style="border:1px #e6e6e6 solid;">
+                <!-- Contents 시작 -->
+                <div class="detail_top">
+                    <table width="930" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <table width="930" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td class="txt_9a" height="25">
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h2 class="blind">상품 주문 정보 입력 영역</h2>
+                                            <!-- detail_images -->
+                                            <p>
+                                                <img src="../../images/detail/detail_line01.gif" alt="" /></p>
+                                                <div class="detail_images">
+            	                                <h2 class="blind">디테일 이미지 영역</h2>
+                                                <p class="ma_t15 ma_b12"><img id="ctl00_ContentPlaceHolder1_imgDetail" onfocus="this.blur()" onclick="javascript:goDetailView('SPCK248C01')" src="http://imageserver.2001outlet.com/ImageFile/Products/CNO2001/2012/11/600/SPCK248C01_1.jpg" style="height:550px;width:550px;border-width:0px;cursor: pointer" /></p>
+                                                    <div class="detail_view" >
+                	                                    <h2 class="blind">디테일 뷰 섬네일</h2>
+                                                        <ul>
+                                                            
+                                                                <li class="ma_r10"><img id="ctl00_ContentPlaceHolder1_rThumnailImage_ctl00_imgThumbnail" onmouseover="javascript:ChangeThumnailImage(this)" src="http://imageserver.2001outlet.com/ImageFile/Products/CNO2001/2012/11/130/SPCK248C01_1.jpg" style="height:47px;width:47px;border-width:0px;cursor:hand" /></li>
+                                                            
+                                                                <li class="ma_r10"><img id="ctl00_ContentPlaceHolder1_rThumnailImage_ctl01_imgThumbnail" onmouseover="javascript:ChangeThumnailImage(this)" src="http://imageserver.2001outlet.com/ImageFile/Products/CNO2001/2012/11/130/SPCK248C01_2.jpg" style="height:47px;width:47px;border-width:0px;cursor:hand" /></li>
+                                                            
+                                                                <li class="ma_r10"><img id="ctl00_ContentPlaceHolder1_rThumnailImage_ctl02_imgThumbnail" onmouseover="javascript:ChangeThumnailImage(this)" src="http://imageserver.2001outlet.com/ImageFile/Products/CNO2001/2012/11/130/SPCK248C01_3.jpg" style="height:47px;width:47px;border-width:0px;cursor:hand" /></li>
+                                                            
+                                                                <li class="ma_r10"><img id="ctl00_ContentPlaceHolder1_rThumnailImage_ctl03_imgThumbnail" onmouseover="javascript:ChangeThumnailImage(this)" src="http://imageserver.2001outlet.com/ImageFile/Products/CNO2001/2012/11/130/SPCK248C01_4.jpg" style="height:47px;width:47px;border-width:0px;cursor:hand" /></li>
+                                                                                       
+                                                        </ul>                                                                      	                                    
+                                                    </div>
+                                                    <!-- //detail_view -->                                            
+                                                </div>
+                                                <!-- //detail_images -->
+                                            <p class="flo_l">
+                                                <img src="http://www.spao.com/images/detail/detail_line01.gif" style="width: 1px; height:660px;" alt="" /></p>
+                                            <!-- detail_order -->
+                                            <div class="detail_order">
+                                                <h2 class="blind">상품주문 정보 입력 영역</h2>
+                                                <h3 class="detail_h301">
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    <span id="ctl00_ContentPlaceHolder1_lblEvtTxt"></span><br />
+                                                
+                                                    <strong><span id="ctl00_ContentPlaceHolder1_ProductTitle"></span></strong>
+                                                    <input type="hidden" name="ctl00$ContentPlaceHolder1$lblBrand" id="ctl00_ContentPlaceHolder1_lblBrand" value="스파오" />
+                                                    <input type="hidden" name="ctl00$ContentPlaceHolder1$lblProductName" id="ctl00_ContentPlaceHolder1_lblProductName" value="캐시라이크 가디건" />
+                                                </h3>
+                                                <dl class="detail_orInfo">
+                                                    <dt>style NO : <span id="ctl00_ContentPlaceHolder1_lblItemCode" style="font-size: 12px">SPCK248C01</span></dt>
+                                                    <dd></dd>
+                                                    <dt class="mp_orPrice01">판매가 : </dt>
+                                                    <dd class="mp_orPrice02"><span id="ctl00_ContentPlaceHolder1_lblSalePrice"></span></dd>
+                                                    
+                                                    <dt class="flo_l ma_t30">정상가 : </dt>
+                                                    <dd class="flo_l ma_t30">&nbsp<span id="ctl00_ContentPlaceHolder1_lblProductPrice"></span></dd>
+                                                    
+                                                    <div id="dvCoupon" style="display: none">
+                                                        <dt class="flo_l ma_t30">쿠폰가 : </dt>
+                                                        <dd class="flo_l ma_t30">
+                                                            &nbsp;
+                                                            <span id="ctl00_ContentPlaceHolder1_lblCouponPrice"></span>
+                                                            <a href="javascript:btnProductCoupon_Click();" onfocus='this.blur()'>
+                                                                <img src="/Images/common/btn/coupon.gif" align="absmiddle" /></a><br />
+                                                            <span id="ctl00_ContentPlaceHolder1_lblCouponDate"></span>
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+                                                
+                                                    <img src="../../images/detail/detail_line03.gif" style="width: 360px; height:1px;" alt="" />
+                                                <dl class="detail_orSize">
+                                                    <dt>
+                                                        
+                                                        <img class="flo_l ma_r10" src="../../images/detail/detail_h401.gif" alt="색상 및 사이즈" />                                                        
+                                                        <img src="../../images/common/btn/detail_sizeBt.gif" alt="" onclick="popSizeView();" style="cursor:pointer;" />
+                                                    <dd>
+                                                        <select name="ctl00$ContentPlaceHolder1$ddlItem" id="ctl00_ContentPlaceHolder1_ddlItem" class="select_02" style="width:310px;">
+	<option value="">:: 색상 및 종류를 선택해주세요</option>
+	<option value="SPCK248C01095XL|19900|19900|4|0">09 BLACK/ 5XL </option>
+	<option value="SPCK248C011040L|19900|19900|8|0">10 RED/ 40L </option>
+	<option value="SPCK248C01105XL|19900|19900|3|0">10 RED/ 5XL </option>
+	<option value="SPCK248C011740L|19900|19900|1|0">17 BURGANDY/ 40L </option>
+	<option value="SPCK248C013430M|19900|19900|6|0">34 BEIGE/ 30M </option>
+	<option value="SPCK248C013440L|19900|19900|8|0">34 BEIGE/ 40L </option>
+	<option value="SPCK248C01345XL|19900|19900|2|0">34 BEIGE/ 5XL </option>
+	<option value="SPCK248C016030M|19900|19900|13|0">60 BLUE/ 30M </option>
+	<option value="SPCK248C016040L|19900|19900|11|0">60 BLUE/ 40L </option>
+	<option value="SPCK248C01605XL|19900|19900|3|0">60 BLUE/ 5XL </option>
+	<option value="SPCK248C018030M|19900|19900|7|0">80 PURPLE/ 30M </option>
+	<option value="SPCK248C018040L|19900|19900|7|0">80 PURPLE/ 40L </option>
+	<option value="SPCK248C01805XL|19900|19900|5|0">80 PURPLE/ 5XL </option>
+
+</select>
+                                                    </dd>
+                                                </dl>
+                                                <p>
+                                                    <img src="../../images/detail/detail_line03.gif" style="width:360px; height:1px;" alt="" />
+                                                </p>
+                                                <dl class="detail_orAmount">
+                                                    
+                                                    <table width="46px" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td>
+                                                                <dt>
+                                                                    <img src="../../images/detail/detail_h402.gif" alt="주문수량" /></dt>
+                                                            </td>
+                                                            <td>
+                                                                <dd>
+                                                                    &nbsp;<input name="ctl00$ContentPlaceHolder1$txtBuyCount" type="text" maxlength="3" id="ctl00_ContentPlaceHolder1_txtBuyCount" class="select_02" value="1" onkeydown="handlerNum(this);" onblur="handleBlur(this);" style="height:16px;width:20px;" /></dd>
+                                                            </td>
+                                                            <td width="16px">
+                                                                
+                                                                <a href="JavaScript:upCasting();" onfocus="this.blur();">
+                                                                    <img src="/images/20101101/product/detail/arrow_01.gif" alt="" width="13" height="9" /></a><br />
+                                                                <a href="JavaScript:downCasting();" onfocus="this.blur();">
+                                                                    <img src="/images/20101101/product/detail/arrow_02.gif" alt="" width="13" height="9" /></a>
+                                                            </td>
+                                                        </tr>                                                        
+                                                    </table>
+                                                    
+                                                </dl>
+                                                <p>
+                                                    <img src="../../images/detail/detail_line03.gif" style="width: 360px; height:1px;" alt="" /></p>
+                                                <div style="margin-left:62px;padding:15px 0; display:inline-block">
+                                                    <a href="javascript:btnBasketAdd_Click()" onfocus='this.blur()'><img src="../images/common/btn/preview_btCart.gif" id="imgBasketAdd" alt="" /></a>
+                                                    <a href="javascript:goOrder()" onfocus='this.blur()'><img src="../images/common/btn/preview_btCash.gif" id="imgOrder" alt="" /></a> 
+                                                    <a href="javascript:goWishList()"onfocus='this.blur()'><img src="../images/common/btn/preview_btWish.gif" id="imgWishList" alt="" /></a>
+                                                </div>
+                                                <p>
+                                                    <img src="../../images/detail/detail_line03.gif" style="width: 360px; height:1px;" alt="" /></p>
+                                                  <h4 style="margin-left:25px; margin-top:10px;"  ><img src="../../images/detail/detail_h403.gif" alt="무이자 카드" /></h4>
+                                                    <dl class="detail_orCard" style="margin-left:25px; margin-top:10px;">
+                	                                    <dt>롯데카드</dt>
+                                                        <dd>5만원 이상 2,3,5개월</dd>
+                                                        <dt>신한카드</dt>
+                                                        <dd>5만원 이상 2,3,5개월</dd>
+                                                        <dt>현대카드</dt>
+                                                        <dd>5만원 이상 2,3개월</dd>
+                                                        <dt>외환카드</dt>
+                                                        <dd>5만원 이상 2,3,4,5개월</dd>
+                                                        <dt>비씨카드</dt>
+                                                        <dd>5만원 이상 2,3개월</dd>
+                                                        <dt>삼성카드</dt>
+                                                        <dd>5만원 이상 2,3,4,5개월</dd>
+                                                        <dt>국민카드</dt>
+                                                        <dd>5만원 이상 2,3,5개월</dd>
+                                                    </dl>
+                                            </div>
+                                            <!-- //detail_order -->
+                                        </td>
+                                    </tr>                                    
+                                    <tr>
+                                        <td>
+                                            <img src="../../images/detail/detail_line01.gif" alt="" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td style="background-color:White" align="center">    
+                                            <table width="930" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                <tr>
+                                                    <td valign="top" align="center">
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table width="930" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                <tr>
+                                                    <td valign="top" align="center">
+                                                    	<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/top.JPG">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01.jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(2).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(3).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(4).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(5).jpg">
+   	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(6).jpg">	                                                    	                									<img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(7).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(8).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(9).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01%20(10).jpg">
+	                                                    <img src="http://www.fashionstory.co.kr/img_prd/SPAOCOM/SPCK248C01_size.jpg">
+                                                    </td>
+                                                </tr>
+                                            </table>                                            
+                                            <table width="930" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                <tr>
+                                                    <td valign="top" align="center">
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </table>                                            
+                                        </td>
+                                        
+                                    </tr>                                    
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<div>
+                        	<td>
+                        	
+	        		 		<h3> People Looks </h3>
+	        		 		<div id="myCarousel" class="carousel slide">  					
+								<div class="carousel-inner">
+    								<div class="active item">
+    									<ul class="thumbnails">
+	  										<li class="span5">
+    											<a href="" class="thumbnail">
+	      											<img src="http://placehold.it/300x200" alt="">
+    											</a>
+			  								</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+				    							<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+										</ul>
+    								</div>
+    								<div class="item">
+    									<ul class="thumbnails">
+    									 	<li class="span5">
+    											<a href="" class="thumbnail">
+	      											<img src="http://placehold.it/300x200" alt="">
+    											</a>
+			  								</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+				    							<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  										</ul>
+    								</div>
+    								<div class="item">
+    									<ul class="thumbnails">
+    									 	<li class="span5">
+    											<a href="" class="thumbnail">
+	      											<img src="http://placehold.it/300x200" alt="">
+    											</a>
+			  								</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+	    										<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  											<li class="span5">
+				    							<a href="" class="thumbnail">
+      												<img src="http://placehold.it/300x200" alt="">
+    											</a>
+  											</li>
+  										</ul>
+    								</div>
+  								</div>  
+  								<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  								<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+							</div>
+
+                        	</td>
+                        	</div>
+                        	<!--  Han Jin-Soo -->
+                        </tr>
+                        <tr>
+                            <td style="background-color:White">
+                                
+                                <div class="detail_comTop">
+            	                    <h3 class="ct_title01">상품평</h3>
+                                </div>
+                                <table border="0" align="center" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="height:10px;">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            <table border="0" cellspacing="0" cellpadding="0" align="center">
+                                                <tr>
+                                                    <td bgcolor="#eaeaea" height="1">
+                                                    </td>
+                                                </tr>
+                                            </table>                                            
+                                            <table border="0" cellpadding="0" cellspacing="0" align="center" width="930">
+                                                <tr>
+                                                    <td>
+                                                        
+<style type="text/css">
+    .ReviewT1
+    {
+        font-weight: bold;
+    }
+    .ReviewT2
+    {
+        font-weight: normal;
+    }
+</style>
+
+<script language="javascript">
+var viewComment = false;
+function viewCommentFunc(idx) {
+    
+    var objComment = document.all["revComment"];
+    var objRTitle = document.all["ReviewTitle"];
+    
+    if(idx < 0) {
+        var img1 = document.getElementById("btnExpand1");
+        var img2 = document.getElementById("btnExpand2");
+       
+        viewComment = !viewComment;
+        var displayStr = (viewComment) ? "" : "none";
+        var boldStyle = (viewComment) ? "ReviewT1" : "ReviewT2";
+       
+        if(objComment) {
+            img1.src = img2.src = (viewComment) ? "/Images/20101101/product/detail/review/but_expandClose.jpg" : "/images/20101101/product/detail/review/but_expand.jpg";
+            if(objComment.length > 1) { 
+                for(var ii = 0; ii < objComment.length; ii++) {
+                    objComment[ii].style.display = displayStr;
+                    objRTitle[ii].className = boldStyle;
+                }
+            } else {
+                objComment.style.display = displayStr;
+                objRTitle.className = boldStyle;
+            }
+        }
+    } else {
+        if(objComment) {
+            if(objComment.length > 1) {
+                objComment[idx].style.display = (objComment[idx].style.display == "") ? "none" : "";
+                objRTitle[idx].className = (objComment[idx].style.display == "") ? "ReviewT1" : "ReviewT2";
+            } else {
+                objComment.style.display = (objComment.style.display == "") ? "none" : "";
+                objRTitle.className = (objComment.style.display == "") ? "ReviewT1" : "ReviewT2";
+            }
+        }
+    }
+}
+function delReview(idx) {
+    if(confirm("정말로 삭제 하시겠습니까?")) {
+        var url = "/Common/ajax/ProductReviewAjax.aspx";
+        var pars = "PROC=" + encodeURIComponent("TP[+]RepleDelete[/]PA1[+]" + idx + "[/]PA2[+]-1[/]PA3[+] [/]");
+        Ajax_Request(url, "POST", pars, ReloadPage);
+    }
+}
+function ReloadPage(Req) {
+    try {
+        var rtnValue = Req.responseText;
+		if (rtnValue != "")
+			if (rtnValue == "true") {
+                var str = location.href;
+                var eidx = str.indexOf('#');
+                var timestamp = (new Date().getTime().toString().substring(0, 10));
+                if (eidx < 0) { eidx = str.length; } 
+                str = str.substring(0, eidx); 
+                eidx = str.indexOf('&t=');
+                if (eidx < 0) { eidx = str.length; } 
+                //alert(str.substring(0, eidx) + '&t=' + timestamp);
+                location.href = str.substring(0, eidx) + '&t=' + timestamp;
+            			
+			    //location.href = "/shop/product_detail.aspx?PC=SPCK248C01&MD=DC";
+		    } else {
+		        alert('처리도중 오류가 발생하였습니다.');
+		    }
+	}
+	catch(e) {}
+}
+function Ajax_Request(pUrl, pMethod, pPars, pCompleteCallBack)
+{
+    var myAjax = new Ajax.Request(pUrl,
+        {
+	        method : pMethod ,
+	        parameters : pPars ,
+	        onComplete : pCompleteCallBack
+        }
+    );
+}
+
+    function popOpinion() {
+        alert("상품평은 로그인후 이용가능합니다.");
+        Login_PopWindow();
+    }
+    
+    function writeComment(idx) {
+        alert('답글쓰기는 로그인후 이용가능합니다.');
+        Login_PopWindow();
+    }
+    
+    function writeReviewBlocker(idx) {
+        alert('불량 상품평 신고는 로그인후 이용가능합니다.');
+        Login_PopWindow();
+    }
+
+
+        function resizeReviewImg(obj) {
+            var newObj = new Image();
+            newObj.src = obj.src;
+            
+            if (parseInt(newObj.width) > 500) {
+                newObj.width = 500;
+            } 
+            
+            obj.width = newObj.width;
+        }
+        
+        function Product_ReviewList() {
+            window.open("/Shop/Product_ReviewList_Pop.aspx?PC=SPCK248C01", "", "width=800, height=650,scrollbars=yes");
+        }
+       
+</script>
+
+<table width="870" border="0" align="center" cellpadding="0" cellspacing="0">
+    <!--#######################-->
+    <tr>
+        <td align="center">
+            <table width="870" height="24" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="98">
+                        <select id="sSearchOpt" onchange="javascript: changeList(this);">
+                            <option value="1">최근등록순</option>
+                            <option value="2">포토상품평</option>
+                            <option value="3">구매자상품평</option>
+                            <option value="4">베스트상품평</option>
+                        </select>
+                        <input name="ctl00$ContentPlaceHolder1$UCProductReview$hSearchOpt" type="hidden" id="ctl00_ContentPlaceHolder1_UCProductReview_hSearchOpt" value="1" />
+                    </td>
+                    <td width="340" align="left">
+                        총 <span class="txt_9e bb" id="bold">
+                            0개</span>의 상품평이
+                        있습니다.
+                    </td>
+                    <td width="290" align="right">
+                         <a href="JavaScript:viewCommentFunc(-1);" onfocus="this.blur();">
+                                    <img src="/images/20101101/product/detail/review/but_expand.jpg" id="btnExpand1"></a>
+                        <a href="JavaScript:popOpinion();" onfocus="this.blur();">
+                            <img src="/images/20101101/product/detail/review/but_write.jpg" width="76" height="27"></a>
+                    </td>
+                </tr>
+            </table>
+            <table width="870" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="5" bgcolor="efefef">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="5">
+                    </td>
+                </tr>
+            </table>
+            
+            <table width='730' height='24' border='0' cellpadding='0' cellspacing='0'><tr><td height='4'></td></tr><tr><td align='center'>등록된 상품평이 없습니다.</td></tr><tr><td height='4'></td></tr></table>
+            <table width="870" height="24" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="5" bgcolor="efefef" colspan="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="5" colspan="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="98">
+                    </td>
+                    <td width="340" align="left">
+                    </td>
+                    <td width="290" align="right">
+                         <a href="JavaScript:viewCommentFunc(-1);" onfocus="this.blur();">
+                                    <img src="/images/20101101/product/detail/review/but_expand.jpg" id="btnExpand2"></a>
+                        <a href="JavaScript:popOpinion();" onfocus="this.blur();">
+                            <img src="/images/20101101/product/detail/review/but_write.jpg" width="76" height="27"></a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="height:15px;">
+        </td>
+    </tr>
+</table>
+
+<script language="javascript" type="text/javascript">
+    // select init
+    var selOptVal = document.getElementById("ctl00_ContentPlaceHolder1_UCProductReview_hSearchOpt").value;
+    var selOpt = document.getElementById("sSearchOpt");
+    selOpt.value = selOptVal;
+
+    function changeList(obj) {
+        location.href = location.pathname + "?PC=SPCK248C01&SearchOpt=" + obj.options[obj.selectedIndex].value + "#2";
+    }
+</script>
+
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:White">
+                                
+                                <!-- detail_linkPd -->
+                                <div class="detail_linkPd">
+        	                        <h2 class="blind">연관상품 리스트</h2>
+                                    <h3 class="ct_title01">추천상품</h3>
+                                    <div class="detail_pd2 flo_l">
+            	                        <p><span id="ctl00_ContentPlaceHolder1_BESTIMAGE1"><a href='/shop/product_detail.aspx?PC=SPJD249C01'><img src='http://imageserver.2001outlet.com//ImageFile/Products/CNO2001/2012/11/SPJD249C01_1.jpg' alt='' width='231' height='235' /></a></span></p>
+                                        <p class="detail_title01">베이직 다운 베스트</p>
+                                        <p class="detail_pr"><span class="detail_pr01">29,900</span><span class="detail_pr02">29,900</span></p> 
+                                    </div>
+                                    <!-- //detail_pd -->
+                                    <p class="flo_l"><img src="../../images/man/right_line.gif" alt="" /></p>
+                                     <div class="detail_pd flo_l">
+            	                        <p><span id="ctl00_ContentPlaceHolder1_BESTIMAGE2"><a href='/shop/product_detail.aspx?PC=SPJD24TC02'><img src='http://imageserver.2001outlet.com//ImageFile/Products/CNO2001/2012/11/SPJD24TC02_1.JPG' alt='' width='231' height='235' /></a></span></p>
+                                        <p class="detail_title01">베이직 다운 점퍼</p>
+                                        <p class="detail_pr"><span class="detail_pr01">59,900</span><span class="detail_pr02">29,900</span></p> 
+                                    </div>
+                                    <!-- //detail_pd -->
+                                    <p class="flo_l"><img src="../../images/man/right_line.gif" alt="" /></p>
+                                    <div class="detail_pd flo_l">
+            	                        <p><span id="ctl00_ContentPlaceHolder1_BESTIMAGE3"><a href='/shop/product_detail.aspx?PC=SPJD249G01'><img src='http://imageserver.2001outlet.com//ImageFile/Products/CNO2001/2012/11/SPJD249G01_1.jpg' alt='' width='231' height='235' /></a></span></p>
+                                        <p class="detail_title01">여성 베이직 다운 베...</p>
+                                        <p class="detail_pr"><span class="detail_pr01">29,900</span><span class="detail_pr02">29,900</span></p> 
+                                    </div>
+                                    <!-- //detail_pd -->
+                                    <p class="flo_l"><img src="../../images/man/right_line.gif" alt="" /></p>
+                                    <div class="detail_pd flo_l ma_rm3">
+            	                       <p><span id="ctl00_ContentPlaceHolder1_BESTIMAGE4"><a href='/shop/product_detail.aspx?PC=SPMZ221G01'><img src='http://imageserver.2001outlet.com//ImageFile/Products/CNO2001/2012/10/SPMZ221G01_1.jpg' alt='' width='231' height='235' /></a></span></p>
+                                       <p class="detail_title01">스파오 여성 베이직 ...</p>
+                                       <p class="detail_pr"><span class="detail_pr01">12,900</span><span class="detail_pr02">29,900</span></p> 
+                                    </div>
+                                    <!-- //detail_pd -->
+                               </div>
+                              <!-- //detail_linkPd -->
+                                
+                            </td>                                            
+                        </tr>                                                
+                    </table>
+                </div>                
+                <script language="javascript" type="text/javascript">
+                    CheckItem();
+                    SubTotalCost();
+
+                    document.getElementById("imgBasketAdd").style.visibility = "visible";
+                    document.getElementById("imgOrder").style.visibility = "visible";
+                    document.getElementById("imgWishList").style.visibility = "visible";    
+                </script>
+            </div>
+        </div>
+    </div>
+    <!--쿠폰체크 체크 -->
+    <div id="divCouponCheck" style="position: absolute; display: none;">
+        <table width="384" height="217" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <img src="/Images/20080401/product2/pop2.gif" width="384" height="217"
+                        border="0" usemap="#CouponPopMap">
+                </td>
+            </tr>
+        </table>
+        <map name="CouponPopMap">
+            <!--확인-->
+            <area shape="rect" coords="123,165,256,195" href="javascript:coupon_close();" onfocus="blur()">
+            <area shape="rect" coords="342,5,366,25" href="javascript:coupon_close();" onfocus="blur()">
+        </map>
+    </div>
+
+
+    <!-- UCSiteMap 시작 -->
+    
+<!-- Sitemap -->
+<div class="footSitemap">
+	<h2 class="blind">하단 사이트 맵 메뉴 영역</h2>
+    <div class="fMenu_man">
+        <h3><a href="#">MAN</a></h3>
+        <dl class="flo_l ma_r95">
+            <dt>TOPS</dt>
+            <dd><a href="#">Tees</a></dd>
+            <dd><a href="#">Polo</a></dd>
+            <dd><a href="#">Shirts</a></dd>
+            <dd><a href="#">Hoodies</a></dd>
+            <dd><a href="#">Knits</a></dd>
+            <dd><a href="#">Vests</a></dd>
+            <dd><a href="#">Outers</a></dd>
+        </dl>
+        <dl class="flo_l ma_r30">
+            <dt>BOTTOMS</dt>
+            <dd><a href="#">Jeans</a></dd>
+            <dd><a href="#">Pants</a></dd>
+            <dd><a href="#">Shorts</a></dd>
+            <dt class="ma_t15">COLLABORATION</dt>
+            <dd><a href="#">Havard &amp; Yale</a></dd>
+            <dd><a href="#">aLEL</a></dd>
+        </dl>
+        <dl class="flo_l ma_r75">
+            <dt>ACCESSARIES</dt>
+            <dd><a href="#">Bag &amp; Shoes</a></dd>
+            <dd><a href="#">Etc.</a></dd>
+            <dt class="ma_t32">INNERWEARS</dt>
+            <dd><a href="#">Roomwears</a></dd>
+            <dd><a href="#">Innerwears</a></dd>
+            <dd><a href="#">Socks</a></dd>
+        </dl>
+    </div><!-- //fMenu_man -->
+    
+    <div class="fMenu_woman">
+        <h3><a href="#">WOMEN</a></h3>
+        <dl class="flo_l ma_r85">
+            <dt>TOPS</dt>
+            <dd><a href="#">Tees</a></dd>
+            <dd><a href="#">Shirts</a></dd>
+            <dd><a href="#">Hoodies</a></dd>
+            <dd><a href="#">Knits</a></dd>
+            <dd><a href="#">Vests</a></dd>
+            <dd><a href="#">Outers</a></dd>
+            <dd><a href="#">One-pieces</a></dd>   
+        </dl>
+        <dl class="flo_l ma_r35">
+            <dt>BOTTOMS</dt>
+            <dd><a href="#">Jeans</a></dd>
+            <dd><a href="#">Pants</a></dd>
+            <dd><a href="#">Shorts</a></dd>
+            <dd><a href="#">Skirts</a></dd>
+            <dt class="ma_t35">COLLABORATION</dt>
+            <dd><a href="#">Havard &amp; Yale</a></dd>
+            <dd><a href="#">aLEL</a></dd>
+        </dl>
+         <dl class="flo_l">
+            <dt>ACCESSARIES</dt>
+            <dd><a href="#">Bag &amp; Shoes</a></dd>
+            <dd><a href="#">Etc.</a></dd>
+            <dt class="ma_t20">INNERWEARS</dt>
+            <dd><a href="#">Roomwears</a></dd>
+            <dd><a href="#">Innerwears</a></dd>
+            <dd><a href="#">Shorts,Legwaers</a></dd>
+        </dl>
+    </div><!-- fMenu_woman -->
+    
+    <div class="fMenu_menu">
+         <h3><a href="#">NEW &amp; BEST</a></h3>
+         <h3><a href="#">ON SALE</a></h3>
+         <h3><a href="#">SPECIAL</a></h3>
+         <h3><a href="#">EVENT</a></h3>
+    </div><!-- //fMenu_menu --> 
+    <div class="fMenu_plan">
+     <h3><a href="#">기획전</a></h3>
+     <ul class="fMenu_plan01">
+     	<li><a href="#">2012 CLEARANCE SALE</a></li>
+        <li><a href="#">SPAO KNITS</a></li>
+        <li><a href="#">LONG SLEEVE T-SHIRTS</a></li>
+        <li><a href="#">스파오 그래픽T - 마블 코믹스, 어벤저스</a></li>
+     	<li><a href="#">스파오 그래픽T - 머펫</a></li>
+        <li><a href="#">스파오 그래픽T - 만화 원피스</a></li>
+        <li><a href="#">스파오 그래픽T - 모모트</a></li>
+     </ul>
+     <ul class="fMenu_plan02">
+     	<li><a href="#">SPAO 베이직 다운 베스트</a></li>
+        <li><a href="#">CHECK SHIRTS</a></li>
+        <li><a href="#">SPAO HOODIES</a></li>
+        <li><a href="#">스파오 그래픽T - 밤비</a></li>
+        <li><a href="#">스파오 그래픽T - 앨리스</a></li>
+        <li><a href="#">스파오 그래픽T - 로보트 태권 V</a></li>
+     </ul>
+    </div><!-- //fMenu_plan --> 
+</div><!-- //footSitemap -->
+    <!-- UCSiteMap 끝 -->
+  
+  
+    <!-- Footer 시작 -->
+    
+<style type="text/css"> 
+    #divMenu {position:absolute; z-index:3;left:50%; margin-left:470px;margin-top: 0px;} 
+</style>
+<script type="text/javascript">
+function goWish() {
+    
+        Login_PopWindow();
+    
+}
+</script>
+<!-- quickMenu -->
+    <div id="divMenu">
+    <div class="wingBanner2">
+    	     <p>
+    	     
+
+<p>&nbsp;</p>
+    	     </p>
+        </div><!-- //wingBanner -->
+        <div class="quickMenu">
+    	    <h2 class="blind">퀵메뉴</h2>
+            <h3 class="ma_b10"><img src="/images/common/quick/quick_top.gif" alt="오늘본 상품" /></h3>
+            <p class="ma_b5">[0]</p>
+            <p class="quick_prev"><button type="button" id="btnUpScrolling" >이전상품 보기</button></p>
+            <p class="quick_next"><button type="button" id="btnDownScrolling" >다음상품 보기</button></p>
+            
+            <ul style="height: 54px; overflow: hidden;" id="ProductList"  scrolling="no" >
+                
+        	    <li class='ma_b5'><a href='#'><img src='/images/common/quick/quick_box.gif' alt='상품1' /></a></li>
+            </ul>
+           
+            <p class="quick_top" onclick="location.href='#header'"><button type="button" >top</button></p>
+            <p><img src="/images/common/quick/quick_bottom.gif" alt="" /></p>
+            
+            
+        </div><!-- //quickMenu -->
+        <!-- wingBanner -->
+        
+        <div class="wingBanner">
+    	     <p>
+    	     <a href="http://www.spao.com/shop/product_detail.aspx?PC=SPjd24tc02">
+	<img border="0" alt="" src="http://imageserver.2001outlet.com/ImageFile/MainDesign/spao/20121031_wing_bn.jpg" /></a>
+    	     </p>
+        </div><!-- //wingBanner -->
+    </div>
+
+<script type="text/javascript">
+    
+    //<![CDATA[
+    function initMoving(target, position, topLimit, btmLimit) {
+    
+        
+        if (!target)
+            return false;
+
+        var obj = target;
+        obj.initTop = position;
+        obj.topLimit = topLimit;
+        obj.bottomLimit = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) - btmLimit - obj.offsetHeight;
+
+        obj.style.position = "absolute";
+        obj.top = obj.initTop;
+        obj.left = obj.initLeft;
+
+        if (typeof (window.pageYOffset) == "number") { //WebKit 
+            obj.getTop = function() {
+                return window.pageYOffset;
+            }
+        } else if (typeof (document.documentElement.scrollTop) == "number") {
+            obj.getTop = function() {
+                return Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+            }
+        } else {
+            obj.getTop = function() {
+                return 0;
+            }
+        }
+
+        if (self.innerHeight) { //WebKit 
+            obj.getHeight = function() {
+                return self.innerHeight;
+            }
+        } else if (document.documentElement.clientHeight) {
+            obj.getHeight = function() {
+                return document.documentElement.clientHeight;
+            }
+        } else {
+            obj.getHeight = function() {
+                return 500;
+            }
+        }
+
+        obj.move = setInterval(function() {
+            if (obj.initTop > 0) {
+                pos = obj.getTop() + obj.initTop;
+            } else {
+                pos = obj.getTop() + obj.getHeight() + obj.initTop;
+                //pos = obj.getTop() + obj.getHeight() / 2 - 15; 
+            }
+
+            if (pos > obj.bottomLimit)
+                pos = obj.bottomLimit;
+            if (pos < obj.topLimit)
+                pos = obj.topLimit;
+
+            interval = obj.top - pos;
+            obj.top = obj.top - interval / 3;
+            obj.style.top = obj.top + "px";
+        }, 100)  //숫자가 클수록 속도가 늦다.
+    }
+    document.all.btnUpScrolling.onclick = listUpScrolling;      // 위로 버튼 이벤트 헨들러 등록 
+    document.all.btnDownScrolling.onclick = listDownScrolling;  // 아래로 버튼 이벤트 헨들러 등록 
+    var ProductHeight = 54;                                    // 상품 하나당 높이
+
+    
+    
+    function listUpScrolling() { // 위로버튼 
+        vProductList = document.all.ProductList;
+        vProductList.scrollTop = vProductList.scrollTop - ProductHeight;
+    }
+
+
+    function listDownScrolling() { // 밑으로 버튼 
+        vProductList = document.all.ProductList;
+        vProductList.scrollTop = vProductList.scrollTop + ProductHeight;
+
+    }
+    
+    //]]> 
+</script>
+<script type="text/javascript">
+    if ($J('.HeadTopBannerUseYnChk').height() > 0) {
+        initMoving(document.getElementById("divMenu"), 152, 50, 50);
+        $J('.maintopheaderBanner').css("top", "60px");
+    } else {
+        initMoving(document.getElementById("divMenu"), 92, 50, 50);
+        $J('.maintopheaderBanner').css("top", "0px");
+    }
+ </script>   
+    <!-- footer -->    
+    <div id="footer">
+    	<!-- footMenu -->
+    	<!-- //footMenu -->
+        <!-- foot_add -->
+        <div class="foot_add">
+        	<h2 class="blind">스파오 기업 및 영업 정보</h2>
+        	<dl class="foot_add01">
+            	<dt>온라인 쇼핑문의</dt>
+                <dd>080-230-1122</dd>
+                <dt>상담시간</dt>
+                <dd>월~금 10시~17시</dd>
+                <dt>점심시간</dt>
+                <dd>월~ 금 12시~ 1시</dd>
+                <dt>스파오 고객상담</dt>
+                <dd>080-300-0456</dd>
+                <dt>상담시간</dt>
+                <dd>월~금 9시~18시</dd>
+                <dt>온라인 쇼핑몰 반품주소</dt>
+                <dd>경기도 안성시 일죽면 금산리 246-9 SPAO 물류센터</dd>
+            </dl>
+            <dl class="foot_add02">
+            	<dt>기업명</dt>
+                <dd>(주)이랜드 리테일</dd>
+                <dt>대표이사</dt>
+                <dd>윤여영</dd>
+                <dt>개인정보보호 책임자</dt>
+                <dd>김연배이사</dd>
+                <dt>사업등록번호</dt>
+                <dd>114-81-01855</dd>
+                <dt>통신판매업 신고</dt>
+                <dd>통신판매업 신고 서초 제 09998호</dd>
+                <dt>주소</dt>
+                <dd><address>서울특별시 서초구 잠원동 70-2</address></dd>
+                <dt>이메일</dt>
+                <dd>webmaster@@spao.com</dd>
+                <dt>copyright</dt>
+                <dd>COPYRIGHT&copy;2011SPAO.ALL RIGHTS RESERVED.</dd>
+            </dl>
+            <ul class="footLogo">
+            	<li><a href="#"><img src="/images/common/footer/footLogo_norton.gif" alt="Norton secured" /></a></li>
+                <li><a href="#"><img src="/images/common/footer/footLogo_lg.gif" alt="LG U Plus" /></a></li>
+                <li><a href="#"><img src="/images/common/footer/footLogo_es.gif" alt="escrow" /></a></li>
+            </ul>
+        </div><!-- //foot_add -->
+        <!-- foot_link -->
+        <div class="foot_link">
+        	<h2 class="blind">개인정보 및 이용관련 메뉴</h2>
+        	<ul>
+            	<li><a href="https://oneclick.elandclub.com:444/OneClickPrivacy.aspx" target="_blank"><img src="/images/common/footer/footBt01.gif" alt="개인정보 취급방침" /></a></li>
+                <li><a href="https://oneclick.elandclub.com:444/OneClickService.aspx" target="_blank"><img src="/images/common/footer/footBt02.gif" alt="이용약관" /></a></li>
+                <li><a href="http://www.spao.com/CallCenter/faq.aspx?_wpoint=TOPCUSTOM"><img src="/images/common/footer/footBt03.gif" alt="FAQ가기" /></a></li>
+            </ul>
+            <h1 class="ma_t10"><img src="/images/common/footer/footLogo_spao.gif" alt="SPAO LOGO" /></h1>
+        </div><!-- //foot_link -->
+    </div>
+<!--장바구니 체크 -->
+<div id="divBasketCheck" style="position:absolute; display :none ; z-index: 9999;">
+
+    <table width="384" height="217" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><img id="imgBasketCheck" src="/Images/20080401/product2/pop_goshopping2.jpg" width="384" height="217" border="0" usemap="#BasketMap"></td>
+      </tr>
+    </table>
+    <map name="BasketMap">
+      <!--장바구니바로가기-->
+      <area shape="rect" coords="50,153,183,183" href="javascript:basket_view();" onfocus="blur()">
+      <!--쇼핑계속하기-->
+      <area shape="rect" coords="204,152,356,185" href="javascript:basket_close();" onfocus="blur()">
+      <area shape="rect" coords="355,6,379,26" href="javascript:basket_close();"  onfocus="blur()">
+    </map>
+
+</div>
+
+<!-- // 상품 zoom -->
+<div id="divProductZoom" style="display:none;" >
+</div> 
+<!--상품 zoom // -->    
+    
+<script language="javascript">
+
+function basket_close() {
+    //divBasketCheck.style.display = "none";
+    $J("#divBasketCheck").css("display", "none");
+    //window.location.reload();
+}
+    
+function basket_view() {
+    location.href = "https://www.spao.com:444/shop/basket.aspx";
+}    
+
+function BasketCheckView(gb) { 
+    var orgLeft = 0;
+    var orgTop  = 1000;
+
+    $J("#divBasketCheck").css("display", "block");
+    
+    if (gb == "I")    {
+        $J(".imgBasketCheck").attr("src", "/Images/20080401/product2/pop_goshopping.jpg"); //        
+    }
+    else if (gb == "U")    {
+    $J(".imgBasketCheck").attr("src", "/Images/20080401/product2/pop_goshopping2.jpg"); //
+    }
+
+    var left = (window.document.body.clientWidth / 2 - 500 / 2);
+    var top = (window.document.body.clientHeight / 2 - 100);
+    
+    orgLeft = (document.documentElement.scrollLeft + left) ;
+    orgTop = (document.documentElement.scrollTop + top);
+
+    $J("#divBasketCheck").css("left", orgLeft);
+    
+    $J("#divBasketCheck").css("top", orgTop);
+}
+
+function usafe(strActPage) {
+    window.open("https://www.usafe.co.kr:447/usafeShopCheck.asp?com_no=" + strActPage, "", "width=500, height=370, scrollbars=no, location=yes,status=yes,left=0, top=0");
+}
+</script>
+
+
+
+
+
+    <!-- Footer 끝 -->
+</div>
+</form>
+</body>
+</html>

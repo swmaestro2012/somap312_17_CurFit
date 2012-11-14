@@ -33,6 +33,23 @@
 	
 }
 
+td A:link {
+	text-decoration: none;
+	color : #000;
+}
+td A:visited {
+	text-decoration: none;
+	color : #000;	
+}
+td A:active {
+	text-decoration: none;
+	color : #000;
+}
+td A:hover {
+	text-decoration: underline;
+	color: #000;
+}
+
 
 .table-padding {
 	padding-top : 50px;
