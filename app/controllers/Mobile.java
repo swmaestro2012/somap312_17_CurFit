@@ -9,5 +9,8 @@ public class Mobile extends Controller {
 	}
 	public static Result otherUserLook() {
 		return ok(mobileOtherLook.render());
-	} 
+	}
+	public static Result coupon() {
+		return ok(mobileCoupon.render());
+	}
 }
