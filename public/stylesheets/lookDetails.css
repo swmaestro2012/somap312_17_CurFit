@@ -46,11 +46,6 @@ table.center {
 	padding-left : 0px;
 	padding-right : 0px;
 }
-
-.item-margin {
-	margin-left : 50px;
-	margin-right : 50px;
-}
 .desc-text {
 	font-size : 18px;
 }
@@ -71,4 +66,12 @@ table.center {
 #photo {
 	display : block;
 	z-index : 10001;
+}
+
+.thumbnail {
+	width : 210px;
+	height : 374px;
+}
+.carousel-inner {
+	margin-left : 25px;
 }

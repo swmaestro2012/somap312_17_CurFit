@@ -4,15 +4,10 @@
 #other-looks {
 	margin-top : 20px;
 }
-
-/*
-#contents-container{
-	border-left: 2px solid;
-	border-right: 2px solid;
+.span3 a {
+	width : 210px;
+	height : 374px;
 }
-
-#menu{
-	width : 910px;
-	height : 100%;
+.thumbnails {
+	margin-left : 20px;
 }
-*/
