@@ -103,7 +103,7 @@ public class RestApp extends Controller {
 		}
 
 		if(userLook.getImageFileName().substring(0, 3).equals("S3_")){
-			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
+			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName().substring(3));
 		}else{
 			userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
 		}
@@ -223,6 +223,8 @@ public class RestApp extends Controller {
 	
 	public static Result imageToS3(String fileName){
 		UserLook userLook = UserLook.find.where().ilike("imageFileName", fileName).findUnique();
+		File file = new File(LOCAL_IMAGE_PATH + userLook.getImageFileName());
+		file.delete();
 		userLook.setImageFileName("S3_" + userLook.getImageFileName());
 		userLook.save();
 		
