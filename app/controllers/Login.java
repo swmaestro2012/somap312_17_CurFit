@@ -37,7 +37,7 @@ public class Login extends Controller {
 		else
 			session("userId", userId);
 		
-		if(user.getIsAdmin() == 1)
+		if(user.isAdmin() == true)
 			return redirect("/dashboard/");
 		
 		return redirect("/");

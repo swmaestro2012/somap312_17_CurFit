@@ -21,7 +21,7 @@ public class User extends Model {
 	private String mail;
 	private List<UserLook> userLooks;
 	
-	private int isAdmin;
+	private boolean admin;
 
 	public static Finder<Long,User> find = new Finder<Long,User>(
 		    Long.class, User.class
@@ -32,14 +32,14 @@ public class User extends Model {
 	}
 	
 	public User(Long id, String userId, String password, String mail,
-			List<UserLook> userLooks, int isAdmin) {
+			List<UserLook> userLooks, boolean admin) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.password = password;
 		this.mail = mail;
 		this.userLooks = userLooks;
-		this.isAdmin = isAdmin;
+		this.setAdmin(admin);
 	}
 
 	public Long getId() {
@@ -82,12 +82,12 @@ public class User extends Model {
 		this.userLooks = userLooks;
 	}
 
-	public int getIsAdmin() {
-		return isAdmin;
+	public boolean isAdmin() {
+		return admin;
 	}
 
-	public void setIsAdmin(int isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 	
 	
