@@ -21,11 +21,12 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.RequestBody;
 import play.mvc.Result;
-import so.tree.imageUploadMQ.ImageMessage;
+import so.tree.imageQueue.ImageSender;
 
 public class RestApp extends Controller {
 	
-	static String imageFilePath = "public/lookImages/";
+	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
 	static JSONObject jsonObject;
 
 	public static Result getLooks(String year, String season, String lookType) throws JSONException {
@@ -100,6 +101,13 @@ public class RestApp extends Controller {
 			jsonObject.put("msg", "Can't find UserLook.");
 			return ok(jsonObject.toString()).as("application/json");
 		}
+
+		if(userLook.getImageFileName().substring(0, 3).equals("S3_")){
+			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
+		}else{
+			userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
+		}
+		
 		return ok(Json.toJson(userLook));
 	}
 
@@ -135,7 +143,7 @@ public class RestApp extends Controller {
 			jsonObject = new JSONObject();
 
 			FileChannel inChannel = new FileInputStream(file).getChannel();
-			FileChannel outChannel = new FileOutputStream(new File(imageFilePath + "/" + fileName)).getChannel();
+			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + fileName)).getChannel();
 			
 			ByteBuffer buf = ByteBuffer.allocate(1024);
 			
@@ -152,8 +160,8 @@ public class RestApp extends Controller {
 			userLook.setImageFileName(fileName);
 			userLook.save();
 
-			ImageMessage imageMessage = new ImageMessage("localhost", fileName);
-			imageMessage.send();
+			ImageSender imageSender = new ImageSender("localhost", fileName);
+			imageSender.send();
 			
 			jsonObject.put("code", 0);
 			jsonObject.put("msg", "ok");
@@ -211,6 +219,14 @@ public class RestApp extends Controller {
 		jsonObject.put("code", 0);
 		jsonObject.put("msg", "ok");
 		return ok(jsonObject.toString()).as("application/json");
+	}
+	
+	public static Result imageToS3(String fileName){
+		UserLook userLook = UserLook.find.where().ilike("imageFileName", fileName).findUnique();
+		userLook.setImageFileName("S3_" + userLook.getImageFileName());
+		userLook.save();
+		
+		return ok();
 	}
 	
 }

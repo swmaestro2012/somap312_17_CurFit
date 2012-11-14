@@ -1,4 +1,4 @@
-package so.tree.imageUploadMQ;
+package so.tree.imageQueue;
 
 import java.io.IOException;
 
@@ -7,14 +7,14 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
 
-public class ImageMessage {
+public class ImageSender {
 
-	private final static String QUEUE_NAME = "hello";
+	private final static String QUEUE_NAME = "imageUploadQueue";
 
 	private String host;
 	private String imageFileName;
 
-	public ImageMessage(String host, String imageFileName) {
+	public ImageSender(String host, String imageFileName) {
 		super();
 		this.host = host;
 		this.imageFileName = imageFileName;

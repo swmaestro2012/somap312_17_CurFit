@@ -4,13 +4,14 @@
 
 # Api
 
-GET		/api/looks					controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
+GET		/api/looks							controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
 
-GET		/api/looks/:id				controllers.RestApp.getLookById(id: Long)
-GET		/api/looks/:id/userLooks	controllers.RestApp.getAllUserLooksByLookId(id: Long)
-GET		/api/userLook/:id			controllers.RestApp.getUserLookById(id: Long)
-POST	/api/userLook				controllers.RestApp.saveUserLook()
-DELETE	/api/userLook/:id			controllers.RestApp.deleteUserLookById(id: Long)
+GET		/api/looks/:id						controllers.RestApp.getLookById(id: Long)
+GET		/api/looks/:id/userLooks			controllers.RestApp.getAllUserLooksByLookId(id: Long)
+GET		/api/userLook/:id					controllers.RestApp.getUserLookById(id: Long)
+POST	/api/userLook						controllers.RestApp.saveUserLook()
+DELETE	/api/userLook/:id					controllers.RestApp.deleteUserLookById(id: Long)
+PUT		/api/imageToS3/:fileName			controllers.RestApp.imageToS3(fileName: String)
 
 
 # Home page
@@ -28,4 +29,4 @@ GET		/shop/spao							controllers.Spao.index()
 GET		/shop/spao/							controllers.Spao.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file            			controllers.Assets.at(path="/public", file)
