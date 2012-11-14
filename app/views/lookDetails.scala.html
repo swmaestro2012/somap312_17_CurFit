@@ -104,73 +104,58 @@
 						<div id="myCarousel" class="carousel slide">
   						<!-- Carousel items -->
   							<div class="carousel-inner">
-    							<div class="active item item-margin">
+    							<div class="active item">
     								<ul class="thumbnails">
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
 			  							</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
   										</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
-      											<img src="http://placehold.it/260x180" alt="">
-    										</a>
-  										</li>
-  										<li class="span4">
-			    							<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
   										</li>
 									</ul>
     							</div>
-    							<div class="item item-margin">
+    							<div class="item">
     								<ul class="thumbnails">
-  										<li class="span4">
-	    									<a href="#" class="thumbnail">
+  										<li class="span3">
+	    									<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
 			  							</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
   										</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
-  										</li>
-  										<li class="span4">
-			    							<a href="#" class="thumbnail">
-      											<img src="http://placehold.it/260x180" alt="">
-    										</a>
-  										</li>
+  										</li>  										
 									</ul>
     							</div>
-    							<div class="item item-margin">
+    							<div class="item">
     								<ul class="thumbnails">
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
 			  							</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
   										</li>
-  										<li class="span4">
-    										<a href="#" class="thumbnail">
-      											<img src="http://placehold.it/260x180" alt="">
-    										</a>
-  										</li>
-  										<li class="span4">
-			    							<a href="#" class="thumbnail">
+  										<li class="span3">
+    										<a class="thumbnail">
       											<img src="http://placehold.it/260x180" alt="">
     										</a>
   										</li>
@@ -191,6 +176,11 @@
 	        	test
 	        </div>
 	    </footer>
+	    <div id="big-photo-container" class="transparent">
+	    	<div id="photo-overwrap">
+	    		<img id="photo" src="@routes.Assets.at("images/loading.gif")" class="img-polaroid">
+	    	</div>
+	    </div>
 	  	<script src="@routes.Assets.at("javascripts/lookDetails.js")"> </script>
 		<script> insertTableInfo({ season : @look.getSeason, topBottom : @look.getLookType })</script> 
     </body>
