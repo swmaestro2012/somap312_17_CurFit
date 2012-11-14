@@ -5,7 +5,9 @@
 
 create table coupon (
   id                        bigint auto_increment not null,
-  userlook_hash             varchar(255),
+  user_look_hash            varchar(255),
+  price                     integer,
+  expire_date               datetime,
   used                      tinyint(1) default 0,
   constraint pk_coupon primary key (id))
 ;
@@ -28,7 +30,7 @@ create table user (
   user_id                   varchar(255),
   password                  varchar(255),
   mail                      varchar(255),
-  is_admin                  integer,
+  admin                     tinyint(1) default 0,
   constraint pk_user primary key (id))
 ;
 
@@ -40,7 +42,8 @@ create table user_look (
   image_file_name           varchar(255),
   image_hash                varchar(255),
   date                      datetime,
-  match_user_look_id        bigint,
+  image_to_s3               tinyint(1) default 0,
+  match_look_id             bigint,
   constraint pk_user_look primary key (id))
 ;
 

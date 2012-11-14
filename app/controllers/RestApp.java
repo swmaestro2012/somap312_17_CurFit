@@ -1,14 +1,20 @@
 package controllers;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.Formatter;
 import java.util.List;
 
+import models.Coupon;
 import models.Look;
 import models.UserLook;
 
@@ -27,6 +33,7 @@ public class RestApp extends Controller {
 	
 	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
 	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
+	
 	static JSONObject jsonObject;
 
 	public static Result getLooks(String year, String season, String lookType) throws JSONException {
@@ -102,8 +109,8 @@ public class RestApp extends Controller {
 			return ok(jsonObject.toString()).as("application/json");
 		}
 
-		if(userLook.getImageFileName().substring(0, 3).equals("S3_")){
-			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName().substring(3));
+		if(userLook.isImageToS3()){
+			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
 		}else{
 			userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
 		}
@@ -157,13 +164,33 @@ public class RestApp extends Controller {
 				}
 			}
 			
-			userLook.setImageFileName(fileName);
-			userLook.save();
+			try {
+				userLook.setImageHash(calculateHash(MessageDigest.getInstance("SHA1"), file));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			ImageSender imageSender = new ImageSender("localhost", fileName);
+			Coupon coupon = new Coupon();
+			coupon.setPrice(3000);
+			coupon.setUsed(false);
+			coupon.setUserlookHash(userLook.getImageHash());
+			coupon.save();
+
+			userLook.setImageFileName(userLook.getImageHash() + ".jpg");
+			userLook.save();
+			
+			
+			
+			
+			ImageSender imageSender = new ImageSender("localhost", userLook.getImageFileName());
 			imageSender.send();
 			
 			jsonObject.put("code", 0);
+			jsonObject.put("hash", userLook.getImageHash());
 			jsonObject.put("msg", "ok");
 		
 		}catch(NullPointerException e){
@@ -199,7 +226,6 @@ public class RestApp extends Controller {
 		}
 		
 		
-		
 		return ok(jsonObject.toString()).as("application/json");
 	}
 
@@ -223,12 +249,51 @@ public class RestApp extends Controller {
 	
 	public static Result imageToS3(String fileName){
 		UserLook userLook = UserLook.find.where().ilike("imageFileName", fileName).findUnique();
+		userLook.setImageToS3(true);
+		userLook.save();
+
 		File file = new File(LOCAL_IMAGE_PATH + userLook.getImageFileName());
 		file.delete();
-		userLook.setImageFileName("S3_" + userLook.getImageFileName());
-		userLook.save();
 		
 		return ok();
 	}
 	
+	public static Result useCoupon() throws JSONException{
+		
+		String hash = request().body().asFormUrlEncoded().get("hash")[0];
+		Coupon coupon = Coupon.find.where().ilike("userLookHash", hash).findUnique();
+		
+		coupon.setUsed(true);
+		coupon.save();
+		
+		jsonObject.put("code", 0);
+		jsonObject.put("msg", "ok");
+		return ok(jsonObject.toString()).as("application/json");
+	}
+	
+	public static String calculateHash(MessageDigest algorithm, File file) throws Exception
+    {
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        DigestInputStream dis = new DigestInputStream(bis, algorithm);
+ 
+        // read the file and update the hash calculation
+        while(dis.read() != -1) 
+            ;
+ 
+        // get the hash value as byte array
+        byte[] hash = algorithm.digest();
+ 
+        return byteArray2Hex(hash);
+    }
+ 
+    private static String byteArray2Hex(byte[] hash)
+    {
+        Formatter formatter = new Formatter();
+        for(byte b : hash)
+        {
+            formatter.format("%02x", b);
+        }
+        return formatter.toString();
+    }
 }

@@ -39,7 +39,7 @@ public class User extends Model {
 		this.password = password;
 		this.mail = mail;
 		this.userLooks = userLooks;
-		this.setAdmin(admin);
+		this.admin = admin;
 	}
 
 	public Long getId() {

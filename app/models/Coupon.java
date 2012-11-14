@@ -1,11 +1,14 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 @Entity
 public class Coupon extends Model {
@@ -13,13 +16,25 @@ public class Coupon extends Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String userlookHash;
+	private String userLookHash;
+	private int price;
+	private Date expireDate;
 	private boolean used;
 
-	public Coupon(Long id, String userlookHash, boolean used) {
+	public static Finder<Long, Coupon> find = new Finder<Long, Coupon>(
+			Long.class, Coupon.class);
+
+	public Coupon() {
+		super();
+	}
+
+	public Coupon(Long id, String userLookHash, int price, Date expireDate,
+			boolean used) {
 		super();
 		this.id = id;
-		this.userlookHash = userlookHash;
+		this.userLookHash = userLookHash;
+		this.price = price;
+		this.expireDate = expireDate;
 		this.used = used;
 	}
 
@@ -32,11 +47,27 @@ public class Coupon extends Model {
 	}
 
 	public String getUserlookHash() {
-		return userlookHash;
+		return userLookHash;
 	}
 
-	public void setUserlookHash(String userlookHash) {
-		this.userlookHash = userlookHash;
+	public void setUserlookHash(String userLookHash) {
+		this.userLookHash = userLookHash;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
 	}
 
 	public boolean isUsed() {
