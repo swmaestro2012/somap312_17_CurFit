@@ -171,7 +171,7 @@ $(document).ready(function() {
 	
 	
 	// use methods.
-	$('.transparent').hide();
+	//$('.transparent').hide();
 	$('#product').addClass('active');	
 	
 	$('#confirm-form').submit(function() {

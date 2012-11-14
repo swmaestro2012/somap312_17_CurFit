@@ -62,3 +62,13 @@ table.center {
 #looks {
 	margin-top : 80px;
 }
+
+#photo-overwrap {
+	top : 40%;
+	left : 45%;
+	position : absolute;	
+}
+#photo {
+	display : block;
+	z-index : 10001;
+}
