@@ -30,7 +30,7 @@ POST	/dashboard/login					controllers.Login.login()
 GET		/mobile/							controllers.Mobile.index()
 GET		/mobile								controllers.Mobile.index()
 GET		/mobile/looks						controllers.Mobile.otherUserLook()
-
+GET		/mobile/coupon						controllers.Mobile.coupon()
 # Spao Copy Pages
 GET		/shop/spao							controllers.Spao.index()
 GET		/shop/spao/							controllers.Spao.index()
