@@ -22,12 +22,12 @@ GET     /dashboard	                        controllers.Dashboard.index()
 GET     /dashboard/	                        controllers.Dashboard.index()
 GET		/dashboard/looks					controllers.Looks.selectLooks()
 GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
-
+GET		/dashboard/looks/upload/					controllers.Looks.uploadLooks()	
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
 GET		/dashboard/login					controllers.Login.blank()
 POST	/dashboard/login					controllers.Login.login()
 
-# Mobile Page
+# Mobile Page 
 GET		/mobile/							controllers.Mobile.index()
 GET		/mobile/looks						controllers.Mobile.otherUserLook()
 GET		/mobile/coupon						controllers.Mobile.coupon()
