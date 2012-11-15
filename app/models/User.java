@@ -20,7 +20,6 @@ public class User extends Model {
 	private String password;
 	private String mail;
 	private List<UserLook> userLooks;
-	
 	private boolean admin;
 
 	public static Finder<Long,User> find = new Finder<Long,User>(
