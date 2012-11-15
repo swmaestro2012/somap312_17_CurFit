@@ -31,7 +31,9 @@ POST	/dashboard/login					controllers.Login.login()
 GET		/mobile/							controllers.Mobile.index()
 GET		/mobile/looks						controllers.Mobile.otherUserLook()
 GET		/mobile/coupon						controllers.Mobile.coupon()
+POST	/mobile/facebook					controllers.Mobile.facebook()
 GET		/mobile/:hash						controllers.Mobile.myLook(hash: String)
+
 
 
 # Spao Copy Pages

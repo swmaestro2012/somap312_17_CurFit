@@ -1,6 +1,7 @@
 package controllers;
 
 import models.UserLook;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
@@ -35,5 +36,10 @@ public class Mobile extends Controller {
 		}
 		
 		return ok(mobileIndex.render(imageUrl));
+	}
+	public static Result facebook() {
+		String imgUrl = request().body().asFormUrlEncoded().get("facebook-uplaod")[0];
+		Logger.info(imgUrl);
+		return ok(mobileFacebook.render(imgUrl));
 	}
 }

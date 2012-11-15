@@ -1,4 +1,4 @@
-@(imageUrl: String)
+@(imgUrl :String)
 <HTML>
 	<head>
 		<title> 내 이미지 보기 </title>
@@ -7,10 +7,10 @@
 		<link rel="stylesheet" href="@routes.Assets.at("jquerymobile/for-spao.min.css")" />
 		<link rel="stylesheet" href="@routes.Assets.at("jquerymobile/jquery.mobile.structure-1.2.0.css")" />
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileCommon.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileIndex.css")">        
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileIndex.css")">
         <script src="@routes.Assets.at("javascripts/jquery-1.8.2.min.js")"></script>
         <script src="@routes.Assets.at("jquerymobile/jquery.mobile-1.2.0.min.js")"></script>		
-        <script src="@routes.Assets.at("javascripts/mobileIndex.js")"></script>        
+        <script src="https://connect.facebook.net/en_US/all.js"></script>  
 	</head>
 	<body>
 		<div data-role="page" data-theme="a">
@@ -25,13 +25,11 @@
 				<h1> 내 이미지 보기 </h1>
 			</div>
 			<div data-role="content" data-theme="a">
-					<img id="photo" src="@imageUrl">
-				<Button id="share"> 페이스북 공유 </Button>
-				<a rel="external" href="/mobile/looks"><Button color="green"> 다른 코디 보기 </Button></a>
+				<img id="#photo" src="@imgUrl">
+				<label for="facebook-caption">메시지를 입력하세요 :</label>
+				<textarea name="facebook-caption" id="facebook-caption" data-mini="true"></textarea>				
+				<Button> 페이스북 공유 </Button>
 			</div>
-		</div>
-		<form action="/mobile/facebook" method="POST">
-			<input id="facebook-upload" name="facebook-uplaod" type="hidden"/>
-		</form>
+		</div>		
 	</body>
 </HTML>
