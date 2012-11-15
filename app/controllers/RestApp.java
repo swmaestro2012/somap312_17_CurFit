@@ -108,6 +108,14 @@ public class RestApp extends Controller {
 			jsonObject.put("msg", "UserLooks are empty.");
 			return ok(jsonObject.toString()).as("application/json");
 		}
+		
+		for(UserLook userLook : look.getUserLooks()){
+			if(userLook.isImageToS3()){
+				userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
+			}else{
+				userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
+			}
+		}
 		return ok(Json.toJson(look.getUserLooks())).as("application/json");
 	}
 
