@@ -59,8 +59,9 @@ table.center {
 }
 
 #photo-overwrap {
-	top : 40%;
-	left : 45%;
+	margin-top : 50px;
+	margin-bottom : 50px;
+	left : 50%;
 	position : absolute;	
 }
 #photo {
