@@ -18,13 +18,12 @@ public class Looks extends Controller {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		return ok(selection.render("Select Models", "Han Jin-Soo", currentYear));
 	}
-	
 	public static Result lookDetails(Long id){
 		if(session("userId") != null)
 			return redirect("/dashboard/login");
 		Look look = Look.find.byId(id);
 		if (look != null){
-			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look ));
+			return ok(lookDetails.render("Details Model", "Han Jin-Soo", look, look.getUserLooks() ));
 		}
 		else {
 			return notFound();
