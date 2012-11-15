@@ -44,7 +44,7 @@ create table user_look (
   image_hash                varchar(255),
   date                      datetime,
   image_to_s3               tinyint(1) default 0,
-  match_look_id             bigint,
+  match_user_look_id        bigint,
   constraint pk_user_look primary key (id))
 ;
 

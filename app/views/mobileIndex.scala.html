@@ -1,4 +1,4 @@
-@()
+@(imageUrl: String)
 <HTML>
 	<head>
 		<title> 내 이미지 보기 </title>
@@ -25,7 +25,7 @@
 				<h1> 내 이미지 보기 </h1>
 			</div>
 			<div data-role="content" data-theme="a">
-					<img src="http://pds24.egloos.com/pds/201205/08/43/c0002443_4fa811bbb3215.jpg">
+					<img src="@imageUrl">
 				<Button color="blue"> 페이스북 공유 </Button>
 				<a rel="external" href="/mobile/looks"><Button color="green"> 다른 코디 보기 </Button></a>
 			</div>

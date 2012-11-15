@@ -12,6 +12,8 @@ import views.html.index;
 public class Dashboard extends Controller {
   
   public static Result index() {
+		if(session("userId") != null)
+			return redirect("/dashboard/login");
 	  
 	  List<Look> mostShootingLookList = Look.find.where().orderBy("shotCount desc").setMaxRows(5).findList();
 	  List<UserLook> mostLikedUserLookList = UserLook.find.where().orderBy("likeCount desc").setMaxRows(5).findList();

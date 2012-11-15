@@ -15,7 +15,7 @@ public class Login extends Controller {
 	
 	public static Result blank() {
 		if(session("userId") != null)
-			return redirect("/login");
+			return redirect("/dashboard/login");
 		return ok(login.render(""));
 	}
 	
@@ -40,7 +40,7 @@ public class Login extends Controller {
 		if(user.isAdmin() == true)
 			return redirect("/dashboard/");
 		
-		return redirect("/");
+		return redirect("/dashboard/login");
 	}
 	
 	public static String encSHA1(String input) throws NoSuchAlgorithmException {

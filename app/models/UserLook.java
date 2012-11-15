@@ -30,7 +30,7 @@ public class UserLook extends Model {
 	private String imageHash;
 	private Date date;
 	private boolean imageToS3;
-	private Long matchLookId;
+	private Long matchUserLookId;
 	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
 		    Long.class, UserLook.class
@@ -52,7 +52,7 @@ public class UserLook extends Model {
 		this.imageHash = imageHash;
 		this.date = date;
 		this.imageToS3 = imageToS3;
-		this.matchLookId = matchLookId;
+		this.matchUserLookId = matchLookId;
 	}
 
 
@@ -114,12 +114,12 @@ public class UserLook extends Model {
 		this.imageFileName = imageFileName;
 	}
 
-	public Long getMatchLookId() {
-		return matchLookId;
+	public Long getMatchUserLookId() {
+		return matchUserLookId;
 	}
 
-	public void setMatchUserLookId(Long matchLookId) {
-		this.matchLookId = matchLookId;
+	public void setMatchUserLookId(Long matchUserLookId) {
+		this.matchUserLookId = matchUserLookId;
 	}
 
 	public boolean isImageToS3() {

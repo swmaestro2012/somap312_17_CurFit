@@ -172,7 +172,7 @@ public class RestApp extends Controller {
 			jsonObject = new JSONObject();
 
 			FileChannel inChannel = new FileInputStream(file).getChannel();
-			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + userLook.getImageHash() + ".png")).getChannel();
+			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + userLook.getImageHash())).getChannel();
 			
 			ByteBuffer buf = ByteBuffer.allocate(1024);
 			
@@ -192,7 +192,8 @@ public class RestApp extends Controller {
 			coupon.setUserlookHash(userLook.getImageHash());
 			coupon.save();
 
-			userLook.setImageFileName(userLook.getImageHash() + ".png");
+			userLook.setImageFileName(userLook.getImageHash());
+			userLook.setImageToS3(true);
 			userLook.save();
 			
 			
