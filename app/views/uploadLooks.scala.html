@@ -1,0 +1,87 @@
+@(title: String)(username :String)
+@importCss = {}
+@import controllers.Looks
+@main(title)(username)(importCss){
+<header id="dashboard-name">
+	<div class="container">
+		<h1 id="dashboard-text">Upload Product</h1>
+	</div>
+</header>
+
+<div class="container">
+	<div class="row">
+		<div class="span10">
+			<form action="/dashboard/looks/upload/" method="POST" enctype="multipart/form-data" class="form-horizontal">
+				<div class="control-group">
+					<label class="control-label" for="name">상품 이름</label>
+					<div class="controls">
+						<input name="name" type="text" id="name" placeholder="상품 이름을 입력하세요">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="season">시즌</label>
+					<div class="controls">
+						<div id="season" class="control-group">
+							<div id="season_" class="btn-group" data-toggle="buttons-radio">
+								<button type="button" data-season="0" class="btn">봄</button>
+								<button type="button" data-season="1" class="btn">여름</button>
+								<button type="button" data-season="2" class="btn">가을</button>
+								<button type="button" data-season="3" class="btn">겨울</button>
+								<input id="form-season" name ="season" type="hidden">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="years">출시 년도</label>
+					<div class="controls">
+						<select id="year" name="year">
+							@for(i <- 2008 to 2012){
+								<option>@i</option>
+							}
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="picture">모델 이미지</label>
+					<div class="controls">
+						<input type="file" name="picture" id="picture" accept="image/x-png, image/gif, image/jpeg">
+					</div>
+				</div>
+				    
+				
+				<div class="control-group">
+					<label class="control-label" for="barcode">바코드</label>
+					<div class="controls">
+						<input name="barcode" type="text" id="barcode" placeholder="바코드를 입력해주세요.">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="top-bottom">상/하의</label>
+					<div class="controls">
+						<div id="top-bottom" class="control-group">					
+							<div id="top-bottom_" class="btn-group" data-toggle="buttons-radio">
+								<button data-topBottom="0" type="button" class = "btn">상의</button>
+								<button data-topBottom="1" type="button" class = "btn">하의</button>
+								<input id="form-topBottom" type="hidden" name="top-bottom">
+							</div>
+						</div>					
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="description">설명</label>
+					<div class="controls">
+						<textarea name="description" id="description" placeholder="상품 설명을 입력해주세요."></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" type="submit" class="btn">Sign in</button>						
+					</div>
+				</div>						
+			</form>
+		</div>
+	</div>
+</div>
+<script src="@routes.Assets.at("javascripts/uploadLooks.js")"> </script>
+}
