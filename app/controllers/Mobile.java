@@ -23,7 +23,7 @@ public class Mobile extends Controller {
 		
 //		String imageUrl;
 		
-		UserLook userLook = UserLook.find.where().ilike("imageHash", hash).findUnique();
+		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
 		userLook.getId();
 		
 //		if(userLook.isImageToS3()){

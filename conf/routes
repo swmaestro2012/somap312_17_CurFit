@@ -19,6 +19,8 @@ PUT		/api/looks/imageToS3/:fileName		controllers.Looks.imageToS3(fileName: Strin
 PUT		/api/userLooks/imageToS3/:fileName	controllers.RestApp.imageToS3(fileName: String)
 GET		/api/coupons/:hash					controllers.RestApp.getCoupon(hash: String)
 
+POST	/api/like/:id						controllers.RestApp.likeByLookId(id: Long)
+
 
 # Home page
 GET     /dashboard	                        controllers.Dashboard.index()

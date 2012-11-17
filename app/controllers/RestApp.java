@@ -152,7 +152,7 @@ public class RestApp extends Controller {
 			return ok(jsonObject.toString()).as("application/json");
 		}
 		
-		return ok(Json.toJson(userLooks));
+		return ok(Json.toJson(userLooks)).as("application/json");
 	}
 	
 	public static Result saveUserLook() throws JSONException {
@@ -315,6 +315,24 @@ public class RestApp extends Controller {
 		Coupon coupon = Coupon.find.where().ilike("userLookHash", hash).findUnique();
 		
 		return ok(Json.toJson(coupon));
+	}
+	
+	public static Result likeByLookId(Long id) throws JSONException{
+		
+		Look look = Look.find.byId(id);
+		if (look == null) {
+			Logger.error("[code: -3] Can't find look.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find look.");
+			return ok(jsonObject.toString()).as("application/json");
+		}
+		look.setId(look.getId()+1);
+		look.save();
+		
+		jsonObject.put("code", 0);
+		jsonObject.put("msg", "ok");
+		return ok(jsonObject.toString()).as("application/json");
 	}
 	
 	public static String calculateHash(MessageDigest algorithm, File file) throws Exception

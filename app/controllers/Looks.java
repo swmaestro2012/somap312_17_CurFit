@@ -80,7 +80,7 @@ public class Looks extends Controller {
 			}
 			
 			
-			ImageSender imageSender = new ImageSender("localhost", look.getImageFileName(), "user");
+			ImageSender imageSender = new ImageSender("localhost", look.getImageFileName(), "Look");
 			imageSender.send();
 			look.setImageToS3(false);
 			look.save();
