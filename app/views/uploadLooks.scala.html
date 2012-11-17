@@ -1,5 +1,7 @@
 @(title: String)(username :String)
-@importCss = {}
+@importCss = {
+	<link rel="stylesheet" href="@routes.Assets.at("/stylesheets/uploadLooks.css")">
+}
 @import controllers.Looks
 @main(title)(username)(importCss){
 <header id="dashboard-name">
@@ -8,9 +10,16 @@
 	</div>
 </header>
 
-<div class="container">
+<div id="container" class="container">
 	<div class="row">
-		<div class="span10">
+		<div class="span1"></div>
+		<div class="span5">
+			<div>
+				<img id="preview" class="img-polaroid" src="@routes.Assets.at("images/NoImage.png")">
+			</div>
+		</div>
+		<div class="span6">
+			<div id="form-container">
 			<form action="/dashboard/looks/upload" method="POST" enctype="multipart/form-data" class="form-horizontal">
 				<div class="control-group">
 					<label class="control-label" for="name">상품 이름</label>
@@ -45,7 +54,7 @@
 				<div class="control-group">
 					<label class="control-label" for="picture">모델 이미지</label>
 					<div class="controls">
-						<input type="file" name="picture" id="picture" accept="image/x-png, image/gif, image/jpeg">
+						<input type="file" name="picture" id="picture" accept="image/*" onchange="readUrl(this)">
 					</div>
 				</div>
 				    
@@ -69,17 +78,24 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label class="control-label" for="price">가격</label>
+					<div class="controls">
+						<input name="price" type="text" id="price" placeholder="가격을 입력해주세요.">
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label" for="description">설명</label>
 					<div class="controls">
 						<textarea name="description" id="description" placeholder="상품 설명을 입력해주세요."></textarea>
 					</div>
-				</div>
+				</div>				
 				<div class="control-group">
 					<div class="controls">
-						<button type="submit" type="submit" class="btn">Sign in</button>						
+						<button type="submit" type="submit" class="btn">제출</button>						
 					</div>
 				</div>						
 			</form>
+			</div>
 		</div>
 	</div>
 </div>

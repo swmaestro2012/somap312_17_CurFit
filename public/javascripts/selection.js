@@ -5,10 +5,13 @@ $(document).ready(function() {
 		var tags =
 			'<div class="products-container">' +
 				'<a href="/dashboard/looks/' + data.id + '">' +
-				'<img class="products-img" src="' + data.imageFileName + '">' +
+				'<img class="products-img" src="' + data.imageUrl + '">' +
 				'<label class="products-label">'+ data.name +'</label>' +
 				'</a>' +
 			'</div>'
+		console.log(data.imageUrl);
+		console.log(data.id);
+		console.log(data.name);
 		return $('#result-contents').append(tags);		
 	};
 	var clearTag = function() {
@@ -38,7 +41,6 @@ $(document).ready(function() {
 			success : function(obj) {
 				$(obj).each(function(i, v) {
 					if(v.code !== 2){
-						console.log(v.name);
 						template(v);
 					}
 					else if (v.code === 2){
