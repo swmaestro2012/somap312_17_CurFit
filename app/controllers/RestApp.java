@@ -3,6 +3,7 @@ package controllers;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -109,13 +110,14 @@ public class RestApp extends Controller {
 			return ok(jsonObject.toString()).as("application/json");
 		}
 		
-		for(UserLook userLook : look.getUserLooks()){
-			if(userLook.isImageToS3()){
-				userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
-			}else{
-				userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
-			}
-		}
+//		for(UserLook userLook : look.getUserLooks()){
+//			if(userLook.isImageToS3()){
+//				userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
+//			}else{
+//				userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
+//			}
+//		}
+		
 		return ok(Json.toJson(look.getUserLooks())).as("application/json");
 	}
 
@@ -130,13 +132,27 @@ public class RestApp extends Controller {
 			return ok(jsonObject.toString()).as("application/json");
 		}
 
-		if(userLook.isImageToS3()){
-			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
-		}else{
-			userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
-		}
+//		if(userLook.isImageToS3()){
+//			userLook.setImageFileName(AMAZON_S3_PATH + userLook.getImageFileName());
+//		}else{
+//			userLook.setImageFileName(LOCAL_IMAGE_PATH + userLook.getImageFileName());
+//		}
 		
 		return ok(Json.toJson(userLook));
+	}
+	
+	public static Result getMatchUserLookByLookId(String id) throws JSONException {
+
+		List<UserLook> userLooks = UserLook.find.where().ilike("matchUserLookId", id).findList();
+		if (userLooks.size() == 0) {
+			Logger.error("[code: -4] Can't find UserLook.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -4);
+			jsonObject.put("msg", "Can't find UserLook.");
+			return ok(jsonObject.toString()).as("application/json");
+		}
+		
+		return ok(Json.toJson(userLooks));
 	}
 	
 	public static Result saveUserLook() throws JSONException {
@@ -164,54 +180,49 @@ public class RestApp extends Controller {
 			
 			
 			RequestBody request = request().body();
-			File file = request.asMultipartFormData().getFiles().get(0).getFile();
+			File file = request.asMultipartFormData().getFile("front").getFile();
+			File file_noFace = request.asMultipartFormData().getFile("noface").getFile();
+			File file_back = request.asMultipartFormData().getFile("back").getFile();
 			
+			//Hashing image.
 			try {
-				userLook.setImageHash(calculateHash(MessageDigest.getInstance("MD5"), file));
+				userLook.setImageFileName(calculateHash(MessageDigest.getInstance("MD5"), file));
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			
 			jsonObject = new JSONObject();
-
-			FileChannel inChannel = new FileInputStream(file).getChannel();
-			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + userLook.getImageHash())).getChannel();
 			
-			ByteBuffer buf = ByteBuffer.allocate(1024);
-			
-			while(true){
-				if(inChannel.read(buf) == -1){
-					break;
-				}else{
-					buf.flip();
-					outChannel.write(buf);
-					buf.clear();
-				}
-			}
+			fileOut(file, userLook.getImageFileName());
+			fileOut(file_noFace, userLook.getImageFileName()+"_noface");
+			fileOut(file_back, userLook.getImageFileName()+"_back");
 			
 			Coupon coupon = new Coupon();
 			coupon.setPrice(3000);
 			coupon.setUsed(false);
-			coupon.setUserlookHash(userLook.getImageHash());
+			coupon.setUserlookHash(userLook.getImageFileName());
 			coupon.save();
 
-			userLook.setImageFileName(userLook.getImageHash());
-			userLook.setImageToS3(true);
+			userLook.setImageFileName(userLook.getImageFileName());
+			userLook.setImageToS3(false);
 			userLook.save();
 			
 			
 			
-			
-			ImageSender imageSender = new ImageSender("localhost", userLook.getImageFileName());
+
+			ImageSender imageSender = new ImageSender("localhost", userLook.getImageFileName(), "none");
+			imageSender.send();
+			imageSender.setImageFileName(userLook.getImageFileName()+"_noface");
+			imageSender.send();
+			imageSender.setImageFileName(userLook.getImageFileName()+"_back");
+			imageSender.setLookType("userLook");
 			imageSender.send();
 			
 			jsonObject.put("code", 0);
-			jsonObject.put("hash", userLook.getImageHash());
+			jsonObject.put("hash", userLook.getImageFileName());
 			jsonObject.put("msg", "ok");
 		
 		}catch(NullPointerException e){
@@ -275,9 +286,16 @@ public class RestApp extends Controller {
 
 		File file = new File(LOCAL_IMAGE_PATH + userLook.getImageFileName());
 		file.delete();
+		File file_noFace = new File(LOCAL_IMAGE_PATH + userLook.getImageFileName()+"_noface");
+		file_noFace.delete();
+		File file_back = new File(LOCAL_IMAGE_PATH + userLook.getImageFileName()+"_back");
+		file_back.delete();
+		
 		
 		return ok();
 	}
+	
+	
 	
 	public static Result useCoupon() throws JSONException{
 		
@@ -290,6 +308,13 @@ public class RestApp extends Controller {
 		jsonObject.put("code", 0);
 		jsonObject.put("msg", "ok");
 		return ok(jsonObject.toString()).as("application/json");
+	}
+	
+	public static Result getCoupon(String hash){
+		
+		Coupon coupon = Coupon.find.where().ilike("userLookHash", hash).findUnique();
+		
+		return ok(Json.toJson(coupon));
 	}
 	
 	public static String calculateHash(MessageDigest algorithm, File file) throws Exception
@@ -316,5 +341,23 @@ public class RestApp extends Controller {
             formatter.format("%02x", b);
         }
         return formatter.toString();
+    }
+    
+    private static void fileOut(File file, String fileName) throws IOException{
+
+		FileChannel inChannel = new FileInputStream(file).getChannel();
+		FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + fileName)).getChannel();
+		
+		ByteBuffer buf = ByteBuffer.allocate(1024);
+		
+		while(true){
+			if(inChannel.read(buf) == -1){
+				break;
+			}else{
+				buf.flip();
+				outChannel.write(buf);
+				buf.clear();
+			}
+		}
     }
 }

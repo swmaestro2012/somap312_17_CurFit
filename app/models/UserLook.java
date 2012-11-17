@@ -15,6 +15,9 @@ import play.db.ebean.Model;
 
 @Entity
 public class UserLook extends Model {
+	
+	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +30,6 @@ public class UserLook extends Model {
 	private int size;
 	private int likeCount;
 	private String imageFileName;
-	private String imageHash;
 	private Date date;
 	private boolean imageToS3;
 	private Long matchUserLookId;
@@ -41,7 +43,7 @@ public class UserLook extends Model {
 	}
 
 	public UserLook(Long id, Look look, int size, int likeCount,
-			String imageFileName, String imageHash, Date date,
+			String imageFileName, Date date,
 			boolean imageToS3, Long matchLookId) {
 		super();
 		this.id = id;
@@ -49,20 +51,9 @@ public class UserLook extends Model {
 		this.size = size;
 		this.likeCount = likeCount;
 		this.imageFileName = imageFileName;
-		this.imageHash = imageHash;
 		this.date = date;
 		this.imageToS3 = imageToS3;
 		this.matchUserLookId = matchLookId;
-	}
-
-
-
-	public String getImageHash(){
-		return imageHash;
-	}
-	
-	public void setImageHash(String imageHash){
-		this.imageHash = imageHash;
 	}
 	
 	public Date getDate(){
@@ -130,6 +121,12 @@ public class UserLook extends Model {
 		this.imageToS3 = imageToS3;
 	}
 	
+	public String getImageUrl(){
+		if(isImageToS3()){
+			return AMAZON_S3_PATH + getImageFileName();
+		}else{
+			return LOCAL_IMAGE_PATH + getImageFileName();
+		}
+	}
 	
-
 }

@@ -12,6 +12,10 @@ import play.db.ebean.Model;
 @Entity
 public class User extends Model {
 	
+
+	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -88,7 +92,4 @@ public class User extends Model {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
-	
-	
 }

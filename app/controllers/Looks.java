@@ -1,22 +1,35 @@
 package controllers;
 
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
-import java.util.Date;
-
+import java.util.Formatter;
 
 import models.Look;
 import models.UserLook;
 import play.Logger;
+import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Http.MultipartFormData;
-import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Http.RequestBody;
 import play.mvc.Result;
-import views.html.*;
-import views.html.helper.select;
+import so.tree.imageQueue.ImageSender;
+import views.html.lookDetails;
+import views.html.selection;
+import views.html.uploadLooks;
 
 public class Looks extends Controller {
+	
+	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
+	
 	public static Result selectLooks() {
 		if(session("userId") != null)
 			return redirect("/dashboard/login");
@@ -34,49 +47,94 @@ public class Looks extends Controller {
 			return notFound();
 		}
 	}
-	public static Result uploadLooks(){
+	public static Result uploadLook(){
 		return ok(uploadLooks.render("Upload Model", "Han Jin-Soo"));
 	}
 	
 	
-	public static Result upload(){ // naming........ stress
-		  MultipartFormData body = request().body().asMultipartFormData();
-		  FilePart picture = body.getFile("picture");
-		  String name = body.asFormUrlEncoded().get("name")[0];
-		  String season = body.asFormUrlEncoded().get("season")[0];
-		  String year = body.asFormUrlEncoded().get("year")[0];
-		  String barcode = body.asFormUrlEncoded().get("barcode")[0];
-		  String topBottom = body.asFormUrlEncoded().get("top-bottom")[0];
-		  String description = body.asFormUrlEncoded().get("description")[0];
-		  
-		  // colorful red!
-		  Logger.error(picture.getFilename());
-		  Logger.error(name);
-		  Logger.error(season);
-		  Logger.error(year);
-		  Logger.error(barcode);
-		  Logger.error(topBottom);
-		  Logger.error(description);
-		  
-		  if (picture != null) {
-			/*
-			String fileName = picture.getFilename();
-		    String contentType = picture.getContentType(); 
-		    File file = picture.getFile();
-		    */
-			Look look = new Look();
-			look.setName(name);
-			look.setSeason(Integer.parseInt(season));
-			look.setYear(Integer.parseInt(year));
-			look.setBarcode(barcode);
-			look.setLookType(Integer.parseInt(topBottom));
-			look.setDescription(description);
-			look.setImageFileName(picture.getFilename());
+	public static Result newLook(){
+		
+		
+		Form<Look> form = new Form<Look>(Look.class)
+				.bindFromRequest();
+		
+		try{
+			Look look = form.get();
+			RequestBody request = request().body();
+			File file = request.asMultipartFormData().getFiles().get(0).getFile();
+			look.setImageFileName(calculateHash(MessageDigest.getInstance("MD5"), file));
+			
+			FileChannel inChannel = new FileInputStream(file).getChannel();
+			FileChannel outChannel = new FileOutputStream(new File(LOCAL_IMAGE_PATH + "/" + look.getImageFileName())).getChannel();
+			
+			ByteBuffer buf = ByteBuffer.allocate(1024);
+			
+			while(true){
+				if(inChannel.read(buf) == -1){
+					break;
+				}else{
+					buf.flip();
+					outChannel.write(buf);
+					buf.clear();
+				}
+			}
+			
+			
+			ImageSender imageSender = new ImageSender("localhost", look.getImageFileName(), "user");
+			imageSender.send();
+			look.setImageToS3(false);
 			look.save();
-		    return ok("File uploaded");
-		  } else {
-		    flash("error", "Missing file");
-		    return redirect(routes.Application.index());    
-		  }
+			
+		}catch(IllegalStateException e){
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e){
+			
+		}
+		return ok();
 	}
+	
+
+	public static Result imageToS3(String fileName){
+		Look look = Look.find.where().ilike("imageFileName", fileName).findUnique();
+		look.setImageToS3(true);
+		look.save();
+
+		File file = new File(LOCAL_IMAGE_PATH + look.getImageFileName());
+		file.delete();
+		
+		return ok();
+	}
+	
+
+
+	public static String calculateHash(MessageDigest algorithm, File file) throws Exception
+    {
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        DigestInputStream dis = new DigestInputStream(bis, algorithm);
+ 
+        // read the file and update the hash calculation
+        while(dis.read() != -1) 
+            ;
+ 
+        // get the hash value as byte array
+        byte[] hash = algorithm.digest();
+ 
+        return byteArray2Hex(hash);
+    }
+ 
+    private static String byteArray2Hex(byte[] hash)
+    {
+        Formatter formatter = new Formatter();
+        for(byte b : hash)
+        {
+            formatter.format("%02x", b);
+        }
+        return formatter.toString();
+    }
+
 }

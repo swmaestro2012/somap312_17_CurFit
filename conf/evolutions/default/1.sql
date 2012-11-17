@@ -22,6 +22,7 @@ create table look (
   price                     integer,
   barcode                   varchar(255),
   image_file_name           varchar(255),
+  image_to_s3               tinyint(1) default 0,
   description               varchar(255),
   constraint pk_look primary key (id))
 ;
@@ -41,7 +42,6 @@ create table user_look (
   size                      integer,
   like_count                integer,
   image_file_name           varchar(255),
-  image_hash                varchar(255),
   date                      datetime,
   image_to_s3               tinyint(1) default 0,
   match_user_look_id        bigint,

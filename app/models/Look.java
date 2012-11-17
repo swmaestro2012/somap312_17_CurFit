@@ -16,6 +16,9 @@ import play.db.ebean.Model;
 @Entity
 public class Look extends Model {
 
+	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,6 +31,7 @@ public class Look extends Model {
 	private int price;
 	private String barcode;
 	private String imageFileName;
+	private boolean imageToS3;
 	private String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -42,7 +46,7 @@ public class Look extends Model {
 
 	public Look(Long id, String name, int shotCount, int year, int season,
 			int lookType, int price, String barcode, String imageFileName,
-			String description, List<UserLook> userLooks) {
+			boolean imageToS3, String description, List<UserLook> userLooks) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -53,9 +57,12 @@ public class Look extends Model {
 		this.price = price;
 		this.barcode = barcode;
 		this.imageFileName = imageFileName;
+		this.setImageToS3(imageToS3);
 		this.description = description;
 		this.userLooks = userLooks;
 	}
+	
+	
 
 	public String getDescription() {
 		return description;
@@ -146,4 +153,20 @@ public class Look extends Model {
 		this.barcode = barcode;
 	}
 
+	public boolean isImageToS3() {
+		return imageToS3;
+	}
+
+	public void setImageToS3(boolean imageToS3) {
+		this.imageToS3 = imageToS3;
+	}
+
+	public String getImageUrl(){
+		if(isImageToS3()){
+			return AMAZON_S3_PATH + getImageFileName();
+		}else{
+			return LOCAL_IMAGE_PATH + getImageFileName();
+		}
+	}
+	
 }

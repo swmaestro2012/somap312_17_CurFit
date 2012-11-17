@@ -13,11 +13,13 @@ public class ImageSender {
 
 	private String host;
 	private String imageFileName;
+	private String lookType;
 
-	public ImageSender(String host, String imageFileName) {
+	public ImageSender(String host, String imageFileName, String lookType) {
 		super();
 		this.host = host;
 		this.imageFileName = imageFileName;
+		this.lookType = lookType;
 	}
 
 	public String getHost() {
@@ -35,6 +37,14 @@ public class ImageSender {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
+	
+	public String getLookType(){
+		return lookType;
+	}
+	
+	public void setLookType(String lookType){
+		this.lookType = lookType;
+	}
 
 	public void send() throws IOException {
 		ConnectionFactory factory = new ConnectionFactory();
@@ -43,6 +53,14 @@ public class ImageSender {
 		Channel channel = connection.createChannel();
 
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+		
+		if(lookType.equals("userLook")){
+			imageFileName = "user|" + imageFileName;
+		}else if(lookType.equals("Look")){
+			imageFileName = "look|" + imageFileName;
+		}else{
+			imageFileName = "none|" + imageFileName;
+		}
 		channel.basicPublish("", QUEUE_NAME, null, imageFileName.getBytes());
 
 		channel.close();

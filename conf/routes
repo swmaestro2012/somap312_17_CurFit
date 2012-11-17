@@ -10,21 +10,26 @@ GET 	/									controllers.Application.index()
 GET		/api/looks							controllers.RestApp.getLooks(year ?= null, season ?= null, lookType ?= null)
 GET		/api/looksByBarcode/:barcode		controllers.RestApp.getLookByBarcode(barcode: String)
 GET		/api/looks/:id						controllers.RestApp.getLookById(id: Long)
+GET		/api/looks/:id/matchUserLooks		controllers.RestApp.getMatchUserLookByLookId(id: String)
 GET		/api/looks/:id/userLooks			controllers.RestApp.getAllUserLooksByLookId(id: Long)
 GET		/api/userLook/:id					controllers.RestApp.getUserLookById(id: Long)
 POST	/api/userLook						controllers.RestApp.saveUserLook()
 DELETE	/api/userLook/:id					controllers.RestApp.deleteUserLookById(id: Long)
-PUT		/api/imageToS3/:fileName			controllers.RestApp.imageToS3(fileName: String)
+PUT		/api/looks/imageToS3/:fileName		controllers.Looks.imageToS3(fileName: String)
+PUT		/api/userLooks/imageToS3/:fileName	controllers.RestApp.imageToS3(fileName: String)
+GET		/api/coupons/:hash					controllers.RestApp.getCoupon(hash: String)
 
 
 # Home page
 GET     /dashboard	                        controllers.Dashboard.index()
 GET     /dashboard/	                        controllers.Dashboard.index()
 GET		/dashboard/looks					controllers.Looks.selectLooks()
+GET		/dashboard/looks/upload				controllers.Looks.uploadLook()
+POST	/dashboard/looks/upload				controllers.Looks.newLook()
 GET		/dashboard/looks/:id				controllers.Looks.lookDetails(id :Long)
-GET		/dashboard/looks/upload/			controllers.Looks.uploadLooks()
-POST	/dashboard/looks/upload/			controllers.Looks.upload()
 # Login Pages (if you don't do this, I allow to change this. however Let me know.)
+
+
 GET		/dashboard/login					controllers.Login.blank()
 POST	/dashboard/login					controllers.Login.login()
 
