@@ -24,7 +24,6 @@ $(document).ready(function() {
 		var height = $(window).height();
 		var imgHeight = height - 100;
 		var imgWidth = (imgHeight / 1.78);
-		console.log(imgWidth);
 		$('#photo').height(imgHeight)
 				   .width(imgWidth);
 		$('#photo-overwrap').css("margin-left", -(imgWidth / 2) + 'px');		

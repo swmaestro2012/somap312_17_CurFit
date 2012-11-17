@@ -36,7 +36,6 @@ public class Mobile extends Controller {
 	}
 	public static Result facebook() {
 		String imgUrl = request().body().asFormUrlEncoded().get("facebook-uplaod")[0];
-		Logger.info(imgUrl);
 		return ok(mobileFacebook.render(imgUrl));
 	}
 }

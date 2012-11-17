@@ -9,9 +9,7 @@ $(document).ready(function() {
 				'<label class="products-label">'+ data.name +'</label>' +
 				'</a>' +
 			'</div>'
-		console.log(data.imageUrl);
-		console.log(data.id);
-		console.log(data.name);
+
 		return $('#result-contents').append(tags);		
 	};
 	var clearTag = function() {
