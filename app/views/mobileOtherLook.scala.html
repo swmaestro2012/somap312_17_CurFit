@@ -1,4 +1,4 @@
-@()
+@(lookId :Long)(userLooks :List[UserLook])
 <HTML>
 	<head>
 		<title> 코디 보기 </title>
@@ -30,26 +30,42 @@
 			<div data-role="content" data-theme="a">		
 				<div id="slider">
 					<div>
-						<div style='display:block'>
-							<img src="http://pds24.egloos.com/pds/201205/08/43/c0002443_4fa811bbb3215.jpg">
+						<div class="userLooks" data-matchId="@userLooks.get(0).getMatchUserLookId()" style='display:block'>
+							<img src="@userLooks.get(0).getImageUrl()_noface">
 						</div>
-						<div style='display:none'>
-							<img src="http://dailyalive.files.wordpress.com/2010/04/p100424_003.jpg">								
+						@for(i <- 1 to userLooks.size()-1){
+						<div class="userLooks" data-matchId="@userLooks.get(i).getMatchUserLookId()" style='display:none'>
+							<img src="@userLooks.get(i).getImageUrl()_noface">								
 						</div>
-						<div style='display:none'>
-							<img src="http://pds24.egloos.com/pds/201205/08/43/c0002443_4fa811bbb3215.jpg">
-						</div>
-						<div style='display:none'>
-							<img src="http://dailyalive.files.wordpress.com/2010/04/p100424_003.jpg">								
-						</div>
+						}
 					</div>
 				</div>
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">					
 					<h3>같이 코디된 상품</h3>
-					<img src="http://image.spao.com/Product/201205/SPTJ247C15_78_082_490_205.jpg">
+					<img id="co-product" src="@userLooks.get(0).getMatchUserLookId()">
+					<div id="co-product-name">
+					</div>
 				</div>
 			</div>
 			
 		</div>
 	</body>
+	<script> $.ajax({	
+		type : 'GET',
+		url : '/api/looks/' + @userLooks.get(0).getMatchUserLookId(),
+		dataType: 'json',
+		success : function(obj) {
+			$(obj).each(function(i, v) {
+				if(v.code !== -4){
+					$('#co-product').attr('src', v.imageUrl);					
+					$('#co-product-name').append('<h3>' + v.name + '</h3>');
+				}
+				else if (v.code === -4){
+					
+				}				
+			});
+		},
+		error : function() {
+		}
+	});</script>
 </HTML>

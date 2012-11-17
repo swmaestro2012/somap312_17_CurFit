@@ -1,5 +1,7 @@
 package controllers;
 
+
+import models.Look;
 import models.UserLook;
 import play.Logger;
 import play.mvc.Controller;
@@ -10,10 +12,12 @@ import views.html.*;
 public class Mobile extends Controller {
 	
 	public static Result index() {
-		return ok(mobileIndex.render(""));
+		return ok(mobileIndex.render("", null));
 	}
-	public static Result otherUserLook() {
-		return ok(mobileOtherLook.render());
+	public static Result otherUserLook(Long id) {
+		Look look = Look.find.byId(id);
+		
+		return ok(mobileOtherLook.render(id, look.getUserLooks()));
 	}
 	public static Result coupon() {
 		return ok(mobileCoupon.render());
@@ -32,7 +36,7 @@ public class Mobile extends Controller {
 //			imageUrl = LOCAL_IMAGE_PATH + userLook.getImageFileName();
 //		}
 		
-		return ok(mobileIndex.render(userLook.getImageUrl()));
+		return ok(mobileIndex.render(userLook.getImageUrl(), userLook.getLook().getId()));
 	}
 	public static Result facebook() {
 		String imgUrl = request().body().asFormUrlEncoded().get("facebook-uplaod")[0];
