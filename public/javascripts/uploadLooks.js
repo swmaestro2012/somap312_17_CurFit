@@ -1,4 +1,5 @@
-$(document).ready(function() {	
+$(document).ready(function() {
+	$('#add').addClass('active');
 	$('button[data-season]').click(function () {
 		var seasonValue = $(this).attr('data-season');
 		$('#form-season').val(seasonValue);
