@@ -1,9 +1,4 @@
-@()
-
-
-
-
-
+@(userLooks :List[UserLook])
 <!DOCTYPE html>
 <html>
 	<head>
@@ -32,60 +27,20 @@
 	        		 		<div id="myCarousel" class="carousel slide">  					
 								<div class="carousel-inner">
     								<div class="active item">
-    									<ul class="thumbnails">
-	  										<li class="span3">
-    											<a class="thumbnail">
-	      											<img src="http://placehold.it/300x200" alt="">
-    											</a>
-			  								</li>
-  											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>
-  											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>  											
+    									<ul class="thumbnails">	  										
+  											@for(i <- 0 to (userLooks.size()-1) ){
+  												@if((i > 2) && (i%3 == 0)){  											
 										</ul>
     								</div>
     								<div class="item">
-    									<ul class="thumbnails">
-    									 	<li class="span3">
-    											<a class="thumbnail">
-	      											<img src="http://placehold.it/300x200" alt="">
-    											</a>
-			  								</li>
+    									<ul class="thumbnails">																									
+												}											
   											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>
-  											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>  											
-  										</ul>
-    								</div>
-    								<div class="item">
-    									<ul class="thumbnails">
-    									 	<li class="span3">
-    											<a class="thumbnail">
-	      											<img src="http://placehold.it/300x200" alt="">
-    											</a>
-			  								</li>
-  											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>
-  											<li class="span3">
-	    										<a class="thumbnail">
-      												<img src="http://placehold.it/300x200" alt="">
-    											</a>
-  											</li>
+												<a class="thumbnail">
+													<img src="@userLooks.get(i).getImageUrl()_noface" alt="">
+												</a>
+											</li>
+  											}
   										</ul>
     								</div>
   								</div>  
