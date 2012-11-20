@@ -177,7 +177,8 @@ public class RestApp extends Controller {
 			UserLook userLook = form.get();
 			userLook.setLook(look);
 			userLook.setDate(Calendar.getInstance().getTime());
-			
+			look.setShotCount(look.getShotCount()+1);
+			look.save();
 			
 			RequestBody request = request().body();
 			File file = request.asMultipartFormData().getFile("front").getFile();
