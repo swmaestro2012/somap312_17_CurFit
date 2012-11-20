@@ -222,6 +222,7 @@ public class RestApp extends Controller {
 			imageSender.send();
 			
 			jsonObject.put("code", 0);
+			jsonObject.put("id", userLook.getId());
 			jsonObject.put("hash", userLook.getImageFileName());
 			jsonObject.put("msg", "ok");
 		
