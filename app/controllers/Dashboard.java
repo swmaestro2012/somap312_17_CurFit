@@ -15,8 +15,8 @@ public class Dashboard extends Controller {
 		if(session("userId") != null)
 			return redirect("/dashboard/login");
 	  
-	  List<Look> mostShootingLookList = Look.find.where().orderBy("shotCount desc").setMaxRows(5).findList();
-	  List<UserLook> mostLikedUserLookList = UserLook.find.where().orderBy("likeCount desc").setMaxRows(5).findList();
+	  List<Look> mostShootingLookList = Look.find.setMaxRows(5).orderBy("shotCount desc").findList();
+	  List<UserLook> mostLikedUserLookList = UserLook.find.setMaxRows(5).orderBy("likeCount desc").findList();
 	  
 	  Integer shotTotal = 0;	  
 	  for (Look elem : mostShootingLookList){
@@ -25,7 +25,7 @@ public class Dashboard extends Controller {
 	
 	  Logger.info(shotTotal.toString());
 	  
-    return ok(index.render("Welcome to Fashion Dashboard.", "Han Jin-Soo", mostShootingLookList, mostLikedUserLookList, shotTotal));
+	  return ok(index.render("Welcome to Fashion Dashboard.", "Han Jin-Soo", mostShootingLookList, mostLikedUserLookList, shotTotal));
   }
   
   

@@ -16,7 +16,7 @@ import play.db.ebean.Model;
 @Entity
 public class Look extends Model {
 
-	private static String LOCAL_IMAGE_PATH = System.getProperty("user.dir") + "/public/lookImages/";
+	private static String LOCAL_IMAGE_PATH = "http://192.168.0.16:9000/assets/lookImages/";
 	private static String AMAZON_S3_PATH = "https://s3-ap-northeast-1.amazonaws.com/swmaestro/";
 	
 	@Id
