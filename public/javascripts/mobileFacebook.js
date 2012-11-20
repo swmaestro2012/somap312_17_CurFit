@@ -10,8 +10,7 @@ window.fbAsyncInit = function() {
   
 
 
-$(document).ready(function() {	
-	$('#facebook-caption').click(function () {
+	$('#facebook-share').click(function () {
 		var imgSource = $('#photo').attr('src');
 		var message = $('#facebook-caption').val();                                                                                                                
 	    FB.login(function (response) {                                                                                                                                            
@@ -34,4 +33,3 @@ $(document).ready(function() {
 	         }                                                                                                                                                                      
 	      }, { scope: 'user_photos,photo_upload,publish_stream,offline_access' });                                                                                                  
 	}	
-});
