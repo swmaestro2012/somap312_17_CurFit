@@ -37,8 +37,8 @@ public class Mobile extends Controller {
 		
 		return ok(mobileIndex.render(userLook));
 	}
-	public static Result facebook() {
-		String imgUrl = request().body().asFormUrlEncoded().get("facebook-uplaod")[0];
-		return ok(mobileFacebook.render(imgUrl));
+	public static Result facebook(String hash) {
+		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
+		return ok(mobileFacebook.render(userLook.getImageUrl()));
 	}
 }
