@@ -17,6 +17,7 @@ import java.util.List;
 
 import models.Coupon;
 import models.Look;
+import models.User;
 import models.UserLook;
 
 import org.json.JSONException;
@@ -174,11 +175,20 @@ public class RestApp extends Controller {
 				
 			}
 			
+			
+			
 			UserLook userLook = form.get();
 			userLook.setLook(look);
 			userLook.setDate(Calendar.getInstance().getTime());
 			look.setShotCount(look.getShotCount()+1);
 			look.save();
+			
+			User user = User.find.where().ilike("membershipId", request().body().asMultipartFormData().asFormUrlEncoded().get("membershipId")[0]).findUnique();
+			List<UserLook> userLooks = user.getUserLooks();
+			userLooks.add(userLook);
+			user.save();
+			
+			
 			
 			RequestBody request = request().body();
 			File file = request.asMultipartFormData().getFile("front").getFile();
@@ -206,7 +216,8 @@ public class RestApp extends Controller {
 			coupon.setUsed(false);
 			coupon.setUserlookHash(userLook.getImageFileName());
 			coupon.save();
-
+			
+			userLook.setUser(user);
 			userLook.setImageFileName(userLook.getImageFileName());
 			userLook.setImageToS3(false);
 			userLook.save();
@@ -280,6 +291,56 @@ public class RestApp extends Controller {
 		jsonObject.put("msg", "ok");
 		return ok(jsonObject.toString()).as("application/json");
 	}
+	
+	public static Result getUserByMembershipId(String membershipId) throws JSONException{
+		
+		User user = User.find.where().ilike("membershipId", membershipId).findUnique();
+		
+		if (user == null) {
+			Logger.error("[code: -3] Can't find User.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find User.");
+			return ok(jsonObject.toString()).as("application/json");
+		}
+		return ok(Json.toJson(user)).as("application/json");
+	}
+	
+	public static Result getUserLooksOfUserByUserLookId(Long userLookId) throws JSONException{
+		
+		UserLook userLook = UserLook.find.byId(userLookId);
+		if (userLook == null) {
+			Logger.error("[code: -3] Can't find UserLook.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find UserLook.");	
+			return ok(jsonObject.toString()).as("application/json");
+			
+		}
+		
+		User user = userLook.getUser();
+		List<UserLook> userLooks = user.getUserLooks();
+		
+		return ok(Json.toJson(userLooks)).as("application/json");
+	}
+	
+	public static Result getUserByUserLookId(Long userLookId) throws JSONException{
+		
+		UserLook userLook = UserLook.find.byId(userLookId);
+		if (userLook == null) {
+			Logger.error("[code: -3] Can't find UserLook.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find UserLook.");	
+			return ok(jsonObject.toString()).as("application/json");
+			
+		}
+		
+		User user = userLook.getUser();
+		
+		return ok(Json.toJson(user)).as("application/json");
+	}
+	
 	
 	public static Result imageToS3(String fileName){
 		UserLook userLook = UserLook.find.where().ilike("imageFileName", fileName).findUnique();

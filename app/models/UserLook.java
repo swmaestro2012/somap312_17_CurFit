@@ -25,6 +25,9 @@ public class UserLook extends Model {
 	
 	@ManyToOne
 	private Look look;
+	
+	@ManyToOne
+	private User user;
 
 	@Required
 	private int size;
@@ -34,9 +37,6 @@ public class UserLook extends Model {
 	private boolean imageToS3;
 	private Long matchUserLookId;
 	
-	private Long membershipId;
-	
-	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
 		    Long.class, UserLook.class
 		  ); 
@@ -45,19 +45,19 @@ public class UserLook extends Model {
 		super();
 	}
 
-	public UserLook(Long id, Look look, int size, int likeCount,
+	public UserLook(Long id, User user, Look look, int size, int likeCount,
 			String imageFileName, Date date,
-			boolean imageToS3, Long matchLookId, Long membershipId) {
+			boolean imageToS3, Long matchLookId) {
 		super();
 		this.id = id;
 		this.look = look;
+		this.user = user;
 		this.size = size;
 		this.likeCount = likeCount;
 		this.imageFileName = imageFileName;
 		this.date = date;
 		this.imageToS3 = imageToS3;
 		this.matchUserLookId = matchLookId;
-		this.membershipId = membershipId;
 	}
 	
 	public Date getDate(){
@@ -132,12 +132,13 @@ public class UserLook extends Model {
 		}
 	}
 
-	public Long getMembershipId() {
-		return membershipId;
+	@JsonIgnore
+	public User getUser() {
+		return user;
 	}
 
-	public void setMembershipId(Long membershipId) {
-		this.membershipId = membershipId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

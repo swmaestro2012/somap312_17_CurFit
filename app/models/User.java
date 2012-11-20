@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import play.db.ebean.Model;
 
@@ -21,9 +24,12 @@ public class User extends Model {
 	private Long id;
 	
 	private String userId;
+	private String name;
 	private String password;
 	private String mail;
 	private String membershipId;
+	
+	@OneToMany
 	private List<UserLook> userLooks;
 	private boolean admin;
 
@@ -35,11 +41,12 @@ public class User extends Model {
 		super();
 	}
 	
-	public User(Long id, String userId, String password, String mail, String membershipId,
+	public User(Long id, String userId, String name, String password, String mail, String membershipId,
 			List<UserLook> userLooks, boolean admin) {
 		super();
 		this.id = id;
 		this.userId = userId;
+		this.name = name;
 		this.password = password;
 		this.mail = mail;
 		this.membershipId = membershipId;
@@ -63,6 +70,7 @@ public class User extends Model {
 		this.userId = userId;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -101,5 +109,13 @@ public class User extends Model {
 
 	public void setMembershipId(String membershipId) {
 		this.membershipId = membershipId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

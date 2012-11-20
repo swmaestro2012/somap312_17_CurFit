@@ -20,7 +20,9 @@ PUT		/api/userLooks/imageToS3/:fileName	controllers.RestApp.imageToS3(fileName: 
 GET		/api/coupons/:hash					controllers.RestApp.getCoupon(hash: String)
 
 POST	/api/like/:id						controllers.RestApp.likeByUserLookId(id: Long)
-
+GET		/api/user/:membershipId				controllers.RestApp.getUserByMembershipId(membershipId: String)
+GET		/api/userLooksOfUserByUserLookId/:userLookId	controllers.RestApp.getUserLooksOfUserByUserLookId(userLookId: Long)
+GET		/api/userByUserLookId/:userLookId	controllers.RestApp.getUserByUserLookId(userLookId: Long)
 
 # Home page
 GET     /dashboard	                        controllers.Dashboard.index()
