@@ -32,6 +32,7 @@ create table user (
   user_id                   varchar(255),
   password                  varchar(255),
   mail                      varchar(255),
+  membership_id             varchar(255),
   admin                     tinyint(1) default 0,
   constraint pk_user primary key (id))
 ;
@@ -45,6 +46,7 @@ create table user_look (
   date                      datetime,
   image_to_s3               tinyint(1) default 0,
   match_user_look_id        bigint,
+  membership_id             bigint,
   constraint pk_user_look primary key (id))
 ;
 

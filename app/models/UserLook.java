@@ -34,6 +34,9 @@ public class UserLook extends Model {
 	private boolean imageToS3;
 	private Long matchUserLookId;
 	
+	private Long membershipId;
+	
+	
 	public static Finder<Long,UserLook> find = new Finder<Long,UserLook>(
 		    Long.class, UserLook.class
 		  ); 
@@ -44,7 +47,7 @@ public class UserLook extends Model {
 
 	public UserLook(Long id, Look look, int size, int likeCount,
 			String imageFileName, Date date,
-			boolean imageToS3, Long matchLookId) {
+			boolean imageToS3, Long matchLookId, Long membershipId) {
 		super();
 		this.id = id;
 		this.look = look;
@@ -54,6 +57,7 @@ public class UserLook extends Model {
 		this.date = date;
 		this.imageToS3 = imageToS3;
 		this.matchUserLookId = matchLookId;
+		this.membershipId = membershipId;
 	}
 	
 	public Date getDate(){
@@ -72,7 +76,6 @@ public class UserLook extends Model {
 		this.id = id;
 	}
 
-	@JsonIgnore
 	public Look getLook() {
 		return look;
 	}
@@ -128,5 +131,13 @@ public class UserLook extends Model {
 			return LOCAL_IMAGE_PATH + getImageFileName();
 		}
 	}
-	
+
+	public Long getMembershipId() {
+		return membershipId;
+	}
+
+	public void setMembershipId(Long membershipId) {
+		this.membershipId = membershipId;
+	}
+
 }

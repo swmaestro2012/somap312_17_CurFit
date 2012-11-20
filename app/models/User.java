@@ -23,6 +23,7 @@ public class User extends Model {
 	private String userId;
 	private String password;
 	private String mail;
+	private String membershipId;
 	private List<UserLook> userLooks;
 	private boolean admin;
 
@@ -34,13 +35,14 @@ public class User extends Model {
 		super();
 	}
 	
-	public User(Long id, String userId, String password, String mail,
+	public User(Long id, String userId, String password, String mail, String membershipId,
 			List<UserLook> userLooks, boolean admin) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.password = password;
 		this.mail = mail;
+		this.membershipId = membershipId;
 		this.userLooks = userLooks;
 		this.admin = admin;
 	}
@@ -91,5 +93,13 @@ public class User extends Model {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public String getMembershipId() {
+		return membershipId;
+	}
+
+	public void setMembershipId(String membershipId) {
+		this.membershipId = membershipId;
 	}
 }
