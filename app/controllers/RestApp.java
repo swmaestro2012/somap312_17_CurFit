@@ -319,18 +319,20 @@ public class RestApp extends Controller {
 		return ok(Json.toJson(coupon));
 	}
 	
-	public static Result likeByLookId(Long id) throws JSONException{
+	public static Result likeByUserLookId(Long id) throws JSONException{
 		
-		Look look = Look.find.byId(id);
-		if (look == null) {
-			Logger.error("[code: -3] Can't find look.");
+		UserLook userLook = UserLook.find.byId(id);
+		if (userLook == null) {
+			Logger.error("[code: -3] Can't find UserLook.");
 			jsonObject = new JSONObject();
 			jsonObject.put("code", -3);
-			jsonObject.put("msg", "Can't find look.");
+			jsonObject.put("msg", "Can't find UserLook.");
 			return ok(jsonObject.toString()).as("application/json");
 		}
-		look.setId(look.getId()+1);
-		look.save();
+		userLook.setLikeCount(userLook.getLikeCount()+1);
+		userLook.save();
+		
+		jsonObject = new JSONObject();
 		
 		jsonObject.put("code", 0);
 		jsonObject.put("msg", "ok");
