@@ -1,13 +1,5 @@
-window.fbAsyncInit = function() {                                                                                                                                             
-    FB.init({                                                                                                                                                                   
-      appId      : '551594578199655', // App ID
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the
-							// session
-      xfbml      : true  // parse XFBML
-    });                                                                                                                                                                         
-  };
-  
+
+/*
 
 
 	$('#facebook-share').click(function () {
@@ -32,4 +24,6 @@ window.fbAsyncInit = function() {
 	            alert('Interrupted.');                                                                                                                                              
 	         }                                                                                                                                                                      
 	      }, { scope: 'user_photos,photo_upload,publish_stream,offline_access' });                                                                                                  
-	}	
+	}
+	
+*/
