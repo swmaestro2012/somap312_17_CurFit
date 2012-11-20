@@ -1,4 +1,4 @@
-@()
+@(userLooks :List[UserLook])
 <HTML>
 	<head>
 		<title> 내 코디 보기 </title>
@@ -9,7 +9,29 @@
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileCommon.css")">
         <script src="@routes.Assets.at("javascripts/jquery-1.8.2.min.js")"></script>
         <script src="@routes.Assets.at("jquerymobile/jquery.mobile-1.2.0.min.js")"></script>		
-        <script src="@routes.Assets.at("javascripts/mobileMe.js")"></script>		
+        <script src="@routes.Assets.at("javascripts/swipe.js")"></script>		
+        <script src="@routes.Assets.at("javascripts/mobileMe.js")"></script>
+        <script>
+	$.ajax({	
+		type : 'GET',
+		url : '/api/userLook/' + @userLooks.get(0).getId(),
+		dataType: 'json',
+		success : function(obj) {
+			$(obj).each(function(i, v) {
+				if(v.code !== -4){
+					$('#co-product').show();												
+					$('#co-product').attr('src', v.look.imageUrl)						
+					$('#co-product-name').html("").append('<h3>' + v.look.name + '</h3>');						
+				}
+				else if (v.code === -4){
+					
+				}				
+			});
+		},
+		error : function() {
+		}
+	});
+	</script>		
 	</head>
 	<body>	
 		<div data-role="page" data-theme="a">
@@ -28,49 +50,25 @@
 			<div data-role="content" data-theme="a">
 			<div id="slider">
 					<div>
-						@*
-						<div class="userLooks" data-matchId="@userLooks.get(0).getMatchUserLookId()" style='display:block'>
-							<img src="@userLooks.get(0).getImageUrl()_noface">
+						<div class="userLooks" data-id="@userLooks.get(0).getId()" style='display:block'>
+							<img src="@userLooks.get(0).getImageUrl()">
 						</div>
 						 @for(i <- 1 to userLooks.size()-1){ 
-						<div class="userLooks" data-matchId="@userLooks.get(i).getMatchUserLookId()" style='display:none'>
-							<img src="@userLooks.get(i).getImageUrl()_noface">								
+						<div class="userLooks" data-id="@userLooks.get(i).getId()" style='display:none'>
+							<img src="@userLooks.get(i).getImageUrl()">								
 						</div>
-						} *@	
+						} 	
 					</div>
 				</div>
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">					
 					<h3> 코디한 상품</h3>
-					@* <img id="co-product" src="@userLooks.get(0).getMatchUserLookId()"> *@
+					 <img id="co-product" src="@userLooks.get(0).getMatchUserLookId()"> 
 					<div id="co-product-name">
 					</div>
 				</div>
 			</div>
 		</div>
 	</body>
-	@* 수정해야한다. 이때 코디했던 상품으로 
-	<script> $.ajax({	
-		type : 'GET',
-		url : '/api/looks/' + @userLooks.get(0).getMatchUserLookId(),
-		dataType: 'json',
-		success : function(obj) {
-			$(obj).each(function(i, v) {
-				if (typeof v.name === "undefined"){
-					$('#co-product').hide();						
-					$('#co-product-name').html("").append('<h3> 같이 코디된 상품이 없습니다. </h3>');
-				}
-				else if(v.code !== -4){					
-					$('#co-product').attr('src', v.imageUrl);					
-					$('#co-product-name').append('<h3>' + v.name + '</h3>');					
-				}
-				else if (v.code === -4){
-					
-				}				
-			});
-		},
-		error : function() {
-		}
-	});
-	</script>
-	*@
+	
+
 </HTML>

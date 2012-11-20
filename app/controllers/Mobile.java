@@ -35,16 +35,12 @@ public class Mobile extends Controller {
 		return ok(mobileProduct.render(look));
 	}
 	
-	public static Result me() {
-		//UserLook userLook = UserLook.find.byId(new Long(9));
-		//userLook.get
-		
-//		String hash = null;
-//		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
-//		User user = userLook.getUser();
-//		List<UserLook> userLooks = user.getUserLooks();
-//		Route나 POST hash 받고, userLooks 넘기면됨.
-		return ok(mobileMe.render());
+	public static Result me(String hash) {		
+		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
+		User user = userLook.getUser();
+		List<UserLook> userLooks = user.getUserLooks();
+
+		return ok(mobileMe.render(userLooks));
 	}
 	
 	public static Result myLook(String hash){
