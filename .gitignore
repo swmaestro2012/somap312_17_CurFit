@@ -31,3 +31,4 @@ server.pid
 /project/target/streams/$global/ivy-configuration/$global/out
 /project/target/streams/$global/update/$global/out
 /project/target/streams/compile/compile/$global/out
+/RUNNING_PID
