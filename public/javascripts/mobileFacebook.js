@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	$('#facebook-share').click(function() {
 		var imgSource = $('#photo').attr('src');
