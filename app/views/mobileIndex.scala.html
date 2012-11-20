@@ -1,4 +1,4 @@
-@(imageUrl: String)(lookId :Long)
+@(userLook :UserLook)
 <HTML>
 	<head>
 		<title> 내 이미지 보기 </title>
@@ -25,9 +25,11 @@
 				<h1> 내 이미지 보기 </h1>
 			</div>
 			<div data-role="content" data-theme="a">
-				<img id="photo" src="@imageUrl">				
+				<img id="photo" src="@userLook.getImageUrl()">				
+				<img id="photo" src="@userLook.getImageUrl()_back">				
 				<Button id="share"> 페이스북 공유 </Button>
-				<a rel="external" href="/mobile/looks/@lookId"><Button color="green"> 다른 코디 보기 </Button></a>
+				<a rel="external" href="/mobile/looks/@userLook.getLook().getId()"><Button> 다른 코디 보기 </Button></a>
+				<a rel="external" href="/mobile/coupon/@userLook.getImageFileName()"><Button> 쿠폰 보기 </Button></a>
 			</div>
 		</div>
 		<form action="/mobile/facebook" method="POST">

@@ -8,10 +8,14 @@ $(document).ready(function (){
 			dataType: 'json',
 			success : function(obj) {
 				$(obj).each(function(i, v) {
-					if(v.code !== 2){
-						$('#co-product').attr('src', v.imageUrl)
-						
-						$('#co-product-name').html("").append('<h3>' + v.name + '</h3>');
+					if (typeof v.name === "undefined"){
+						$('#co-product').hide();						
+						$('#co-product-name').html("").append('<h3> 같이 코디된 상품이 없습니다. </h3>');
+					}
+					else if(v.code !== 2){
+						$('#co-product').show();												
+						$('#co-product').attr('src', v.imageUrl)						
+						$('#co-product-name').html("").append('<h3>' + v.name + '</h3>');						
 					}
 					else if (v.code === 2){
 						
