@@ -38,7 +38,7 @@ public class Mobile extends Controller {
 		return ok(mobileIndex.render(userLook));
 	}
 	public static Result facebook(String hash) {
-	   
-		return ok(mobileFacebook.render(imgUrl));
+		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
+		return ok(mobileFacebook.render(userLook.getImageUrl()));
 	}
 }
