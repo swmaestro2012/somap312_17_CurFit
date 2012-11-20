@@ -39,7 +39,7 @@ POST	/dashboard/login					controllers.Login.login()
 GET		/mobile/							controllers.Mobile.index()
 GET		/mobile/looks/:id					controllers.Mobile.otherUserLook(id: Long)
 GET		/mobile/coupon/:hash				controllers.Mobile.coupon(hash :String)
-POST	/mobile/facebook					controllers.Mobile.facebook()
+POST	/mobile/facebook/:hash					controllers.Mobile.facebook(hash :String)
 GET		/mobile/:hash						controllers.Mobile.myLook(hash: String)
 
 

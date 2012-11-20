@@ -48,7 +48,7 @@ public class ImageSender {
 
 	public void send() throws IOException {
 		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost("192.168.1.162");
+		factory.setHost("localhost");
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 
