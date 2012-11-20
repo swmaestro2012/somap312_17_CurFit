@@ -1,7 +1,7 @@
-
 $(document).ready(function() {
 	$('#facebook-share').click(function() {
 		var imgSource = $('#photo').attr('src');
+		//var hash = $('#hash').html();
 		var message = $('#facebook-caption').val();
 		FB.login(function(response) {
 			if (response.authResponse) {

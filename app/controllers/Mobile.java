@@ -23,6 +23,17 @@ public class Mobile extends Controller {
 		return ok(mobileCoupon.render(hash));
 	}
 	
+	public static Result personalProduct(Long id){
+		Look look = Look.find.byId(id);	
+		return ok(mobileProduct.render(look));
+	}
+	
+	public static Result me() {
+		//UserLook userLook = UserLook.find.byId(new Long(9));
+		//userLook.get
+		return ok(mobileMe.render());
+	}
+	
 	public static Result myLook(String hash){
 		
 //		String imageUrl;
@@ -39,6 +50,6 @@ public class Mobile extends Controller {
 	}
 	public static Result facebook(String hash) {
 		UserLook userLook = UserLook.find.where().ilike("imageFileName", hash).findUnique();
-		return ok(mobileFacebook.render(userLook.getImageUrl()));
+		return ok(mobileFacebook.render(userLook.getImageUrl(), hash));
 	}
 }

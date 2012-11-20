@@ -1,19 +1,17 @@
-@(lookId :Long)(userLooks :List[UserLook])
+@()
 <HTML>
 	<head>
-		<title> 코디 보기 </title>
+		<title> 내 코디 보기 </title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 		<link rel="stylesheet" href="@routes.Assets.at("jquerymobile/for-spao.min.css")" />
 		<link rel="stylesheet" href="@routes.Assets.at("jquerymobile/jquery.mobile.structure-1.2.0.css")" />
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileCommon.css")">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/mobileOtherLook.css")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.8.2.min.js")"></script>        
+        <script src="@routes.Assets.at("javascripts/jquery-1.8.2.min.js")"></script>
         <script src="@routes.Assets.at("jquerymobile/jquery.mobile-1.2.0.min.js")"></script>		
-        <script src="@routes.Assets.at("javascripts/swipe.min.js")"></script>		
-        <script src="@routes.Assets.at("javascripts/mobileOtherLook.js")"></script>
+        <script src="@routes.Assets.at("javascripts/mobileMe.js")"></script>		
 	</head>
-	<body>        
+	<body>	
 		<div data-role="page" data-theme="a">
 			<div>			
 				<a href="/mobile/">
@@ -22,36 +20,35 @@
 				<div id="logo-left-side">
 				</div>
 			</div>			
-			<div data-role="header" data-position="inline">			
+			<div data-role="header" data-position="inline">
 				<a href="#" data-mini="true" data-icon="arrow-l" onclick='slider.prev();return false'>prev</a>
-				<h1> 코디 보기 </h1>
+				<h1> 내 코디 보기 </h1>
 				<a href="#" data-mini="true" data-theme="a" data-icon="arrow-r" onclick='slider.next();return false'>next</a>
 			</div>
-			<div data-role="content" data-theme="a">		
-				<div id="slider">
+			<div data-role="content" data-theme="a">
+			<div id="slider">
 					<div>
+						@*
 						<div class="userLooks" data-matchId="@userLooks.get(0).getMatchUserLookId()" style='display:block'>
 							<img src="@userLooks.get(0).getImageUrl()_noface">
 						</div>
-						@for(i <- 1 to userLooks.size()-1){
+						 @for(i <- 1 to userLooks.size()-1){ 
 						<div class="userLooks" data-matchId="@userLooks.get(i).getMatchUserLookId()" style='display:none'>
 							<img src="@userLooks.get(i).getImageUrl()_noface">								
 						</div>
-						}
+						} *@	
 					</div>
 				</div>
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">					
-					<h3>같이 코디된 상품</h3>
-					<a id="co-product-wrap"href="">
-					<img id="co-product" src="@userLooks.get(0).getMatchUserLookId()">
-					</a>
+					<h3> 코디한 상품</h3>
+					@* <img id="co-product" src="@userLooks.get(0).getMatchUserLookId()"> *@
 					<div id="co-product-name">
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</body>
+	@* 수정해야한다. 이때 코디했던 상품으로 
 	<script> $.ajax({	
 		type : 'GET',
 		url : '/api/looks/' + @userLooks.get(0).getMatchUserLookId(),
@@ -59,12 +56,10 @@
 		success : function(obj) {
 			$(obj).each(function(i, v) {
 				if (typeof v.name === "undefined"){
-					$('#co-product-wrap').hide();
-//					$('#co-product').hide();					
+					$('#co-product').hide();						
 					$('#co-product-name').html("").append('<h3> 같이 코디된 상품이 없습니다. </h3>');
 				}
 				else if(v.code !== -4){					
-					$('#co-product-wrap').attr('href', '/mobile/looks/product/' + v.id);
 					$('#co-product').attr('src', v.imageUrl);					
 					$('#co-product-name').append('<h3>' + v.name + '</h3>');					
 				}
@@ -75,5 +70,7 @@
 		},
 		error : function() {
 		}
-	});</script>
+	});
+	</script>
+	*@
 </HTML>
