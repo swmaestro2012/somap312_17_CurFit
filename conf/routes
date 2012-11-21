@@ -43,7 +43,7 @@ GET		/mobile/looks/:id					controllers.Mobile.otherUserLook(id: Long)
 GET		/mobile/looks/product/:id			controllers.Mobile.personalProduct(id :Long)
 GET		/mobile/coupon/:hash				controllers.Mobile.coupon(hash :String)
 GET		/mobile/facebook/:hash				controllers.Mobile.facebook(hash :String)
-GET		/mobile/me							controllers.Mobile.me()
+GET		/mobile/me/:hash					controllers.Mobile.me(hash :String)
 GET		/mobile/:hash						controllers.Mobile.myLook(hash: String)
 
 
