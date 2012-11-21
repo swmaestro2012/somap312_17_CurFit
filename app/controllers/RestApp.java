@@ -319,6 +319,14 @@ public class RestApp extends Controller {
 		}
 		
 		User user = userLook.getUser();
+		if(user == null){
+			Logger.error("[code: -3] Can't find User.");
+			jsonObject = new JSONObject();
+			jsonObject.put("code", -3);
+			jsonObject.put("msg", "Can't find User.");	
+			return ok(jsonObject.toString()).as("application/json");
+			
+		}
 		List<UserLook> userLooks = user.getUserLooks();
 		
 		return ok(Json.toJson(userLooks)).as("application/json");
